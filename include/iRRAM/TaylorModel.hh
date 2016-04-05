@@ -339,15 +339,18 @@ public:
 	TM & operator+=(const TM &tm);
 	TM & operator-=(const TM &tm);
 	TM & operator*=(const REAL &r);
-	TM & operator*=(const TM &r) { return *this = *this * r; }
-	TM & operator/=(const TM &r) { return *this = *this / r; }
+	TM & operator*=(const TM &r)   { return *this  = *this * r; }
+	TM & operator/=(const REAL &r) { return *this *= 1 / r; }
+	TM & operator/=(const TM &r)   { return *this  = *this / r; }
 
 	/* these implementations need copies of q anyway; leave possibility for
 	 * the compiler to construct them in-place: pass-by-value */
 	friend TM operator+(TM q, const TM &r)   { return q += r; }
 	friend TM operator-(TM q, const TM &r)   { return q -= r; }
 	friend TM operator*(TM q, const REAL &r) { return q *= r; }
+	friend TM operator*(const REAL &r, TM q) { return q *= r; }
 	friend TM operator*(TM q, const TM &r);
+	friend TM operator/(TM q, const REAL &r) { return q /= r; }
 	friend TM operator/(const TM &q, const TM &r) { return q * inverse(r); }
 
 //	TM operator()(const TM &); /* TODO */
@@ -355,8 +358,8 @@ public:
 	//friend TM inverse_around(const REAL &a);
 	//friend TM inverse(const TM &q) { return inverse_around(q.c0)(q); }
 
-	friend TM inverse(const TM &r);
-	friend TM square(const TM &r)            { return r * r; }
+	friend TM inverse(TM r);
+	friend TM square(const TM &r)            { return r * r; } /* TODO */
 
 	friend orstream & operator<<(orstream &o, const TM &p)
 	{

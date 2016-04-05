@@ -431,17 +431,17 @@ TM operator*(TM q, const TM &r)
 	if (q.sweepto == 0) {
 		for (const TM::I &i : r.c)
 			f.c0 += q_real*i.ci;
-		return f;
 	} else {
 		TM g(REAL(0));
 		for (const TM::I &i : r.c)
 			g.c.emplace_back(i.id,q_real*i.ci);
-		return f+g;
+		f += g;
 	}
+	return f;
 }
 
 #if 0
-TM inverse(const TM &r)
+TM inverse(TM r)
 {
 	/* r =: r0 + [ri] */
 
@@ -452,7 +452,7 @@ TM inverse(const TM &r)
 
 	/* compute taylor sum: q * \sum_{j=0}^\infty (1+[ri]/r0)^{2*j} */
 
-	TM p2 = square(r * r0_inv);     /* (1+[ri]/r0)^2 */
+	TM p2 = square(r *= r0_inv);    /* (1+[ri]/r0)^2 */
 
 	const unsigned N = 10; /* TODO */
 	TM p = p2;                      /* (1+[ri]/r0)^{2*j} */
