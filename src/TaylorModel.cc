@@ -381,3 +381,93 @@ void TM::check() {
 	c[minc].ci = e;
 //  cerr << "max_id "<<max_id<<" (check)\n";
 }
+
+namespace iRRAM {
+
+TM & TM::operator+=(const TM &tm)
+{
+	{ stiff code(prec_diff); c0+=tm.c0; }
+	for (const I &i : tm.c) {
+		for (I &j : c) {
+			if (i.id == j.id) {
+				j.ci += i.ci;
+				goto ok;
+			}
+		}
+		c.push_back(i);
+ok:;
+	}
+	return *this;
+}
+
+TM & TM::operator-=(const TM &tm)
+{
+	{ stiff code(prec_diff); c0 -= tm.c0; }
+	for (const I &i : tm.c) {
+		for (I &j : c) {
+			if (i.id == j.id) {
+				j.ci -= i.ci;
+				goto ok;
+			}
+		}
+		c.emplace_back(i.id,-i.ci);
+ok:;
+	}
+	return *this;
+}
+
+TM & TM::operator*=(const REAL &r)
+{
+	{ stiff code(prec_diff); c0 *=r; }
+	for (I &l : c)
+			l.ci *= r;
+	return *this;
+}
+
+TM operator*(TM q, const TM &r)
+{
+	REAL q_real = q.to_real();
+	TM &f = q*=r.c0;
+	if (q.sweepto == 0) {
+		for (const TM::I &i : r.c)
+			f.c0 += q_real*i.ci;
+		return f;
+	} else {
+		TM g(REAL(0));
+		for (const TM::I &i : r.c)
+			g.c.emplace_back(i.id,q_real*i.ci);
+		return f+g;
+	}
+}
+
+#if 0
+TM inverse(const TM &r)
+{
+	/* r =: r0 + [ri] */
+
+	REAL r0_inv = 1/r.c0;
+	TM q(0);
+	q.c = r.c;
+	q *= -square(r0_inv); /* -[ri]/(r0^2) */
+
+	/* compute taylor sum: q * \sum_{j=0}^\infty (1+[ri]/r0)^{2*j} */
+
+	TM p2 = square(r * r0_inv);     /* (1+[ri]/r0)^2 */
+
+	const unsigned N = 10; /* TODO */
+	TM p = p2;                      /* (1+[ri]/r0)^{2*j} */
+	TM s(1);                        /* \sum for j=0 */
+	s += p;                         /*      for j=1 */
+
+	for (unsigned j=2; j<N; j++) {
+		p *= p2;
+		s += p;
+	}
+
+	/* TODO: add truncation error */
+
+	return q * s;
+}
+#endif
+
+}

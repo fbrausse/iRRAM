@@ -52,6 +52,11 @@ public:
 	struct I {
 		unsigned long long id;
 		REAL ci;
+
+		I() {}
+		I(unsigned long long id, const REAL &ci) : id(id), ci(ci) {}
+		I(unsigned long long id, REAL &&ci) noexcept
+		: id(id), ci(std::forward<REAL>(ci)) {}
 	};
 
 private:
@@ -85,11 +90,11 @@ public:              /* TODO: This should be private in the new future! */
 	REAL c0;           /* center of the Taylor Model */
 	std::vector<I> c;  /* error symbols with their IDs */
 
-//   TM(TM&& t): c(std::move(t.c)),sweepto(t.sweepto){c0=t.c0;}
-//   TM(const TM& t): c(t.c),sweepto(t.sweepto){c0=t.c0;}
 public:
 	/* default constructor */
 	TM(){}
+	TM(TM &&t) noexcept : c0(std::move(t.c0)), c(std::move(t.c)) { sweepto = t.sweepto; }
+	TM(const TM &t) : c0(t.c0), c(t.c) { sweepto = t.sweepto; }
 
 	/* Constructor for conversion from REAL to TM
 	 * This does NOT introduce an error symbol!
@@ -97,6 +102,19 @@ public:
 	 * to simplify the formulation of algorithms.
 	 */
 	TM(const REAL& x) : c0(x) {}
+
+	friend void swap(TM &a, TM &b) noexcept
+	{
+		using std::swap;
+		swap(a.c0, b.c0);
+		swap(a.c , b.c);
+	}
+
+	TM & operator=(TM o) noexcept
+	{
+		swap(*this, o);
+		return *this;
+	}
 
 	// conversion from a TM to a REAL
 	REAL to_real() const {
@@ -112,18 +130,18 @@ public:
 	}
 
 	// explicit cast from a TM to a REAL
-	explicit inline operator REAL(void) const {
+	explicit inline operator REAL() const {
 		return to_real();
 	}
 
-	static void set_default_sweep(unsigned swp) { default_sweep=swp; }
-	static void set_prec_diff    (unsigned prd) { prec_diff=prd; }
+	static void set_default_sweep(unsigned swp) noexcept { default_sweep=swp; }
+	static void set_prec_diff    (unsigned prd) noexcept { prec_diff=prd; }
 
 
-	void geterror_info(sizetype& error) {
+	void geterror_info(sizetype& error) const {
 		c0.geterror(error);
 		sizetype error2;
-		for (I &i : c) {
+		for (const I &i : c) {
 			i.ci.getsize(error2);
 			sizetype_inc(error,error2);
 		}
@@ -318,66 +336,27 @@ public:
 	}
 
 
-	TM & operator+=(const TM &tm)
-	{
-		{ stiff code(prec_diff); c0+=tm.c0; }
-		for (const I &i : tm.c) {
-			for (I &j : c) {
-				if (i.id == j.id) {
-					j.ci += i.ci;
-					goto ok;
-				}
-			}
-			c.push_back(i);
-ok:;
-		}
-		return *this;
-	}
+	TM & operator+=(const TM &tm);
+	TM & operator-=(const TM &tm);
+	TM & operator*=(const REAL &r);
+	TM & operator*=(const TM &r) { return *this = *this * r; }
+	TM & operator/=(const TM &r) { return *this = *this / r; }
 
-	TM & operator-=(const TM &tm)
-	{
-		{ stiff code(prec_diff); c0 -= tm.c0; }
-		for (const I &i : tm.c) {
-			for (I &j : c) {
-				if (i.id == j.id) {
-					j.ci -= i.ci;
-					goto ok;
-				}
-			}
-			c.push_back({i.id,-i.ci});
-ok:;
-		}
-		return *this;
-	}
+	/* these implementations need copies of q anyway; leave possibility for
+	 * the compiler to construct them in-place: pass-by-value */
+	friend TM operator+(TM q, const TM &r)   { return q += r; }
+	friend TM operator-(TM q, const TM &r)   { return q -= r; }
+	friend TM operator*(TM q, const REAL &r) { return q *= r; }
+	friend TM operator*(TM q, const TM &r);
+	friend TM operator/(const TM &q, const TM &r) { return q * inverse(r); }
 
-	TM & operator*=(const REAL &r) {
-		{ stiff code(prec_diff); c0 *=r; }
-		for (I &l : c)
-				l.ci *= r;
-		return *this;
-	}
+//	TM operator()(const TM &); /* TODO */
 
+	//friend TM inverse_around(const REAL &a);
+	//friend TM inverse(const TM &q) { return inverse_around(q.c0)(q); }
 
-	friend TM operator*(const TM &q, const TM &r) {
-		TM f = q*r.c0;
-		REAL q_real = q.to_real();
-		if (q.sweepto == 0) {
-			for (const I &i : r.c)
-				f.c0 += q_real*i.ci;
-			return f;
-		} else {  
-			TM g = TM(REAL(0));
-			for (const I &i : r.c)
-				g.c.push_back(I({i.id,q_real*i.ci}));
-			return f+g;
-		}
-	}
-
-
-	friend TM operator+(const TM &q, const TM &r)   { return TM(q) += r; }
-	friend TM operator-(const TM &q, const TM &r)   { return TM(q) -= r; }
-	friend TM operator*(const TM &q, const REAL &r) { return TM(q) *= r; }
-
+	friend TM inverse(const TM &r);
+	friend TM square(const TM &r)            { return r * r; }
 
 	friend orstream & operator<<(orstream &o, const TM &p)
 	{
