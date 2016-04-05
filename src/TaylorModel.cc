@@ -446,27 +446,27 @@ TM inverse(TM r)
 	/* r =: r0 + [ri] */
 
 	REAL r0_inv = 1/r.c0;
-	TM q(0);
-	q.c = r.c;
-	q *= -square(r0_inv); /* -[ri]/(r0^2) */
+	r.c0 = 0;
+	r *= r0_inv;           /*  [ri]/r0     */
 
-	/* compute taylor sum: q * \sum_{j=0}^\infty (1+[ri]/r0)^{2*j} */
+	TM q2 = square(r);     /* ([ri]/r0)^2  */
+	r.c0 = -1;
+	r *= -r0_inv;          /* (1-[ri]/r0)/r0 */
 
-	TM p2 = square(r *= r0_inv);    /* (1+[ri]/r0)^2 */
+	/* taylor sum: r * \sum_{j=0}^\infty ([ri]/r0)^{2*j} */
 
 	const unsigned N = 10; /* TODO */
-	TM p = p2;                      /* (1+[ri]/r0)^{2*j} */
-	TM s(1);                        /* \sum for j=0 */
-	s += p;                         /*      for j=1 */
 
-	for (unsigned j=2; j<N; j++) {
-		p *= p2;
-		s += p;
-	}
+	TM q = q2;             /* ([ri]/r0)^{2*j} */
+	TM s(1);               /* \sum for j=0 */
+	s += q;                /*      for j=1 */
+
+	for (unsigned j=2; j<N; j++)
+		s += q *= q2;
 
 	/* TODO: add truncation error */
 
-	return q * s;
+	return r * s;
 }
 #endif
 
