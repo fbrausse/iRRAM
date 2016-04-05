@@ -939,9 +939,7 @@ REAL::REAL(const RATIONAL & r)
 
 	REAL result = REAL(numi) / REAL(deni);
 	result.mp_conv();
-	error = result.error;
-	MP_duplicate_w_init(result.value, value);
-	MP_getsize(value, vsize);
+	*this = std::move(result);
 }
 
 REAL::REAL(const INTEGER & y)
