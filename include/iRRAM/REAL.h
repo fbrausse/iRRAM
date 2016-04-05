@@ -702,8 +702,8 @@ inline REAL REAL::operator-() const
 	                              -dp.upper_neg));
 }
 
-inline REAL & REAL::operator-=(const REAL &y) { return *this = *this - y; }
-inline REAL & REAL::operator-=(      int   n) { return *this = *this - n; }
+inline REAL & REAL::operator-=(const REAL &y) { return *this = *this - y; } /* TODO: specialize */
+inline REAL & REAL::operator-=(      int   n) { return *this = *this - n; } /* TODO: specialize */
 
 // inline double my_fmin(const double& x,const double& y)
 // { return  x<y?x:y ; }
