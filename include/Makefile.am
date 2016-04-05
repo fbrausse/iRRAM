@@ -27,4 +27,5 @@ no_base_include_HEADERS = \
 	iRRAM/helper-templates.hh \
 	iRRAM/GMP_intrat.h \
 	iRRAM/MPFR_interface.h \
-	iRRAM/mpfr_extension.h
+	iRRAM/mpfr_extension.h \
+	iRRAM/TaylorModel.hh

@@ -240,6 +240,8 @@ friend REAL lipschitz (REAL f(const REAL&),
                        REAL lip_f(const REAL&),
                        const REAL& x);
 
+friend class TM;
+
 friend void swap(REAL &, REAL &) noexcept;
 friend REAL strtoREAL2(const char *s, char **endptr);
 
