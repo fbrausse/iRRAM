@@ -54,9 +54,7 @@ public:
 		REAL ci;
 
 		I() {}
-		I(unsigned long long id, const REAL &ci) : id(id), ci(ci) {}
-		I(unsigned long long id, REAL &&ci) noexcept
-		: id(id), ci(std::forward<REAL>(ci)) {}
+		I(unsigned long long id, REAL ci) : id(id), ci(std::move(ci)) {}
 	};
 
 private:
@@ -101,7 +99,7 @@ public:
 	 * The purpose is just to allow an automatic conversion and 
 	 * to simplify the formulation of algorithms.
 	 */
-	TM(const REAL& x) : c0(x) {}
+	TM(REAL x) : c0(std::move(x)) {}
 
 	friend void swap(TM &a, TM &b) noexcept
 	{

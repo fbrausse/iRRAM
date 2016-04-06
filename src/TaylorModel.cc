@@ -428,7 +428,7 @@ TM operator*(TM q, const TM &r)
 {
 	REAL q_real = q.to_real();
 	TM &f = q*=r.c0;
-	if (q.sweepto == 0) {
+	if (TM::sweepto == 0) {
 		for (const TM::I &i : r.c)
 			f.c0 += q_real*i.ci;
 	} else {
@@ -440,10 +440,13 @@ TM operator*(TM q, const TM &r)
 	return f;
 }
 
-#if 0
+#if 1
 TM inverse(TM r)
 {
 	/* r =: r0 + [ri] */
+
+	sizetype domain_of_inverse_f;
+	static_cast<REAL>(r).geterror(domain_of_inverse_f);
 
 	REAL r0_inv = 1/r.c0;
 	r.c0 = 0;
@@ -454,6 +457,7 @@ TM inverse(TM r)
 	r *= -r0_inv;          /* (1-[ri]/r0)/r0 */
 
 	/* taylor sum: r * \sum_{j=0}^\infty ([ri]/r0)^{2*j} */
+	/* development point: r0, evaluated on r0+[ri] = domain_pf_inverse_f */
 
 	const unsigned N = 10; /* TODO */
 
@@ -461,6 +465,8 @@ TM inverse(TM r)
 	TM s(1);               /* \sum for j=0 */
 	s += q;                /*      for j=1 */
 
+	/* Geometric series with ratio c=([ri]/r0)^2 = (1-c^N)/(1-c),
+	 * truncation error therefore: c^N/(1-c) */
 	for (unsigned j=2; j<N; j++)
 		s += q *= q2;
 
