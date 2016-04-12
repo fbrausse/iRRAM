@@ -377,7 +377,34 @@ public:
 		}
 		return o;
 	}
-}; // !class TM 
+}; // !class TM
+
+/******************************************************************************
+ * summation of Taylor sequences                                              *
+ * The constructor needs a sequences of numbers with a radius of convergence  *
+ * larger(!) than the given value 'radius'.                                   *
+ * 'bound_type' determines the meaning of 'bound':                            *
+ * for 'bound_type=n', 'bound' has to be an upper bound                       *
+ * for the absolute value of the n-th derivative of the sum function          *
+ * on a circle with the given 'radius' value                                  *
+ ******************************************************************************/
+template <typename R>
+R taylor_sum(const std::function<R(unsigned)> &coeff,
+             const REAL &radius,
+             const REAL &bound,
+             unsigned bound_type);
+
+template <>
+REAL taylor_sum(const std::function<REAL(unsigned)> &coeff,
+                const REAL &radius,
+                const REAL &bound,
+                unsigned bound_type);
+
+template <>
+TM taylor_sum(const std::function<TM(unsigned)> &coeff,
+              const REAL &radius,
+              const REAL &bound,
+              unsigned bound_type);
 
 } // !namespace iRRAM
 
