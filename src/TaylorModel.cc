@@ -295,58 +295,62 @@ bool TM::test4() {
 
 
 
-bool TM::test5() {
-	if (c.size()>0){
+bool TM::test5()
+{
+	if (c.size() > 0) {
 		sizetype errorsum;
 		sizetype_exact(errorsum);
-		for (unsigned i=0;i< c.size();i++){
-			 sizetype cis=c[i].ci.vsize;
-			 sizetype_inc(errorsum,cis);
-			 sizetype_shift(cis,cis,-20);
-			 if (sizetype_less(cis,c[i].ci.error)) {
-	 cerr << "large error! "<< c[i].id<<"\n"; 
-	 return true;
-			} 
+		for (unsigned i = 0; i < c.size(); i++) {
+			sizetype cis = c[i].ci.vsize;
+			sizetype_inc(errorsum, cis);
+			sizetype_shift(cis, cis, -20);
+			if (sizetype_less(cis, c[i].ci.error)) {
+				cerr << "large error! " << c[i].id << "\n";
+				return true;
+			}
 		}
-	return sizetype_less(errorsum,c0.error); 
+		return sizetype_less(errorsum, c0.error);
 	};
 	return true;
 }
 
-bool TM::test6() {
-	if (c.size()>0){
+bool TM::test6()
+{
+	if (c.size() > 0) {
 		sizetype errorsum;
 		sizetype_exact(errorsum);
-		for (unsigned i=0;i< c.size();i++){
-			 sizetype cis=c[i].ci.vsize;
-			 sizetype_inc(errorsum,cis);
-			 sizetype_shift(cis,cis,-20);
-			if (sizetype_less(cis,c[i].ci.error)) {
-	 cerr << "large error! "<< c[i].id<<"\n"; 
-	 return true;
-			} 
+		for (unsigned i = 0; i < c.size(); i++) {
+			sizetype cis = c[i].ci.vsize;
+			sizetype_inc(errorsum, cis);
+			sizetype_shift(cis, cis, -20);
+			if (sizetype_less(cis, c[i].ci.error)) {
+				cerr << "large error! " << c[i].id << "\n";
+				return true;
+			}
 		}
-	sizetype_shift(errorsum,errorsum,-15);  
-	return sizetype_less(errorsum,c0.error); 
+		sizetype_shift(errorsum, errorsum, -15);
+		return sizetype_less(errorsum, c0.error);
 	};
 	return true;
 }
 
-bool TM::test7() {
-	if (c.size()>0){
-		sizetype c0e=c0.error;
-		sizetype_shift(c0e,c0e,10);  
-		for (unsigned i=0;i< c.size();i++){
-			 sizetype cis=c[i].ci.vsize;
-			 if (sizetype_less(cis,c0e)){
-	 cerr << "compare polish: "<< c[i].id<<"\n"; 
-	 return true;
-			 }
-			 sizetype_shift(cis,cis,-25);  
-			 if (sizetype_less(cis,c[i].ci.error)) {
-	 cerr << "large error polish: "<< c[i].id<<"\n"; 
-	 return true;
-			} 
+bool TM::test7()
+{
+	if (c.size() > 0) {
+		sizetype c0e = c0.error;
+		sizetype_shift(c0e, c0e, 10);
+		for (unsigned i = 0; i < c.size(); i++) {
+			sizetype cis = c[i].ci.vsize;
+			if (sizetype_less(cis, c0e)) {
+				cerr << "compare polish: " << c[i].id << "\n";
+				return true;
+			}
+			sizetype_shift(cis, cis, -25);
+			if (sizetype_less(cis, c[i].ci.error)) {
+				cerr << "large error polish: " << c[i].id
+				     << "\n";
+				return true;
+			}
 		}
 		return false;
 	};
@@ -354,16 +358,17 @@ bool TM::test7() {
 }
 
 
-void TM::check() {
-	unsigned minc=0;
-	if (c.size()>0) {
+void TM::check()
+{
+	unsigned minc = 0;
+	if (c.size() > 0) {
 		sizetype maxsize = c0.vsize;
 		sizetype minsize = c[0].ci.vsize;
-		for (unsigned i=0; i<c.size(); i++) {
-			if (sizetype_less(maxsize,c[i].ci.vsize))
+		for (unsigned i = 0; i < c.size(); i++) {
+			if (sizetype_less(maxsize, c[i].ci.vsize))
 				return;
-			if (sizetype_less(c[i].ci.vsize,minsize)) {
-				minc    = i;
+			if (sizetype_less(c[i].ci.vsize, minsize)) {
+				minc = i;
 				minsize = c[i].ci.vsize;
 			}
 		}
@@ -372,14 +377,14 @@ void TM::check() {
 
 	REAL zero_one = 0;
 	sizetype l;
-	sizetype_set(l,1,0);
+	sizetype_set(l, 1, 0);
 	zero_one.seterror(l);
 
 	REAL e;
-	my_to_formal_ball(c0+c[minc].ci*zero_one,c0,e);
+	my_to_formal_ball(c0 + c[minc].ci * zero_one, c0, e);
 	c[minc].id = max_id++;
 	c[minc].ci = e;
-//  cerr << "max_id "<<max_id<<" (check)\n";
+	//  cerr << "max_id "<<max_id<<" (check)\n";
 }
 
 namespace iRRAM {
@@ -440,7 +445,7 @@ TM operator*(TM q, const TM &r)
 	return f;
 }
 
-#if 1
+#if 0
 TM inverse(TM r)
 {
 	/* r =: r0 + [ri] */

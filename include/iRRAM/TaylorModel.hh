@@ -333,6 +333,20 @@ public:
 			x.round();
 	}
 
+	//vector version of check4()
+	static void check4(std::vector<TM>& x) {
+		bool test=false;
+		for (unsigned i=0; i < x.size(); i++) {
+			test = test || x[i].test4();
+		}
+		if (test) { 
+			cerr << "# check\n";
+			for (unsigned i=0; i < x.size(); i++) {
+				x[i].round();
+			}
+		}
+	}
+
 
 	TM & operator+=(const TM &tm);
 	TM & operator-=(const TM &tm);
@@ -350,6 +364,8 @@ public:
 	friend TM operator*(TM q, const TM &r);
 	friend TM operator/(TM q, const REAL &r) { return q /= r; }
 	friend TM operator/(const TM &q, const TM &r) { return q * inverse(r); }
+	friend TM operator-(const TM &r)         { return TM(0) -= r; } /* TODO */
+	friend TM operator+(TM r)                { return std::move(r); }
 
 //	TM operator()(const TM &); /* TODO */
 
