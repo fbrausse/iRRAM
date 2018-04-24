@@ -73,11 +73,6 @@ void resources(double& time, unsigned int& memory){
 #endif
 /* end of debugging aids */
 
-
-const int iRRAM_prec_steps=512;
-static int _iRRAM_prec_array[iRRAM_prec_steps];
-const int *const iRRAM_prec_array = _iRRAM_prec_array;
-
 void show_statistics()
 {
   cerr << "   MP-objects in use:  "<<MP_var_count<<"\n"; 
@@ -284,6 +279,31 @@ extern "C" int iRRAM_parse_args(struct iRRAM_init_options *opts, int *argc, char
 	return iRRAM_success;
 }
 
+static void init_prec_array(int (&prec_array)[iRRAM_prec_steps],
+                            int starting_prec, int _prec_inc,
+                            double prec_factor)
+{
+	using namespace iRRAM;
+
+	prec_array[0] = 2100000000;
+	prec_array[1] = starting_prec;
+	double factor = std::sqrt(std::sqrt(prec_factor));
+	int prec_inc = _prec_inc;
+	if (state->debug)
+		cerr << "Basic precision bounds: "
+		     << "double[1]";
+	for (int i = 2; i < iRRAM_prec_steps; i++) {
+		prec_array[i] = starting_prec + prec_inc;
+		prec_inc = int(prec_inc * factor) + _prec_inc;
+		if (prec_array[i] >= prec_array[i - 1])
+			prec_array[i] = prec_array[i - 1];
+		else if (state->debug && ((i % 5 == 0) || (i < 10)))
+			cerr << " " << prec_array[i] << "[" << i << "]";
+	}
+	if (state->debug)
+		cerr << "\n";
+}
+
 extern "C" void iRRAM_initialize3(const struct iRRAM_init_options *opts)
 {
 	using namespace iRRAM;
@@ -293,24 +313,8 @@ extern "C" void iRRAM_initialize3(const struct iRRAM_init_options *opts)
 	state->prec_start = opts->prec_start;
 
 	MP_initialize;
-
-	_iRRAM_prec_array[0] = 2100000000;
-	_iRRAM_prec_array[1] = opts->starting_prec;
-	int prec_inc = opts->prec_inc;
-	double factor = std::sqrt(std::sqrt(opts->prec_factor));
-	if (state->debug)
-		cerr << "Basic precision bounds: "
-		     << "double[1]";
-	for (int i = 2; i < iRRAM_prec_steps; i++) {
-		_iRRAM_prec_array[i] = opts->starting_prec + prec_inc;
-		prec_inc = int(prec_inc * factor) + opts->prec_inc;
-		if (_iRRAM_prec_array[i] >= _iRRAM_prec_array[i - 1])
-			_iRRAM_prec_array[i] = _iRRAM_prec_array[i - 1];
-		else if (state->debug && ((i % 5 == 0) || (i < 10)))
-			cerr << " " << iRRAM_prec_array[i] << "[" << i << "]";
-	}
-	if (state->debug)
-		cerr << "\n";
+	init_prec_array(state->prec_array, opts->starting_prec, opts->prec_inc,
+	                opts->prec_factor);
 }
 
 extern "C" void iRRAM_initialize2(int *argc, char **argv)

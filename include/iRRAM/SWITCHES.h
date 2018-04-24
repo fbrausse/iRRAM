@@ -47,12 +47,9 @@ MA 02111-1307, USA.
 #define iRRAM_SWITCHES_H
 
 #include <cassert>
+#include <iRRAM/common.h>
 
 namespace iRRAM {
-
-extern const int *const iRRAM_prec_array;
-extern const int iRRAM_prec_steps;
-
 
 /*! \addtogroup switches
  * @{ */

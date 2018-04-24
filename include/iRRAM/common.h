@@ -21,6 +21,7 @@ extern "C" {
 #define iRRAM_DEFAULT_PREC_SKIP   5
 #define iRRAM_DEFAULT_PREC_START  1
 #define iRRAM_DEFAULT_DEBUG       0
+#define iRRAM_prec_steps          512
 
 struct iRRAM_init_options {
 	int    starting_prec;

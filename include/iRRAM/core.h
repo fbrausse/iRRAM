@@ -120,6 +120,7 @@ struct state_t {
 	int prec_skip = iRRAM_DEFAULT_PREC_SKIP;
 	int max_prec = 1;
 	int prec_start = iRRAM_DEFAULT_PREC_START;
+	int prec_array[iRRAM_prec_steps];
 	bool highlevel = false; /* TODO: remove: iRRAM-timings revealed no performance loss */
 	/* The following boolean "inReiterate" is used to distinguish voluntary
 	 * deletions of rstreams from deletions initiated by iterations.
@@ -218,13 +219,14 @@ inline void modify_cached(const T &t, const state_t &st)
 		get_cache<T>(st).modify(t);
 }
 
+static struct {
+	int operator[](int n) const noexcept { return state->prec_array[n]; }
+} const iRRAM_prec_array;
+
 extern void resources(double&,unsigned int&);
 extern double ln2_time;
 extern double pi_time;
 void show_statistics();
-
-extern const int iRRAM_prec_steps;
-extern const int *const iRRAM_prec_array;
 
 inline bool debug_enabled(int level)
 {
