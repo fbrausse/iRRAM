@@ -32,8 +32,61 @@ MA 02111-1307, USA.
 
 #include <iRRAM/lib.h>
 
+static void init_prec_array(int (&prec_array)[iRRAM_prec_steps],
+                            int starting_prec, int _prec_inc,
+                            double prec_factor, int debug)
+{
+	prec_array[0] = 2100000000;
+	prec_array[1] = starting_prec;
+	double factor = std::sqrt(std::sqrt(prec_factor));
+	int prec_inc = _prec_inc;
+	if (debug)
+		std::cerr << "Basic precision bounds: "
+		     << "double[1]";
+	for (int i = 2; i < iRRAM_prec_steps; i++) {
+		prec_array[i] = starting_prec + prec_inc;
+		prec_inc = int(prec_inc * factor) + _prec_inc;
+		if (prec_array[i] >= prec_array[i - 1])
+			prec_array[i] = prec_array[i - 1];
+		else if (debug && ((i % 5 == 0) || (i < 10)))
+			std::cerr << " " << prec_array[i] << "[" << i << "]";
+	}
+	if (debug)
+		std::cerr << "\n";
+}
 
 namespace iRRAM {
+
+state_proxy<true>::state_proxy()
+: std::unique_ptr<state_t> { std::make_unique<state_t>() }
+{
+}
+
+static struct iRRAM_init_options opts = iRRAM_INIT_OPTIONS_INIT;
+
+iRRAM_TLS state_proxy<iRRAM_HAVE_TLS> state;
+
+iRRAM_TLS orstream cerr(&std::cerr, false);
+iRRAM_TLS orstream clog(&std::clog, false);
+iRRAM_TLS orstream cout;
+iRRAM_TLS irstream cin;
+
+void internal::init()
+{
+	(void)state;
+	(void)cerr;
+	(void)clog;
+	(void)cout;
+	(void)cin;
+
+	state->debug = opts.debug;
+	state->prec_skip = opts.prec_skip;
+	state->prec_start = opts.prec_start;
+
+	MP_initialize;
+	init_prec_array(state->prec_array, opts.starting_prec, opts.prec_inc,
+	                opts.prec_factor, state->debug);
+}
 
 
 /* for debugging (time measuring):*/
@@ -279,42 +332,10 @@ extern "C" int iRRAM_parse_args(struct iRRAM_init_options *opts, int *argc, char
 	return iRRAM_success;
 }
 
-static void init_prec_array(int (&prec_array)[iRRAM_prec_steps],
-                            int starting_prec, int _prec_inc,
-                            double prec_factor)
+extern "C" void iRRAM_initialize3(const struct iRRAM_init_options *_opts)
 {
-	using namespace iRRAM;
-
-	prec_array[0] = 2100000000;
-	prec_array[1] = starting_prec;
-	double factor = std::sqrt(std::sqrt(prec_factor));
-	int prec_inc = _prec_inc;
-	if (state->debug)
-		cerr << "Basic precision bounds: "
-		     << "double[1]";
-	for (int i = 2; i < iRRAM_prec_steps; i++) {
-		prec_array[i] = starting_prec + prec_inc;
-		prec_inc = int(prec_inc * factor) + _prec_inc;
-		if (prec_array[i] >= prec_array[i - 1])
-			prec_array[i] = prec_array[i - 1];
-		else if (state->debug && ((i % 5 == 0) || (i < 10)))
-			cerr << " " << prec_array[i] << "[" << i << "]";
-	}
-	if (state->debug)
-		cerr << "\n";
-}
-
-extern "C" void iRRAM_initialize3(const struct iRRAM_init_options *opts)
-{
-	using namespace iRRAM;
-
-	state->debug = opts->debug;
-	state->prec_skip = opts->prec_skip;
-	state->prec_start = opts->prec_start;
-
-	MP_initialize;
-	init_prec_array(state->prec_array, opts->starting_prec, opts->prec_inc,
-	                opts->prec_factor);
+	iRRAM::opts = *_opts;
+	iRRAM::internal::init();
 }
 
 extern "C" void iRRAM_initialize2(int *argc, char **argv)

@@ -36,15 +36,9 @@ MA 02111-1307, USA.
 
 namespace iRRAM {
 
-iRRAM_TLS orstream cerr(&std::cerr, false);
-iRRAM_TLS orstream clog(&std::clog, false);
-iRRAM_TLS orstream cout;
-iRRAM_TLS irstream cin;
-
 orstream::orstream(std::ostream * s, bool respect_iteration)
 {
 	target = s;
-	iRRAM_DEBUG1(2, "I/O-handler: Creating output stream \n");
 	_respect_iteration = respect_iteration;
 	real_w = 20;
 	real_f = float_form::absolute;
@@ -52,7 +46,6 @@ orstream::orstream(std::ostream * s, bool respect_iteration)
 orstream::orstream()
 {
 	target = &std::cout;
-	iRRAM_DEBUG1(2, "I/O-handler: Creating output stream cout\n");
 	_respect_iteration = true;
 	real_w = 20;
 	real_f = float_form::absolute;
@@ -60,8 +53,6 @@ orstream::orstream()
 orstream::orstream(std::string s, std::ios::openmode mod)
 {
 	if (actual_stack().inlimit > 0) {
-		iRRAM_DEBUG1(2, "I/O-handler: Operation illegal in continuous "
-		                "section!\n");
 		return;
 	}
 	_respect_iteration = true;
@@ -72,14 +63,9 @@ orstream::orstream(std::string s, std::ios::openmode mod)
 		/*    get_cached<unsigned int>(real_w);
 		    get_cached<unsigned int>(real_f);
 		    get_cached<bool>(_respect_iteration);*/
-		iRRAM_DEBUG1(2,
-		             "I/O-handler: Recreating output stream '"
-		                     << s << "'(" << real_w << ")\n");
 		return;
 	}
 	target = new std::ofstream(s.c_str(), mod);
-	iRRAM_DEBUG1(2, "I/O-handler: Creating new output stream '"
-	                        << s << "'\n");
 	put_cached(target);
 	/*    put_cached<unsigned int>(real_w);
 	    put_cached<unsigned int>(real_f);
@@ -88,21 +74,16 @@ orstream::orstream(std::string s, std::ios::openmode mod)
 
 irstream::irstream()
 {
-	iRRAM_DEBUG1(2, "I/O-handler: Creating input stream cin\n");
 	target = &std::cin;
 }
 
 irstream::irstream(std::string s, std::ios::openmode mod)
 {
 	if (actual_stack().inlimit > 0) {
-		iRRAM_DEBUG1(2, "I/O-handler: Operation illegal in continuous "
-		                "section!\n");
 		return;
 	}
 	if (get_cached(target))
 		return;
-	iRRAM_DEBUG1(2, "I/O-handler: Creating new input stream '"
-	                        << s << "'\n");
 	target = new std::ifstream(s.c_str(), mod);
 	put_cached(target);
 }
@@ -197,8 +178,6 @@ orstream::~orstream()
 {
 	if (++state->requests > state->outputs) {
 		if (target != &std::cout && _respect_iteration) {
-			iRRAM_DEBUG1(2, "I/O-handler: Closing handler for "
-			                "output stream\n");
 			iRRAM_outexec(delete target; target = 0;);
 		}
 		state->outputs++;
@@ -209,8 +188,6 @@ irstream::~irstream()
 {
 	if (++state->requests > state->outputs) {
 		if (target != &std::cin) {
-			iRRAM_DEBUG1(2, "I/O-Handler: Closing handler for "
-			                "input stream\n");
 			iRRAM_outexec(delete target; target = 0;);
 		}
 		state->outputs++;

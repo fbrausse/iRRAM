@@ -77,6 +77,9 @@ namespace iRRAM {
 // iRRAM_exec template
 
 namespace internal {
+
+void init();
+
 class run {
 
 	state_t &st;
@@ -126,12 +129,14 @@ public:
 template <typename F, typename... Args>
 ret_value_t<F,Args...> exec(F f, const Args &... args)
 {
+	internal::init();
 	return internal::run(*state).exec(f, args...);
 }
 
 template <typename F, typename... Args>
 ret_void_t<F,Args...> exec(F f, const Args &... args)
 {
+	internal::init();
 	internal::run(*state).exec(f, args...);
 }
 

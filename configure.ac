@@ -111,7 +111,12 @@ AS_IF([test -z "$tls"],
      [xdetect],[AC_MSG_WARN([could not detect any supported thread-local storage class specifier; disabling thread support])])
    AC_SUBST([iRRAM_HAVE_TLS],[0])],
   [AC_MSG_NOTICE([using $tls as thread-local storage class specifier])
-   AC_SUBST([iRRAM_HAVE_TLS],[1])])
+   AC_SUBST([iRRAM_HAVE_TLS],[1])
+   AC_LANG_PUSH([C++])
+   AX_CHECK_COMPILE_FLAG([-fno-extern-tls-init],
+     [AM_CXXFLAGS="$AM_CXXFLAGS -fno-extern-tls-init"],
+     [AC_MSG_NOTICE([C++ compiler does not support -fno-extern-tls-init -> slower TLS-access])])
+   AC_LANG_POP([C++])])
 AC_SUBST([iRRAM_TLS],[$tls])
 AC_SUBST([iRRAM_TLS_STD],[$tls_std])
 
