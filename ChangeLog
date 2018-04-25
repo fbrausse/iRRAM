@@ -1,3 +1,27 @@
+2017 fb:
+  * add doxygen documentation system + documented several functions, types and
+    SWITCHES: sqrt(REAL), bound(REAL,int), size(REAL), approx(REAL,int), REAL +
+    sizetype data structures + assumptions
+  * sizetype: make mant/exp uint32_t/int32_t (for bit ops)
+  * replace max3/max4 by std::max({...})
+  * faster string->REAL conversion strtoREAL2()
+  * INTEGER:
+    * operators: added %=, C++11 move support, optimized +=, -=, -, *=, /=
+    * make class impl private
+    * remove ill-precedenced operator^ in favour of explicit fn power()
+  * speed-up REAL::mp_make_mp()
+  * new sizetype_log2() and sizetype_power2(exp) functions
+  * moved iRRAM_exec into namespace: renamed as iRRAM::exec
+  * added C-interface to iRRAM::exec: iRRAM_exec(void (*)(void *), void *)
+  * rearrange #includes and functions to match used/declared functionality
+  * sqrt.cc: hide symbols for internal functions
+  * limit: support general callable objects and explicitely providing the
+    continuous parameters + document new API + replace copy-pasted versions
+  * sizetype: simplify limit/lipschitz code (limit_templates todo)
+  * bug fixes:
+    * sqrt: error calculation in case x>0
+    * QUICKINSTALL: abort when configure or make fails for any package
+
 2015-2016 fb:
   * made use/type of thread-local storage configurable via --{en,dis}able-tls=
   * removed build/ directoy + support out-of-tree builds
