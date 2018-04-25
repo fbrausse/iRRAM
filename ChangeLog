@@ -1,3 +1,26 @@
+2017-2018 fb:
+  * added choose(std::initializer_list<LAZY_BOOLEAN>) to remove 6 as an upper
+    limit on the number of compile-time known parameters
+  * added 'iRRAM_' prefix to REITERATE() macro to not pollute global namespace
+  * added global adderror() and to_formal_ball() for REAL type as means to
+    access properties of metric types in type-agnostic code
+  * RATIONAL:
+    * cleanup/speedup mpq-based functions
+    * add power(RATIONAL,unsigned) + tests
+  * TLS:
+    * '__thread' as TLS-class is not supported any more
+    * speed-up TLS-enabled builds by not requiring calls to tls_init() when the
+      compiler supports it
+    * all state including I/O lives in TLS now (when --enable-tls is conf'ed)
+  * encapsulate iRRAM-loop in separate object
+  * make iRRAM::cache's internals private
+  * bug fixes:
+    * fix REAL::operator=(const REAL &) for 1st iteration
+  * code cosmetics:
+    * GMP/MPFR-backends: remove indirection + use (const) types expected by API
+    * STREAMS use cache-access helpers
+    * renamings for shorter, more readable code
+
 2017 fb:
   * add doxygen documentation system + documented several functions, types and
     SWITCHES: sqrt(REAL), bound(REAL,int), size(REAL), approx(REAL,int), REAL +
