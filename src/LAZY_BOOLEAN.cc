@@ -72,9 +72,10 @@ std::size_t choose(std::initializer_list<LAZY_BOOLEAN> x)
 
 	auto true_pos = find_if(begin(x), end(x), is_true);
 	if (true_pos != end(x)) {
-		result = true_pos - begin(x);
+		result = 1 + (true_pos - begin(x));
 	} else if (find_if(begin(x), end(x), is_bot) != end(x)) {
-		iRRAM_DEBUG1(1,"choose(init-list): lazy boolean value BOTTOM leading to iteration\n");
+		iRRAM_DEBUG1(1,"choose(init-list): lazy boolean value BOTTOM "
+		               "leading to iteration\n");
 		iRRAM_REITERATE(0);
 	} else {
 		result = 0;
