@@ -310,7 +310,7 @@ static inline void rat_gmp_neg(const mpq_t z1, mpq_t z){mpq_neg(z,z1);}
 /* Last change: 09.08.2017                                                   */
 /* Comment: base=MP exponent=int                                             */
 /*****************************************************************************/
-static inline void rat_gmp_power(const mpq_t z1, unsigned int z2, mpq_t z)
+static inline void rat_gmp_power(const mpq_t z1, unsigned long int z2, mpq_t z)
 {
 	mpz_pow_ui(mpq_numref(z), mpq_numref(z1), z2);
 	mpz_pow_ui(mpq_denref(z), mpq_denref(z1), z2);
@@ -340,6 +340,8 @@ static inline void rat_gmp_duplicate_wo_init(const mpq_t z1, mpq_t z2){mpq_set(z
 /********* sign and comparison of integer and rational */
 static inline int rat_gmp_sgn(const mpq_t z){return mpq_sgn(z);}
 static inline int rat_gmp_cmp(const mpq_t z1,const mpq_t z2){return mpq_cmp(z1,z2);}
+
+static inline void rat_gmp_inv(const mpq_t x, mpq_t r) { mpq_inv(r, x); }
 
 #ifdef __cplusplus
 }

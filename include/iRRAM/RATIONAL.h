@@ -99,7 +99,8 @@ friend RATIONAL abs          (RATIONAL x);
 friend INTEGER  numerator	 (const RATIONAL& x);
 friend INTEGER  denominator	 (const RATIONAL& x);
 friend int 	sign	 	 (const RATIONAL& x);
-friend RATIONAL power        (RATIONAL x, unsigned n);
+friend RATIONAL power        (RATIONAL x, unsigned long n);
+friend RATIONAL inv          (RATIONAL x);
 
 /****** Comparisons ******/
 
