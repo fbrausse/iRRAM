@@ -33,28 +33,13 @@ MA 02111-1307, USA.
 #include <iRRAM/INTEGER.h>
 #include <iRRAM/STREAMS.h> /* float_form, iRRAM_DEBUG* */
 
-#ifdef __SSE2__at_the_moment_not_used_due_to_alignment_problems_in_gcc_4_3
-#include <emmintrin.h>
-#define _use_SSE2_
-#endif
-
 namespace iRRAM {
 
 /*! \ingroup types */
 class REAL final : conditional_comparison_overloads<REAL,LAZY_BOOLEAN>
 {
 	struct double_pair {
-	#ifdef _use_SSE2__
-		union {
-			struct {
-				double lower_pos, upper_neg;
-			};
-			__m128d sse_data;
-		};
-		double_pair(const __m128d& sse) noexcept : sse_data(sse) {}
-	#else
 		double lower_pos, upper_neg;
-	#endif
 		double_pair(const double l,const double u) noexcept
 		: lower_pos(l), upper_neg(u) {}
 		double_pair() noexcept {}
@@ -312,9 +297,6 @@ public:
 private:
 	REAL(MP_type y, sizetype errorinfo) noexcept;
 	REAL(const double_pair &ydp) noexcept;
-#ifdef _use_SSE2__
-	REAL(const __m128d     &y_sse) noexcept;
-#endif
 
 	void         mp_copy            (const REAL   &);
 	void         mp_copy_init       (const REAL   &);
@@ -491,11 +473,6 @@ inline REAL::REAL(MP_type y, sizetype errorinfo) noexcept
 inline REAL::REAL(const double_pair& ydp) noexcept
 : dp(ydp), value(nullptr) {}
 
-#ifdef _use_SSE2__
-inline REAL::REAL(const __m128d& y_sse) noexcept
-: dp(y_sse), value(nullptr) {}
-#endif
-
 inline REAL::~REAL() 
 {
 	if (iRRAM_unlikely(value)) {
@@ -610,12 +587,8 @@ inline REAL operator+(const REAL& x, const REAL& y)
 {
 	if (iRRAM_unlikely(x.value||y.value))
 		return x.mp_conv().mp_addition(y.mp_conv());
-#ifdef _use_SSE2__
-	return REAL(_mm_add_pd(x.dp.sse_data,y.dp.sse_data));
-#else
 	return REAL(REAL::double_pair(x.dp.lower_pos+y.dp.lower_pos,
 	                              x.dp.upper_neg+y.dp.upper_neg));
-#endif
 }
 
 template <typename A,typename B>
@@ -657,12 +630,8 @@ inline REAL & REAL::operator+=(const REAL &y)
 		mp_conv().mp_eqaddition(y.mp_conv());
 		return *this;
 	}
-#ifdef _use_SSE2__
-	dp.sse_data = _mm_add_pd(x.dp.sse_data,y.dp.sse_data);
-#else
 	dp.lower_pos+=y.dp.lower_pos;
 	dp.upper_neg+=y.dp.upper_neg;
-#endif
 	return *this;
 }
 
@@ -803,14 +772,8 @@ inline REAL operator/(const REAL& x, const int &n)
 		return x.mp_division(n);
 	REAL::double_pair z;
 	if (n > 0) {
-#ifdef _use_SSE2__
-		__m128d n_sse = _mm_set_pd1(double(n));
-		n_sse = _mm_div_pd(x.dp.sse_data, n_sse);
-		return REAL(n_sse);
-#else
 		z.lower_pos = x.dp.lower_pos / n,
 		z.upper_neg = x.dp.upper_neg / n;
-#endif
 	} else if (n < 0) {
 		z.lower_pos = (-x.dp.upper_neg) / n;
 		z.upper_neg = (-x.dp.lower_pos) / n;
