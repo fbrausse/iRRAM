@@ -1,9 +1,9 @@
 <map id="include/iRRAM/DYADIC.h" name="include/iRRAM/DYADIC.h">
-<area shape="rect" id="node2" href="$DYADIC_8cc.html" title="src/DYADIC.cc" alt="" coords="85,80,200,107"/>
-<area shape="rect" id="node3" href="$lib_8h.html" title="include/iRRAM/lib.h" alt="" coords="225,80,367,107"/>
-<area shape="rect" id="node7" href="$REALS_8cc.html" title="src/REALS.cc" alt="" coords="392,80,499,107"/>
-<area shape="rect" id="node8" href="$STREAMS_8cc.html" title="src/STREAMS.cc" alt="" coords="523,80,653,107"/>
-<area shape="rect" id="node4" href="$mpfr__extension_8cc.html" title="src/MPFR/mpfr_extension.cc" alt="" coords="5,155,208,181"/>
-<area shape="rect" id="node5" href="$REALmain_8cc.html" title="src/REALmain.cc" alt="" coords="232,155,360,181"/>
-<area shape="rect" id="node6" href="$iRRAM_8h.html" title="include/iRRAM.h" alt="" coords="384,155,509,181"/>
+<area shape="rect" id="node2" href="$DYADIC_8cc.html" title="src/DYADIC.cc" alt="" coords="78,80,193,107"/>
+<area shape="rect" id="node3" href="$lib_8h.html" title="include/iRRAM/lib.h" alt="" coords="217,80,355,107"/>
+<area shape="rect" id="node7" href="$REALS_8cc.html" title="src/REALS.cc" alt="" coords="379,80,486,107"/>
+<area shape="rect" id="node8" href="$STREAMS_8cc.html" title="src/STREAMS.cc" alt="" coords="511,80,637,107"/>
+<area shape="rect" id="node4" href="$mpfr__extension_8cc.html" title="src/MPFR/mpfr_extension.cc" alt="" coords="5,155,199,181"/>
+<area shape="rect" id="node5" href="$REALmain_8cc.html" title="src/REALmain.cc" alt="" coords="223,155,349,181"/>
+<area shape="rect" id="node6" href="$iRRAM_8h.html" title="include/iRRAM.h" alt="" coords="373,155,495,181"/>
 </map>

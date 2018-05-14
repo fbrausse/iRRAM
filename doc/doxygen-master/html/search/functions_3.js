@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['debug_5fenabled',['debug_enabled',['../namespaceiRRAM.html#a200a01244306f18e398624257ba06769',1,'iRRAM']]],
   ['denominator',['denominator',['../namespaceiRRAM.html#a8d743c38b160c69bbb4ba6175e5b4f30',1,'iRRAM']]],
   ['denorm_5fmin',['denorm_min',['../structstd_1_1numeric__limits_3_1_1iRRAM_1_1generic__sizetype_3_01M_00_01E_01_4_01_4.html#a3df976a7decf71ba71721b55185368b6',1,'std::numeric_limits&lt;::iRRAM::generic_sizetype&lt; M, E &gt; &gt;']]],
   ['disjoint',['disjoint',['../namespaceiRRAM.html#a3af1a2671561640f255bf16a8dcdae97',1,'iRRAM']]],

@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['lazy_5fboolean',['LAZY_BOOLEAN',['../classiRRAM_1_1LAZY__BOOLEAN.html',1,'iRRAM']]],
-  ['lazy_5fboolean',['LAZY_BOOLEAN',['../classiRRAM_1_1LAZY__BOOLEAN.html#a26c51529f1d4e274718a625555740e01',1,'iRRAM::LAZY_BOOLEAN::LAZY_BOOLEAN() noexcept'],['../classiRRAM_1_1LAZY__BOOLEAN.html#ae8f63f27d186fa3482468ddd7160b78a',1,'iRRAM::LAZY_BOOLEAN::LAZY_BOOLEAN(const LAZY_BOOLEAN &amp;y) noexcept'],['../classiRRAM_1_1LAZY__BOOLEAN.html#a64d1b2285dd91ab067c550ba140dff06',1,'iRRAM::LAZY_BOOLEAN::LAZY_BOOLEAN(bool b) noexcept']]],
+  ['lazy_5fboolean',['LAZY_BOOLEAN',['../classiRRAM_1_1LAZY__BOOLEAN.html',1,'iRRAM::LAZY_BOOLEAN'],['../classiRRAM_1_1LAZY__BOOLEAN.html#a26c51529f1d4e274718a625555740e01',1,'iRRAM::LAZY_BOOLEAN::LAZY_BOOLEAN() noexcept'],['../classiRRAM_1_1LAZY__BOOLEAN.html#ae8f63f27d186fa3482468ddd7160b78a',1,'iRRAM::LAZY_BOOLEAN::LAZY_BOOLEAN(const LAZY_BOOLEAN &amp;y) noexcept'],['../classiRRAM_1_1LAZY__BOOLEAN.html#a64d1b2285dd91ab067c550ba140dff06',1,'iRRAM::LAZY_BOOLEAN::LAZY_BOOLEAN(bool b) noexcept']]],
   ['lazy_5fboolean_2ecc',['LAZY_BOOLEAN.cc',['../LAZY__BOOLEAN_8cc.html',1,'']]],
   ['lazy_5fboolean_5ffunction_5fand',['LAZY_BOOLEAN_FUNCTION_and',['../namespaceiRRAM.html#a4ca3aafb90dea7e78e9843863da45841',1,'iRRAM']]],
   ['lazy_5fboolean_5ffunction_5fnot',['LAZY_BOOLEAN_FUNCTION_not',['../namespaceiRRAM.html#ad18a1d28e507711a7384e3ac0df72b39',1,'iRRAM']]],

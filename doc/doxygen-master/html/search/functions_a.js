@@ -9,7 +9,8 @@ var searchData=
   ['mig',['mig',['../namespaceiRRAM.html#a8b244866b9fd4de3be443ad328a6a7c6',1,'iRRAM']]],
   ['min',['min',['../structstd_1_1numeric__limits_3_1_1iRRAM_1_1generic__sizetype_3_01M_00_01E_01_4_01_4.html#ab56aeb4f6f8c9fa02a2a510feaee6787',1,'std::numeric_limits&lt;::iRRAM::generic_sizetype&lt; M, E &gt; &gt;']]],
   ['minimum',['minimum',['../group__maths.html#gae8c84e10cce45ccda89c0f803a2433de',1,'iRRAM']]],
-  ['modify',['modify',['../classiRRAM_1_1iRRAM__cache.html#ae1361557ae5c63d96814804dbb613f69',1,'iRRAM::iRRAM_cache']]],
+  ['modify',['modify',['../classiRRAM_1_1cache.html#a796c15281406af5b5b8b4f1b91f5ec7b',1,'iRRAM::cache']]],
+  ['modify_5fcached',['modify_cached',['../namespaceiRRAM.html#aa3a6c1da9039ee5f03c3e77e362f4fa8',1,'iRRAM']]],
   ['module',['module',['../classiRRAM_1_1REAL.html#ad3b854f736b21c97960a8ca51ea6a539',1,'iRRAM::REAL::module()'],['../namespaceiRRAM.html#a6132fdfd6a36d3c44a3dbd7976fe45b3',1,'iRRAM::module()']]],
   ['modulo',['modulo',['../group__maths.html#ga5daa52740f7014a5c20727ffe68b4043',1,'iRRAM']]],
   ['mpfr_5fext_5fcos',['mpfr_ext_cos',['../mpfr__extension_8cc.html#a801a5610fbfad344d1c1c8f6f02c1936',1,'mpfr_ext_cos(mpfr_ptr r, mpfr_srcptr u, int p):&#160;mpfr_extension.cc'],['../mpfr__extension_8h.html#a801a5610fbfad344d1c1c8f6f02c1936',1,'mpfr_ext_cos(mpfr_ptr r, mpfr_srcptr u, int p):&#160;mpfr_extension.cc']]],
@@ -20,5 +21,6 @@ var searchData=
   ['mpfr_5fext_5ftest',['mpfr_ext_test',['../mpfr__extension_8cc.html#a7131aec18ce094b9eacf7f683ba2d606',1,'mpfr_ext_test(mpfr_ptr y, mpfr_srcptr u, int p, mp_rnd_t rnd_mode):&#160;mpfr_extension.cc'],['../mpfr__extension_8h.html#a0226f67846ab5d23aea2d4ef86c795ee',1,'mpfr_ext_test(mpfr_ptr r, mpfr_srcptr u, int p, mp_rnd_t rnd_mode):&#160;mpfr_extension.cc']]],
   ['mpfr_5fwrapper',['mpfr_wrapper',['../mpfr__extension_8cc.html#a495fafb617885ac5533ced3170e6fe55',1,'mpfr_extension.cc']]],
   ['mult',['MULT',['../namespaceiRRAM.html#abfdc9736e0579efb04cd7316b3e7ffb2',1,'iRRAM']]],
-  ['multiplication',['multiplication',['../namespaceiRRAM.html#a0fe80b0d5e0abe3b7e576334923c1c2b',1,'iRRAM']]]
+  ['multiplication',['multiplication',['../namespaceiRRAM.html#a0fe80b0d5e0abe3b7e576334923c1c2b',1,'iRRAM']]],
+  ['mv_5fcache',['mv_cache',['../structiRRAM_1_1mv__cache.html#a8e314ba30b50627f7168f938f020b597',1,'iRRAM::mv_cache']]]
 ];

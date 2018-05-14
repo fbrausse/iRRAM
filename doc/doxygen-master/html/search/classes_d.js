@@ -1,8 +1,12 @@
 var searchData=
 [
-  ['single_5fvalued',['single_valued',['../structiRRAM_1_1single__valued.html',1,'iRRAM']]],
-  ['sparserealmatrix',['SPARSEREALMATRIX',['../classiRRAM_1_1SPARSEREALMATRIX.html',1,'iRRAM']]],
-  ['spm_5felement',['SPM_ELEMENT',['../classiRRAM_1_1SPM__ELEMENT.html',1,'iRRAM']]],
-  ['state_5ft',['state_t',['../structiRRAM_1_1state__t.html',1,'iRRAM']]],
-  ['stiff',['stiff',['../classiRRAM_1_1stiff.html',1,'iRRAM']]]
+  ['rational',['RATIONAL',['../classiRRAM_1_1RATIONAL.html',1,'iRRAM']]],
+  ['real',['REAL',['../classiRRAM_1_1REAL.html',1,'iRRAM']]],
+  ['realmatrix',['REALMATRIX',['../classiRRAM_1_1REALMATRIX.html',1,'iRRAM']]],
+  ['rel',['rel',['../structiRRAM_1_1stiff_1_1rel.html',1,'iRRAM::stiff']]],
+  ['relaxed',['relaxed',['../structiRRAM_1_1relaxed.html',1,'iRRAM']]],
+  ['retval',['retval',['../structiRRAM_1_1internal_1_1retval.html',1,'iRRAM::internal']]],
+  ['retval_3c_20void_20_3e',['retval&lt; void &gt;',['../structiRRAM_1_1internal_1_1retval_3_01void_01_4.html',1,'iRRAM::internal']]],
+  ['rstream',['rstream',['../classiRRAM_1_1rstream.html',1,'iRRAM']]],
+  ['run',['run',['../classiRRAM_1_1internal_1_1run.html',1,'iRRAM::internal']]]
 ];

@@ -1,8 +1,25 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node2" href="$structiRRAM_1_1is__continuous_3_01COMPLEX_01_4.html" title="iRRAM::is_continuous\l\&lt; COMPLEX \&gt;" alt="" coords="167,5,325,47"/>
-<area shape="rect" id="node3" href="$structiRRAM_1_1is__continuous_3_01FUNCTION_3_01REAL_00_01Args_8_8_8_01_4_01_4.html" title="iRRAM::is_continuous\l\&lt; FUNCTION\&lt; REAL, Args... \&gt; \&gt;" alt="" coords="135,71,357,112"/>
-<area shape="rect" id="node4" href="$structiRRAM_1_1is__continuous_3_01INTERVAL_01_4.html" title="iRRAM::is_continuous\l\&lt; INTERVAL \&gt;" alt="" coords="167,136,325,177"/>
-<area shape="rect" id="node5" href="$structiRRAM_1_1is__continuous_3_01REAL_01_4.html" title="iRRAM::is_continuous\l\&lt; REAL \&gt;" alt="" coords="167,201,325,243"/>
-<area shape="rect" id="node6" href="$structiRRAM_1_1is__continuous_3_01REALMATRIX_01_4.html" title="iRRAM::is_continuous\l\&lt; REALMATRIX \&gt;" alt="" coords="167,267,325,308"/>
-<area shape="rect" id="node7" href="$structiRRAM_1_1is__continuous_3_01SPARSEREALMATRIX_01_4.html" title="iRRAM::is_continuous\l\&lt; SPARSEREALMATRIX \&gt;" alt="" coords="151,332,341,373"/>
+<area shape="rect" id="node2" href="$structiRRAM_1_1is__cacheable_3_01bool_01_4.html" title="iRRAM::is_cacheable\l\&lt; bool \&gt;" alt="" coords="166,5,315,47"/>
+<area shape="rect" id="node3" href="$structiRRAM_1_1is__cacheable_3_01double_01_4.html" title="iRRAM::is_cacheable\l\&lt; double \&gt;" alt="" coords="166,71,315,112"/>
+<area shape="rect" id="node4" href="$structiRRAM_1_1is__cacheable_3_01float_01_4.html" title="iRRAM::is_cacheable\l\&lt; float \&gt;" alt="" coords="166,136,315,177"/>
+<area shape="rect" id="node5" href="$structiRRAM_1_1is__cacheable_3_01int_01_4.html" title="iRRAM::is_cacheable\l\&lt; int \&gt;" alt="" coords="166,201,315,243"/>
+<area shape="rect" id="node6" href="$structiRRAM_1_1is__cacheable_3_01long_01_4.html" title="iRRAM::is_cacheable\l\&lt; long \&gt;" alt="" coords="166,267,315,308"/>
+<area shape="rect" id="node7" href="$structiRRAM_1_1is__cacheable_3_01long_01long_01_4.html" title="iRRAM::is_cacheable\l\&lt; long long \&gt;" alt="" coords="166,332,315,373"/>
+<area shape="rect" id="node8" href="$structiRRAM_1_1is__cacheable_3_01MP__int__type_01_4.html" title="iRRAM::is_cacheable\l\&lt; MP_int_type \&gt;" alt="" coords="166,397,315,439"/>
+<area shape="rect" id="node9" href="$structiRRAM_1_1is__cacheable_3_01MP__type_01_4.html" title="iRRAM::is_cacheable\l\&lt; MP_type \&gt;" alt="" coords="166,463,315,504"/>
+<area shape="rect" id="node10" href="$structiRRAM_1_1is__cacheable_3_01short_01_4.html" title="iRRAM::is_cacheable\l\&lt; short \&gt;" alt="" coords="166,528,315,569"/>
+<area shape="rect" id="node11" href="$structiRRAM_1_1is__cacheable_3_01std_1_1istream_01_5_01_4.html" title="iRRAM::is_cacheable\l\&lt; std::istream * \&gt;" alt="" coords="166,593,315,635"/>
+<area shape="rect" id="node12" href="$structiRRAM_1_1is__cacheable_3_01std_1_1ostream_01_5_01_4.html" title="iRRAM::is_cacheable\l\&lt; std::ostream * \&gt;" alt="" coords="166,659,315,700"/>
+<area shape="rect" id="node13" href="$structiRRAM_1_1is__cacheable_3_01std_1_1string_01_4.html" title="iRRAM::is_cacheable\l\&lt; std::string \&gt;" alt="" coords="166,724,315,765"/>
+<area shape="rect" id="node14" href="$structiRRAM_1_1is__cacheable_3_01unsigned_01int_01_4.html" title="iRRAM::is_cacheable\l\&lt; unsigned int \&gt;" alt="" coords="166,789,315,831"/>
+<area shape="rect" id="node15" href="$structiRRAM_1_1is__cacheable_3_01unsigned_01long_01_4.html" title="iRRAM::is_cacheable\l\&lt; unsigned long \&gt;" alt="" coords="166,855,315,896"/>
+<area shape="rect" id="node16" href="$structiRRAM_1_1is__cacheable_3_01unsigned_01long_01long_01_4.html" title="iRRAM::is_cacheable\l\&lt; unsigned long long \&gt;" alt="" coords="163,920,318,961"/>
+<area shape="rect" id="node17" href="$structiRRAM_1_1is__cacheable_3_01unsigned_01short_01_4.html" title="iRRAM::is_cacheable\l\&lt; unsigned short \&gt;" alt="" coords="166,985,315,1027"/>
+<area shape="rect" id="node18" href="$structiRRAM_1_1is__cacheable_3_01void_01_5_01_4.html" title="iRRAM::is_cacheable\l\&lt; void * \&gt;" alt="" coords="166,1051,315,1092"/>
+<area shape="rect" id="node19" href="$structiRRAM_1_1is__continuous_3_01COMPLEX_01_4.html" title="iRRAM::is_continuous\l\&lt; COMPLEX \&gt;" alt="" coords="164,1116,317,1157"/>
+<area shape="rect" id="node20" href="$structiRRAM_1_1is__continuous_3_01FUNCTION_3_01REAL_00_01Args_8_8_8_01_4_01_4.html" title="iRRAM::is_continuous\l\&lt; FUNCTION\&lt; REAL, Args... \&gt; \&gt;" alt="" coords="129,1181,352,1223"/>
+<area shape="rect" id="node21" href="$structiRRAM_1_1is__continuous_3_01INTERVAL_01_4.html" title="iRRAM::is_continuous\l\&lt; INTERVAL \&gt;" alt="" coords="164,1247,317,1288"/>
+<area shape="rect" id="node22" href="$structiRRAM_1_1is__continuous_3_01REAL_01_4.html" title="iRRAM::is_continuous\l\&lt; REAL \&gt;" alt="" coords="164,1312,317,1353"/>
+<area shape="rect" id="node23" href="$structiRRAM_1_1is__continuous_3_01REALMATRIX_01_4.html" title="iRRAM::is_continuous\l\&lt; REALMATRIX \&gt;" alt="" coords="164,1377,317,1419"/>
+<area shape="rect" id="node24" href="$structiRRAM_1_1is__continuous_3_01SPARSEREALMATRIX_01_4.html" title="iRRAM::is_continuous\l\&lt; SPARSEREALMATRIX \&gt;" alt="" coords="147,1443,334,1484"/>
 </map>

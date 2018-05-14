@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['debug',['DEBUG',['../GMP__int__ext_8c.html#ad72dbcf6d0153db1b8d8a58001feed83',1,'DEBUG():&#160;GMP_int_ext.c'],['../GMP__rat__ext_8c.html#ad72dbcf6d0153db1b8d8a58001feed83',1,'DEBUG():&#160;GMP_rat_ext.c']]]
+  ['element',['ELEMENT',['../REALMATRIX_8cc.html#add2876fcb05e208b76b8ddbe005edef0',1,'REALMATRIX.cc']]],
+  ['errordefine',['ERRORDEFINE',['../errno_8cc.html#a876ce6bc80305cc02deae21fe68b2a9a',1,'ERRORDEFINE():&#160;errno.cc'],['../common_8h.html#a876ce6bc80305cc02deae21fe68b2a9a',1,'ERRORDEFINE():&#160;common.h']]]
 ];

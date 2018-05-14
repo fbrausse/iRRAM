@@ -43,6 +43,7 @@ var classiRRAM_1_1RATIONAL =
     [ "operator==", "classiRRAM_1_1RATIONAL.html#a50ee53c9ce6424b94ec5e7e4bf8115a5", null ],
     [ "operator>", "classiRRAM_1_1RATIONAL.html#ac0b02617047e5cf122590b7a0bd14031", null ],
     [ "operator>=", "classiRRAM_1_1RATIONAL.html#a8bcb47af6b9665d529cc5b7e024866de", null ],
+    [ "power", "classiRRAM_1_1RATIONAL.html#a8cb1ab8c16692dd496547afa5a767311", null ],
     [ "REAL", "classiRRAM_1_1RATIONAL.html#a17b1e82a1fb95006e79e965c939512f7", null ],
     [ "scale", "classiRRAM_1_1RATIONAL.html#afb2b559184424456ba2d7973e0e78278", null ],
     [ "sign", "classiRRAM_1_1RATIONAL.html#a41a08eee3faa9e72aa234a93438d0626", null ],

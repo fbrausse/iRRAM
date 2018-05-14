@@ -1,4 +1,4 @@
 var namespaces =
 [
-    [ "iRRAM", "namespaceiRRAM.html", null ]
+    [ "iRRAM", "namespaceiRRAM.html", "namespaceiRRAM" ]
 ];

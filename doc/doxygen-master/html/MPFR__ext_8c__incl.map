@@ -1,5 +1,4 @@
 <map id="src/MPFR/MPFR_ext.c" name="src/MPFR/MPFR_ext.c">
-<area shape="rect" id="node2" href="$MPFR__ext_8h.html" title="MPFR_ext.h" alt="" coords="169,80,267,107"/>
-<area shape="rect" id="node6" href="$MPFR__interface_8h.html" title="iRRAM/MPFR_interface.h" alt="" coords="127,155,309,181"/>
-<area shape="rect" id="node8" href="$GMP__intrat_8h.html" title="iRRAM/GMP_intrat.h" alt="" coords="139,229,292,256"/>
+<area shape="rect" id="node4" href="$MPFR__interface_8h.html" title="iRRAM/MPFR_interface.h" alt="" coords="169,80,343,107"/>
+<area shape="rect" id="node5" href="$GMP__intrat_8h.html" title="iRRAM/GMP_intrat.h" alt="" coords="139,155,285,181"/>
 </map>

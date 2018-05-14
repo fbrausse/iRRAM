@@ -1,10 +1,10 @@
 <map id="include/iRRAM/limit_templates.h" name="include/iRRAM/limit_templates.h">
-<area shape="rect" id="node2" href="$core_8h.html" title="iRRAM/core.h" alt="" coords="251,244,360,271"/>
-<area shape="rect" id="node9" href="$helper-templates_8hh.html" title="iRRAM/helper&#45;templates.hh" alt="" coords="5,95,200,121"/>
-<area shape="rect" id="node11" href="$sizetype_8hh.html" title="iRRAM/sizetype.hh" alt="" coords="455,95,596,121"/>
-<area shape="rect" id="node17" href="$STREAMS_8h.html" title="iRRAM/STREAMS.h" alt="" coords="653,169,801,196"/>
-<area shape="rect" id="node23" href="$SWITCHES_8h.html" title="iRRAM/SWITCHES.h" alt="" coords="681,95,836,121"/>
-<area shape="rect" id="node24" href="$cache_8h.html" title="iRRAM/cache.h" alt="" coords="871,95,990,121"/>
-<area shape="rect" id="node6" href="$common_8h.html" title="iRRAM/common.h" alt="" coords="409,319,543,345"/>
-<area shape="rect" id="node8" href="$errno_8h.html" title="iRRAM/errno.h" alt="" coords="492,393,607,420"/>
+<area shape="rect" id="node2" href="$core_8h.html" title="iRRAM/core.h" alt="" coords="117,244,223,271"/>
+<area shape="rect" id="node11" href="$helper-templates_8hh.html" title="iRRAM/helper&#45;templates.hh" alt="" coords="28,95,211,121"/>
+<area shape="rect" id="node13" href="$sizetype_8hh.html" title="iRRAM/sizetype.hh" alt="" coords="502,95,638,121"/>
+<area shape="rect" id="node18" href="$STREAMS_8h.html" title="iRRAM/STREAMS.h" alt="" coords="337,169,483,196"/>
+<area shape="rect" id="node24" href="$SWITCHES_8h.html" title="iRRAM/SWITCHES.h" alt="" coords="735,95,887,121"/>
+<area shape="rect" id="node25" href="$cache_8h.html" title="iRRAM/cache.h" alt="" coords="911,95,1026,121"/>
+<area shape="rect" id="node8" href="$common_8h.html" title="iRRAM/common.h" alt="" coords="667,319,798,345"/>
+<area shape="rect" id="node10" href="$errno_8h.html" title="iRRAM/errno.h" alt="" coords="747,393,857,420"/>
 </map>

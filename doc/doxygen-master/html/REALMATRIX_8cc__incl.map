@@ -1,14 +1,14 @@
 <map id="src/REALMATRIX.cc" name="src/REALMATRIX.cc">
-<area shape="rect" id="node3" href="$REALMATRIX_8h.html" title="iRRAM/REALMATRIX.h" alt="" coords="537,80,708,107"/>
-<area shape="rect" id="node24" href="$SPARSEREALMATRIX_8h.html" title="iRRAM/SPARSEREALMATRIX.h" alt="" coords="733,80,958,107"/>
-<area shape="rect" id="node25" href="$SWITCHES_8h.html" title="iRRAM/SWITCHES.h" alt="" coords="1073,80,1228,107"/>
-<area shape="rect" id="node27" href="$sizetype_8hh.html" title="iRRAM/sizetype.hh" alt="" coords="940,155,1081,181"/>
-<area shape="rect" id="node4" href="$REAL_8h.html" title="iRRAM/REAL.h" alt="" coords="536,155,653,181"/>
-<area shape="rect" id="node7" href="$helper-templates_8hh.html" title="iRRAM/helper&#45;templates.hh" alt="" coords="5,229,200,256"/>
-<area shape="rect" id="node16" href="$LAZYBOOLEAN_8h.html" title="iRRAM/LAZYBOOLEAN.h" alt="" coords="310,229,493,256"/>
-<area shape="rect" id="node17" href="$INTEGER_8h.html" title="iRRAM/INTEGER.h" alt="" coords="517,229,659,256"/>
-<area shape="rect" id="node19" href="$STREAMS_8h.html" title="iRRAM/STREAMS.h" alt="" coords="819,229,967,256"/>
-<area shape="rect" id="node9" href="$core_8h.html" title="iRRAM/core.h" alt="" coords="533,304,643,331"/>
-<area shape="rect" id="node13" href="$common_8h.html" title="iRRAM/common.h" alt="" coords="691,379,826,405"/>
-<area shape="rect" id="node15" href="$errno_8h.html" title="iRRAM/errno.h" alt="" coords="775,453,889,480"/>
+<area shape="rect" id="node3" href="$REALMATRIX_8h.html" title="iRRAM/REALMATRIX.h" alt="" coords="719,80,885,107"/>
+<area shape="rect" id="node27" href="$SPARSEREALMATRIX_8h.html" title="iRRAM/SPARSEREALMATRIX.h" alt="" coords="473,80,694,107"/>
+<area shape="rect" id="node28" href="$SWITCHES_8h.html" title="iRRAM/SWITCHES.h" alt="" coords="1130,155,1282,181"/>
+<area shape="rect" id="node30" href="$sizetype_8hh.html" title="iRRAM/sizetype.hh" alt="" coords="882,155,1018,181"/>
+<area shape="rect" id="node4" href="$REAL_8h.html" title="iRRAM/REAL.h" alt="" coords="515,155,630,181"/>
+<area shape="rect" id="node7" href="$helper-templates_8hh.html" title="iRRAM/helper&#45;templates.hh" alt="" coords="5,229,188,256"/>
+<area shape="rect" id="node18" href="$LAZYBOOLEAN_8h.html" title="iRRAM/LAZYBOOLEAN.h" alt="" coords="212,229,389,256"/>
+<area shape="rect" id="node20" href="$INTEGER_8h.html" title="iRRAM/INTEGER.h" alt="" coords="497,229,637,256"/>
+<area shape="rect" id="node22" href="$STREAMS_8h.html" title="iRRAM/STREAMS.h" alt="" coords="796,229,941,256"/>
+<area shape="rect" id="node9" href="$core_8h.html" title="iRRAM/core.h" alt="" coords="465,304,571,331"/>
+<area shape="rect" id="node15" href="$common_8h.html" title="iRRAM/common.h" alt="" coords="1117,379,1247,405"/>
+<area shape="rect" id="node17" href="$errno_8h.html" title="iRRAM/errno.h" alt="" coords="1197,453,1306,480"/>
 </map>

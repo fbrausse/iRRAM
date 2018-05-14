@@ -1,9 +1,9 @@
 <map id="include/iRRAM/RATIONAL.h" name="include/iRRAM/RATIONAL.h">
-<area shape="rect" id="node2" href="$lib_8h.html" title="include/iRRAM/lib.h" alt="" coords="225,80,367,107"/>
-<area shape="rect" id="node6" href="$RATIONAL_8cc.html" title="src/RATIONAL.cc" alt="" coords="391,80,523,107"/>
-<area shape="rect" id="node7" href="$REALS_8cc.html" title="src/REALS.cc" alt="" coords="548,80,655,107"/>
-<area shape="rect" id="node8" href="$STREAMS_8cc.html" title="src/STREAMS.cc" alt="" coords="679,80,809,107"/>
-<area shape="rect" id="node3" href="$mpfr__extension_8cc.html" title="src/MPFR/mpfr_extension.cc" alt="" coords="5,155,208,181"/>
-<area shape="rect" id="node4" href="$REALmain_8cc.html" title="src/REALmain.cc" alt="" coords="232,155,360,181"/>
-<area shape="rect" id="node5" href="$iRRAM_8h.html" title="include/iRRAM.h" alt="" coords="384,155,509,181"/>
+<area shape="rect" id="node2" href="$lib_8h.html" title="include/iRRAM/lib.h" alt="" coords="217,80,355,107"/>
+<area shape="rect" id="node6" href="$RATIONAL_8cc.html" title="src/RATIONAL.cc" alt="" coords="380,80,509,107"/>
+<area shape="rect" id="node7" href="$REALS_8cc.html" title="src/REALS.cc" alt="" coords="534,80,641,107"/>
+<area shape="rect" id="node8" href="$STREAMS_8cc.html" title="src/STREAMS.cc" alt="" coords="665,80,792,107"/>
+<area shape="rect" id="node3" href="$mpfr__extension_8cc.html" title="src/MPFR/mpfr_extension.cc" alt="" coords="5,155,199,181"/>
+<area shape="rect" id="node4" href="$REALmain_8cc.html" title="src/REALmain.cc" alt="" coords="223,155,349,181"/>
+<area shape="rect" id="node5" href="$iRRAM_8h.html" title="include/iRRAM.h" alt="" coords="373,155,495,181"/>
 </map>

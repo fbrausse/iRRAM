@@ -10,8 +10,6 @@ var searchData=
   ['maxrow',['maxrow',['../classiRRAM_1_1REALMATRIX.html#a4218072e9b537949bb0892dbe18c45f5',1,'iRRAM::REALMATRIX::maxrow()'],['../classiRRAM_1_1SPARSEREALMATRIX.html#a3f70e7c5e6c3edb6dfc15ea6ab1b060d',1,'iRRAM::SPARSEREALMATRIX::maxrow()']]],
   ['min_5fexponent',['min_exponent',['../structstd_1_1numeric__limits_3_1_1iRRAM_1_1generic__sizetype_3_01M_00_01E_01_4_01_4.html#ad2f53f7c751996436c4ca05df0e2ced5',1,'std::numeric_limits&lt;::iRRAM::generic_sizetype&lt; M, E &gt; &gt;::min_exponent()'],['../group__sizetype.html#gaa8581f7ffccb0f3380be1bd243400348',1,'iRRAM::min_exponent()']]],
   ['min_5fmantissa',['min_mantissa',['../group__sizetype.html#ga8d901116f01358802f239a8087fa44fa',1,'iRRAM']]],
-  ['mpfr_5ffreevarcount',['mpfr_FreeVarCount',['../MPFR__ext_8c.html#a610b973f4876bda7f28e4bdbb2c43f28',1,'mpfr_FreeVarCount():&#160;MPFR_ext.c'],['../MPFR__interface_8h.html#a610b973f4876bda7f28e4bdbb2c43f28',1,'mpfr_FreeVarCount():&#160;MPFR_ext.c']]],
-  ['mpfr_5ffreevars',['mpfr_FreeVars',['../MPFR__ext_8c.html#a7db1a26aec94b8ec530e49ea0424fe93',1,'mpfr_FreeVars():&#160;MPFR_ext.c'],['../MPFR__interface_8h.html#a8c2558bceb68aa94b4ed2f4cdc25c897',1,'mpfr_FreeVars():&#160;MPFR_ext.c']]],
-  ['mpfr_5ftotalallocvarcount',['mpfr_TotalAllocVarCount',['../MPFR__ext_8c.html#a71f935833a97193cb35d31e8b5926c08',1,'mpfr_TotalAllocVarCount():&#160;MPFR_ext.c'],['../MPFR__interface_8h.html#a71f935833a97193cb35d31e8b5926c08',1,'mpfr_TotalAllocVarCount():&#160;MPFR_ext.c']]],
-  ['mpfr_5ftotalfreedvarcount',['mpfr_TotalFreedVarCount',['../MPFR__ext_8c.html#a35b4264a1019a6919c480e327302794e',1,'mpfr_TotalFreedVarCount():&#160;MPFR_ext.c'],['../MPFR__interface_8h.html#a35b4264a1019a6919c480e327302794e',1,'mpfr_TotalFreedVarCount():&#160;MPFR_ext.c']]]
+  ['mpq_5fcache',['mpq_cache',['../structiRRAM_1_1state__t.html#ac6124f2145d0424dc734770d9577c0aa',1,'iRRAM::state_t']]],
+  ['mpz_5fcache',['mpz_cache',['../structiRRAM_1_1state__t.html#ae1ad22d31e61505ef664b3aa4937e304',1,'iRRAM::state_t']]]
 ];

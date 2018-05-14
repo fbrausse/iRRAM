@@ -1,9 +1,5 @@
 var MPFR__ext_8c =
 [
-    [ "MaxFreeVars", "MPFR__ext_8c.html#ad017c3482601f246d10e797cb79cb20b", null ],
-    [ "ext_mpfr_var_count", "MPFR__ext_8c.html#a2ed43466c59c6f6168e50e073fb1f9ec", null ],
-    [ "mpfr_FreeVarCount", "MPFR__ext_8c.html#a610b973f4876bda7f28e4bdbb2c43f28", null ],
-    [ "mpfr_FreeVars", "MPFR__ext_8c.html#a7db1a26aec94b8ec530e49ea0424fe93", null ],
-    [ "mpfr_TotalAllocVarCount", "MPFR__ext_8c.html#a71f935833a97193cb35d31e8b5926c08", null ],
-    [ "mpfr_TotalFreedVarCount", "MPFR__ext_8c.html#a35b4264a1019a6919c480e327302794e", null ]
+    [ "ext_mpfr_finalize", "MPFR__ext_8c.html#a8e5b471bc692e1066956dc99d8514897", null ],
+    [ "ext_mpfr_initialize", "MPFR__ext_8c.html#a2d680094abc50fd0db6258f65ec2c5cf", null ]
 ];

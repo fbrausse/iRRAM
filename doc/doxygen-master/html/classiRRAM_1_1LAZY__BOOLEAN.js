@@ -8,6 +8,7 @@ var classiRRAM_1_1LAZY__BOOLEAN =
     [ "bound", "classiRRAM_1_1LAZY__BOOLEAN.html#aa6b03cb0cbf0f2c64d608097b1519b29", null ],
     [ "check", "classiRRAM_1_1LAZY__BOOLEAN.html#a3950f0ffdb2abc9443ead6ae02064515", null ],
     [ "choose", "classiRRAM_1_1LAZY__BOOLEAN.html#ad9395629aebbda6ba4d646ce0f831cb4", null ],
+    [ "choose", "classiRRAM_1_1LAZY__BOOLEAN.html#a1291107d90fe7c0971cf85c7483c1d1d", null ],
     [ "maximum", "classiRRAM_1_1LAZY__BOOLEAN.html#a736dd3d5cc7ae23a28fc8f734dc7b0aa", null ],
     [ "minimum", "classiRRAM_1_1LAZY__BOOLEAN.html#ace3ab0c4f59bbfc836f20801e9ab1d84", null ],
     [ "operator!", "classiRRAM_1_1LAZY__BOOLEAN.html#a4e332cf268d4f3321961c4bb81864e96", null ],

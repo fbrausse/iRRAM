@@ -1,6 +1,4 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structiRRAM_1_1single__valued.html" title="Explicit declaration of single_valued behaviour of a code section despite multi&#45;valued operations..." alt="" coords="5,5,164,32"/>
-<area shape="rect" id="node2" href="$structiRRAM_1_1limit__computation.html" title="Combination of stiff and single_valued. " alt="" coords="212,5,392,32"/>
-<area shape="rect" id="node3" href="$classiRRAM_1_1stiff.html" title="Temporary increase of the working precision. " alt="" coords="37,56,132,83"/>
-<area shape="rect" id="node4" href="$structiRRAM_1_1relaxed.html" title="Temporarily halve the working precision. " alt="" coords="243,56,361,83"/>
+<area shape="rect" id="node1" title="STL class. " alt="" coords="5,13,145,39"/>
+<area shape="rect" id="node2" href="$structiRRAM_1_1state__proxy_3_01true_01_4.html" title="iRRAM::state_proxy\l\&lt; true \&gt;" alt="" coords="193,5,335,47"/>
 </map>

@@ -1,13 +1,11 @@
 var searchData=
 [
-  ['id',['id',['../classiRRAM_1_1cachelist.html#a9d338d7fe29613521ef1bef76b4ceee1',1,'iRRAM::cachelist']]],
+  ['id',['id',['../structiRRAM_1_1cachelist.html#a8939ce2ef4169f17040124217e82218f',1,'iRRAM::cachelist']]],
   ['infinite',['infinite',['../structiRRAM_1_1state__t.html#afbbb3731c61ebcaa862a0aa7bf8ee73d',1,'iRRAM::state_t']]],
   ['inlimit',['inlimit',['../structiRRAM_1_1ITERATION__DATA.html#ac461b4c705b415edf76cf7352a671de2',1,'iRRAM::ITERATION_DATA']]],
   ['inreiterate',['inReiterate',['../structiRRAM_1_1state__t.html#a0f0f8e1f4dba1b58d198dc0bd89ed1a2',1,'iRRAM::state_t']]],
-  ['int_5fgmp_5fvar_5fcount',['int_gmp_var_count',['../GMP__int__ext_8c.html#a7723311d8883d3cf0002204c44d2efa3',1,'int_gmp_var_count():&#160;GMP_int_ext.c'],['../GMP__intrat_8h.html#a7723311d8883d3cf0002204c44d2efa3',1,'int_gmp_var_count():&#160;GMP_int_ext.c']]],
+  ['int_5fgmp_5fvar_5fcount',['int_gmp_var_count',['../structiRRAM__mpz__cache__t.html#ac436b9b00381bdabdf9a900752b68076',1,'iRRAM_mpz_cache_t']]],
   ['irram_5ferror_5fmsg',['iRRAM_error_msg',['../errno_8cc.html#a274077c7cff13560bc38966890b48646',1,'iRRAM_error_msg():&#160;errno.cc'],['../common_8h.html#a274077c7cff13560bc38966890b48646',1,'iRRAM_error_msg():&#160;errno.cc']]],
-  ['irram_5fprec_5farray',['iRRAM_prec_array',['../namespaceiRRAM.html#aacc8f5007c881577512cf9ffbf39e958',1,'iRRAM']]],
-  ['irram_5fprec_5fsteps',['iRRAM_prec_steps',['../namespaceiRRAM.html#a3aae1cd7ad2824f19cd8041e474e7258',1,'iRRAM']]],
   ['irram_5fversion_5frt',['iRRAM_VERSION_rt',['../stack_8cc.html#ae9f1e256cc6e4d2aa75923a0bfd5dfc8',1,'stack.cc']]],
   ['is_5fbounded',['is_bounded',['../structstd_1_1numeric__limits_3_1_1iRRAM_1_1generic__sizetype_3_01M_00_01E_01_4_01_4.html#a49bab1c6a29d4ccc37f0d7c44d482894',1,'std::numeric_limits&lt;::iRRAM::generic_sizetype&lt; M, E &gt; &gt;']]],
   ['is_5fexact',['is_exact',['../structstd_1_1numeric__limits_3_1_1iRRAM_1_1generic__sizetype_3_01M_00_01E_01_4_01_4.html#a224e151ac206e812ec9ed2ddd5fb29f6',1,'std::numeric_limits&lt;::iRRAM::generic_sizetype&lt; M, E &gt; &gt;']]],

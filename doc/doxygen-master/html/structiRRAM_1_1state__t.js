@@ -2,8 +2,10 @@ var structiRRAM_1_1state__t =
 [
     [ "ACTUAL_STACK", "structiRRAM_1_1state__t.html#ab6536bdc9b51918a963fba70221a663e", null ],
     [ "cache_active", "structiRRAM_1_1state__t.html#aace2f0340a268408360785bb08e4f8a3", null ],
+    [ "cache_address", "structiRRAM_1_1state__t.html#a39bcc6e9f4a2571f6295b4b8f0439d2a", null ],
     [ "debug", "structiRRAM_1_1state__t.html#a145a0915b8facde45b7cafcfee959623", null ],
     [ "DYADIC_precision", "structiRRAM_1_1state__t.html#af59d6efc12dc8b1e41e69f0608f71396", null ],
+    [ "ext_mpfr_cache", "structiRRAM_1_1state__t.html#a0007626688e3563091342df2b353732a", null ],
     [ "highlevel", "structiRRAM_1_1state__t.html#abd66f9e021bf12e937a8fddeb727b724", null ],
     [ "infinite", "structiRRAM_1_1state__t.html#afbbb3731c61ebcaa862a0aa7bf8ee73d", null ],
     [ "inReiterate", "structiRRAM_1_1state__t.html#a0f0f8e1f4dba1b58d198dc0bd89ed1a2", null ],
@@ -11,11 +13,13 @@ var structiRRAM_1_1state__t =
     [ "ln2_val", "structiRRAM_1_1state__t.html#a654d3c938e306e28157425cf420b38f7", null ],
     [ "max_active", "structiRRAM_1_1state__t.html#a06be6e8bab11b6c2aecdbdbef5344f2d", null ],
     [ "max_prec", "structiRRAM_1_1state__t.html#af1c6729ec19b8130e793eb52cf6865a3", null ],
+    [ "mpq_cache", "structiRRAM_1_1state__t.html#ac6124f2145d0424dc734770d9577c0aa", null ],
+    [ "mpz_cache", "structiRRAM_1_1state__t.html#ae1ad22d31e61505ef664b3aa4937e304", null ],
     [ "outputs", "structiRRAM_1_1state__t.html#ae156bffc193f5945e9774f3127d82110", null ],
     [ "pi_err", "structiRRAM_1_1state__t.html#a304e828f7fec6eac30edaa732963f1b1", null ],
     [ "pi_val", "structiRRAM_1_1state__t.html#ac08e2d935055cde0d1337f1943239fe7", null ],
+    [ "prec_array", "structiRRAM_1_1state__t.html#a34bc800d2819e55a095b4cf423e31057", null ],
     [ "prec_skip", "structiRRAM_1_1state__t.html#a69a76cc999ffe5ce730ff4e1d9d65457", null ],
     [ "prec_start", "structiRRAM_1_1state__t.html#a7f360dbd6ee2f50a3183bd678a365f7c", null ],
-    [ "requests", "structiRRAM_1_1state__t.html#abc4da744c236efcdbb2a5575fab3bdd9", null ],
-    [ "thread_data_address", "structiRRAM_1_1state__t.html#a13abf2c693e75234bc1e9afe6cd5243a", null ]
+    [ "requests", "structiRRAM_1_1state__t.html#abc4da744c236efcdbb2a5575fab3bdd9", null ]
 ];

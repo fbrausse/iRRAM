@@ -1,19 +1,19 @@
 <map id="include/iRRAM/SWITCHES.h" name="include/iRRAM/SWITCHES.h">
-<area shape="rect" id="node2" href="$limit__templates_8h.html" title="include/iRRAM/limit\l_templates.h" alt="" coords="473,80,616,121"/>
-<area shape="rect" id="node6" href="$lib_8h.html" title="include/iRRAM/lib.h" alt="" coords="284,244,426,271"/>
-<area shape="rect" id="node10" href="$exp__log_8cc.html" title="src/exp_log.cc" alt="" coords="688,169,800,196"/>
-<area shape="rect" id="node11" href="$pi__ln2_8cc.html" title="src/pi_ln2.cc" alt="" coords="824,169,924,196"/>
-<area shape="rect" id="node14" href="$INTERVAL_8cc.html" title="src/INTERVAL.cc" alt="" coords="802,87,932,114"/>
-<area shape="rect" id="node15" href="$REALMATRIX_8cc.html" title="src/REALMATRIX.cc" alt="" coords="957,87,1108,114"/>
-<area shape="rect" id="node16" href="$REALS_8cc.html" title="src/REALS.cc" alt="" coords="1132,87,1239,114"/>
-<area shape="rect" id="node17" href="$sin__cos_8cc.html" title="src/sin_cos.cc" alt="" coords="1264,87,1374,114"/>
-<area shape="rect" id="node18" href="$STREAMS_8cc.html" title="src/STREAMS.cc" alt="" coords="1398,87,1528,114"/>
-<area shape="rect" id="node3" href="$COMPLEX_8h.html" title="include/iRRAM/COMPLEX.h" alt="" coords="416,169,614,196"/>
-<area shape="rect" id="node5" href="$limits_8cc.html" title="src/limits.cc" alt="" coords="604,244,698,271"/>
-<area shape="rect" id="node12" href="$SPARSEREALMATRIX_8cc.html" title="src/SPARSEREALMATRIX.cc" alt="" coords="24,169,230,196"/>
-<area shape="rect" id="node13" href="$sqrt_8cc.html" title="src/sqrt.cc" alt="" coords="254,169,341,196"/>
-<area shape="rect" id="node4" href="$COMPLEX_8cc.html" title="src/COMPLEX.cc" alt="" coords="450,244,580,271"/>
-<area shape="rect" id="node7" href="$mpfr__extension_8cc.html" title="src/MPFR/mpfr_extension.cc" alt="" coords="64,319,267,345"/>
-<area shape="rect" id="node8" href="$REALmain_8cc.html" title="src/REALmain.cc" alt="" coords="291,319,419,345"/>
-<area shape="rect" id="node9" href="$iRRAM_8h.html" title="include/iRRAM.h" alt="" coords="443,319,568,345"/>
+<area shape="rect" id="node2" href="$limit__templates_8h.html" title="include/iRRAM/limit\l_templates.h" alt="" coords="466,80,604,121"/>
+<area shape="rect" id="node6" href="$lib_8h.html" title="include/iRRAM/lib.h" alt="" coords="278,244,416,271"/>
+<area shape="rect" id="node10" href="$exp__log_8cc.html" title="src/exp_log.cc" alt="" coords="676,169,783,196"/>
+<area shape="rect" id="node11" href="$pi__ln2_8cc.html" title="src/pi_ln2.cc" alt="" coords="807,169,903,196"/>
+<area shape="rect" id="node14" href="$INTERVAL_8cc.html" title="src/INTERVAL.cc" alt="" coords="788,87,916,114"/>
+<area shape="rect" id="node15" href="$REALMATRIX_8cc.html" title="src/REALMATRIX.cc" alt="" coords="941,87,1089,114"/>
+<area shape="rect" id="node16" href="$REALS_8cc.html" title="src/REALS.cc" alt="" coords="1114,87,1220,114"/>
+<area shape="rect" id="node17" href="$sin__cos_8cc.html" title="src/sin_cos.cc" alt="" coords="1244,87,1351,114"/>
+<area shape="rect" id="node18" href="$STREAMS_8cc.html" title="src/STREAMS.cc" alt="" coords="1376,87,1502,114"/>
+<area shape="rect" id="node3" href="$COMPLEX_8h.html" title="include/iRRAM/COMPLEX.h" alt="" coords="410,169,601,196"/>
+<area shape="rect" id="node5" href="$limits_8cc.html" title="src/limits.cc" alt="" coords="592,244,686,271"/>
+<area shape="rect" id="node12" href="$SPARSEREALMATRIX_8cc.html" title="src/SPARSEREALMATRIX.cc" alt="" coords="23,169,226,196"/>
+<area shape="rect" id="node13" href="$sqrt_8cc.html" title="src/sqrt.cc" alt="" coords="250,169,334,196"/>
+<area shape="rect" id="node4" href="$COMPLEX_8cc.html" title="src/COMPLEX.cc" alt="" coords="441,244,568,271"/>
+<area shape="rect" id="node7" href="$mpfr__extension_8cc.html" title="src/MPFR/mpfr_extension.cc" alt="" coords="66,319,260,345"/>
+<area shape="rect" id="node8" href="$REALmain_8cc.html" title="src/REALmain.cc" alt="" coords="284,319,410,345"/>
+<area shape="rect" id="node9" href="$iRRAM_8h.html" title="include/iRRAM.h" alt="" coords="434,319,556,345"/>
 </map>

@@ -1,28 +1,11 @@
 var searchData=
 [
   ['cache_5factive',['cache_active',['../structiRRAM_1_1state__t.html#aace2f0340a268408360785bb08e4f8a3',1,'iRRAM::state_t']]],
-  ['cache_5fb',['cache_b',['../classiRRAM_1_1iRRAM__thread__data__class.html#a31e7459ae8606271ce5a08baa13675ef',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5fd',['cache_d',['../classiRRAM_1_1iRRAM__thread__data__class.html#a6216b43705225548569ed64cd3fa0050',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5ff',['cache_f',['../classiRRAM_1_1iRRAM__thread__data__class.html#a3951c1ab7ab6e414bec0574b9a7ade5b',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5fi',['cache_i',['../classiRRAM_1_1iRRAM__thread__data__class.html#a1b939081fa2af8443c78e710dae53924',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5fis',['cache_is',['../classiRRAM_1_1iRRAM__thread__data__class.html#ab59dcde609b40458758cc7c3743ba647',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5fl',['cache_l',['../classiRRAM_1_1iRRAM__thread__data__class.html#a0ef85a394cff284714938ac840d1bebf',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5fll',['cache_ll',['../classiRRAM_1_1iRRAM__thread__data__class.html#a4df3707c13338a144a04a84511391265',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5fmp',['cache_mp',['../classiRRAM_1_1iRRAM__thread__data__class.html#aacc6d874ccb54f0b739b814308c9f1ed',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5fmpi',['cache_mpi',['../classiRRAM_1_1iRRAM__thread__data__class.html#a5320041de69974dc39957bda9542ee4b',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5fos',['cache_os',['../classiRRAM_1_1iRRAM__thread__data__class.html#acf27e5b1fc76e6220ae8ca3cbaaf96a1',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5fs',['cache_s',['../classiRRAM_1_1iRRAM__thread__data__class.html#a7264543a48e429e17f55193b21a5f94a',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5fsh',['cache_sh',['../classiRRAM_1_1iRRAM__thread__data__class.html#a7c937b28a86fc046b019823a5385c6e2',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5fui',['cache_ui',['../classiRRAM_1_1iRRAM__thread__data__class.html#abb48751e857cc60301bb7fba65c5374d',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5ful',['cache_ul',['../classiRRAM_1_1iRRAM__thread__data__class.html#a78b56a4e44b2c4585721e997aefa8e6d',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5full',['cache_ull',['../classiRRAM_1_1iRRAM__thread__data__class.html#a5aaa5be45aae0af21cc431e5e5f22b64',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5fush',['cache_ush',['../classiRRAM_1_1iRRAM__thread__data__class.html#abf7cd93af72296185b22c76d072542ba',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cache_5fv',['cache_v',['../classiRRAM_1_1iRRAM__thread__data__class.html#af83cdac1931eb56a1e2432322debea8d',1,'iRRAM::iRRAM_thread_data_class']]],
-  ['cerr',['cerr',['../namespaceiRRAM.html#a1333c13b8f6902b87521f760a948b9fa',1,'iRRAM']]],
-  ['cin',['cin',['../namespaceiRRAM.html#a543c2495cdfd85d0f70b4f1235d1ba62',1,'iRRAM']]],
-  ['clog',['clog',['../namespaceiRRAM.html#aea0448220f9a150a695c229b8318e432',1,'iRRAM']]],
+  ['cache_5faddress',['cache_address',['../structiRRAM_1_1state__t.html#a39bcc6e9f4a2571f6295b4b8f0439d2a',1,'iRRAM::state_t']]],
+  ['cerr',['cerr',['../namespaceiRRAM.html#ae0c30f5ee440ecda239bae3ad007871e',1,'iRRAM']]],
+  ['cin',['cin',['../namespaceiRRAM.html#a861f6a94c5866cdd3899413e17043136',1,'iRRAM']]],
+  ['clog',['clog',['../namespaceiRRAM.html#a0cdb1d8269f012abc3a05c5413ca056c',1,'iRRAM']]],
   ['colindex',['colindex',['../classiRRAM_1_1SPM__ELEMENT.html#a9d4a97a6148d6702c4198e6be85645ea',1,'iRRAM::SPM_ELEMENT']]],
   ['colvector',['colvector',['../classiRRAM_1_1SPARSEREALMATRIX.html#a24478d1cdcff2677781ce7fd9cfb1cb0',1,'iRRAM::SPARSEREALMATRIX']]],
-  ['cout',['cout',['../namespaceiRRAM.html#ae4e0bb04384319770de112a2bbb64eed',1,'iRRAM']]],
-  ['current',['current',['../classiRRAM_1_1iRRAM__cache.html#ab25004ccf6935aaf74a4db8bc7ce9046',1,'iRRAM::iRRAM_cache']]]
+  ['cout',['cout',['../namespaceiRRAM.html#a925203afb7c242ff6e06612487466d52',1,'iRRAM']]]
 ];

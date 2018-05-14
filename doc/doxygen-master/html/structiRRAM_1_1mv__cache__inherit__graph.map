@@ -1,0 +1,20 @@
+<map id="iRRAM::mv_cache" name="iRRAM::mv_cache">
+<area shape="rect" id="node2" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; bool \&gt;" alt="" coords="207,5,363,32"/>
+<area shape="rect" id="node3" href="$structiRRAM_1_1cache__type.html" title="iRRAM::cache_type" alt="" coords="5,480,145,507"/>
+<area shape="rect" id="node4" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; short \&gt;" alt="" coords="205,56,366,83"/>
+<area shape="rect" id="node5" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; unsigned\l short \&gt;" alt="" coords="199,107,371,149"/>
+<area shape="rect" id="node6" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; int \&gt;" alt="" coords="212,173,359,200"/>
+<area shape="rect" id="node7" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; unsigned\l int \&gt;" alt="" coords="199,225,371,266"/>
+<area shape="rect" id="node8" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; long \&gt;" alt="" coords="207,291,363,317"/>
+<area shape="rect" id="node9" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; unsigned\l long \&gt;" alt="" coords="199,342,371,383"/>
+<area shape="rect" id="node10" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; long\l long \&gt;" alt="" coords="213,407,357,449"/>
+<area shape="rect" id="node11" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; unsigned\l long long \&gt;" alt="" coords="199,473,371,514"/>
+<area shape="rect" id="node12" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; float \&gt;" alt="" coords="207,539,364,565"/>
+<area shape="rect" id="node13" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; double \&gt;" alt="" coords="200,589,371,616"/>
+<area shape="rect" id="node14" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; void *\&gt;" alt="" coords="205,640,366,667"/>
+<area shape="rect" id="node15" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; MP_type \&gt;" alt="" coords="193,691,377,717"/>
+<area shape="rect" id="node16" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; MP_int\l_type \&gt;" alt="" coords="205,742,366,783"/>
+<area shape="rect" id="node17" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; std::\lstring \&gt;" alt="" coords="212,807,359,849"/>
+<area shape="rect" id="node18" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; std::\lostream *\&gt;" alt="" coords="212,873,359,914"/>
+<area shape="rect" id="node19" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; std::\listream *\&gt;" alt="" coords="212,938,359,979"/>
+</map>

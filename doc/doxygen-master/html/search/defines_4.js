@@ -1,5 +1,30 @@
 var searchData=
 [
-  ['gmp_5fmax',['GMP_max',['../MPFR__ext_8h.html#ac4380335630090e2b7a74eca52af0d34',1,'GMP_max():&#160;MPFR_ext.h'],['../GMP__intrat_8h.html#ac4380335630090e2b7a74eca52af0d34',1,'GMP_max():&#160;GMP_intrat.h']]],
-  ['gmp_5fmin',['GMP_min',['../MPFR__ext_8h.html#a46a1a3c726f5ada490f76f67672d8c50',1,'GMP_min():&#160;MPFR_ext.h'],['../GMP__intrat_8h.html#a46a1a3c726f5ada490f76f67672d8c50',1,'GMP_min():&#160;GMP_intrat.h']]]
+  ['irram_5fdebug0',['iRRAM_DEBUG0',['../core_8h.html#aa8e215814b129e53df1322257232cab5',1,'core.h']]],
+  ['irram_5fdebug1',['iRRAM_DEBUG1',['../core_8h.html#af446bda9df16551e174373855ae96b22',1,'core.h']]],
+  ['irram_5fdebug2',['iRRAM_DEBUG2',['../core_8h.html#a123130c1ca3e4ec37b774a57a50032cc',1,'core.h']]],
+  ['irram_5fdefault_5fdebug',['iRRAM_DEFAULT_DEBUG',['../common_8h.html#a50e6c3b0d93dda1927523348e1e4e0eb',1,'common.h']]],
+  ['irram_5fdefault_5fprec_5fskip',['iRRAM_DEFAULT_PREC_SKIP',['../common_8h.html#a488c4ed61da51fe650540982eff19652',1,'common.h']]],
+  ['irram_5fdefault_5fprec_5fstart',['iRRAM_DEFAULT_PREC_START',['../common_8h.html#a77c90447ce584e9c67b1b167e0e89b99',1,'common.h']]],
+  ['irram_5fexpect',['iRRAM_expect',['../common_8h.html#ab83bad0bb35ef7fa0f7573ec489e247b',1,'common.h']]],
+  ['irram_5fext_5fmpfr_5fcache_5finit',['iRRAM_EXT_MPFR_CACHE_INIT',['../MPFR__interface_8h.html#ae6e9d3fb07e775372a8cdbb04bd547aa',1,'MPFR_interface.h']]],
+  ['irram_5fext_5fmpfr_5fcache_5fsize',['iRRAM_EXT_MPFR_CACHE_SIZE',['../MPFR__interface_8h.html#a99f38ac753c74a0920baa7db280708c0',1,'MPFR_interface.h']]],
+  ['irram_5ffloat_5fabsolute',['iRRAM_float_absolute',['../core_8h.html#a34dae99c41b9d4de0103b27a5ffb7522',1,'core.h']]],
+  ['irram_5ffloat_5frelative',['iRRAM_float_relative',['../core_8h.html#acf9e813351a434c836bcce2818701cb0',1,'core.h']]],
+  ['irram_5ffloat_5fshow',['iRRAM_float_show',['../core_8h.html#a702a73f4fb59cf7d3f9bf654d525a13f',1,'core.h']]],
+  ['irram_5fin',['iRRAM_in',['../STREAMS_8cc.html#ae0e222dfaf01342107eb329b6e2d19c1',1,'STREAMS.cc']]],
+  ['irram_5fin2',['iRRAM_in2',['../STREAMS_8cc.html#a04ca1b98a7ed45ddac28a1cf3061d119',1,'STREAMS.cc']]],
+  ['irram_5finexec',['iRRAM_inexec',['../STREAMS_8cc.html#a06d26006fe2d2b84fca865cc416e8cc7',1,'STREAMS.cc']]],
+  ['irram_5finit_5foptions_5finit',['iRRAM_INIT_OPTIONS_INIT',['../common_8h.html#ad4889ad1b0a50f12cdd631505cbb4757',1,'common.h']]],
+  ['irram_5flikely',['iRRAM_likely',['../common_8h.html#a4bf4e33fa19acb384a7f8b415dc61cc4',1,'common.h']]],
+  ['irram_5fmpfr_5frounding_5fmode',['iRRAM_mpfr_rounding_mode',['../MPFR__ext_8h.html#a869520bc1f0c5c5d6f4a65b8c366ec91',1,'MPFR_ext.h']]],
+  ['irram_5fmpq_5fcache_5finit',['iRRAM_MPQ_CACHE_INIT',['../GMP__intrat_8h.html#aa75f5f4089bc9a6810c8322709f1d8e4',1,'GMP_intrat.h']]],
+  ['irram_5fmpq_5fcache_5fsize',['iRRAM_MPQ_CACHE_SIZE',['../GMP__intrat_8h.html#a01261ec1ea019d49e0a7c873bb6ae529',1,'GMP_intrat.h']]],
+  ['irram_5fmpz_5fcache_5finit',['iRRAM_MPZ_CACHE_INIT',['../GMP__intrat_8h.html#a3c5681000f90c940cce9ac386bfd00c3',1,'GMP_intrat.h']]],
+  ['irram_5fmpz_5fcache_5fsize',['iRRAM_MPZ_CACHE_SIZE',['../GMP__intrat_8h.html#a4f251f1aea4ebdd204f01615f61a3d4e',1,'GMP_intrat.h']]],
+  ['irram_5fout2',['iRRAM_out2',['../STREAMS_8cc.html#ab337c491c1663668cef6cf32c367f26e',1,'STREAMS.cc']]],
+  ['irram_5foutexec',['iRRAM_outexec',['../STREAMS_8cc.html#a2698f31f553ed08ccf49e499d7027be2',1,'STREAMS.cc']]],
+  ['irram_5fprec_5fsteps',['iRRAM_prec_steps',['../common_8h.html#af0b42e0b72a71121ab0992d700d96dbb',1,'common.h']]],
+  ['irram_5freiterate',['iRRAM_REITERATE',['../core_8h.html#af55e74f7e571a00705d070bda11b7ef1',1,'core.h']]],
+  ['irram_5funlikely',['iRRAM_unlikely',['../common_8h.html#a75d9f803ddec699309ea1457a4646edf',1,'common.h']]]
 ];

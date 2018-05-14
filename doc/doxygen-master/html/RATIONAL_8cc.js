@@ -15,6 +15,7 @@ var RATIONAL_8cc =
     [ "operator/=", "RATIONAL_8cc.html#aff752dded9ecae9126bb6302833757dd", null ],
     [ "operator<", "RATIONAL_8cc.html#a92984a3a4a1581dce9f8a3ecebd4cf8f", null ],
     [ "operator==", "RATIONAL_8cc.html#accce5b2f41ae869d06713e18c876b52c", null ],
+    [ "power", "RATIONAL_8cc.html#a2d8f6465450a01c067922e16752b3cc7", null ],
     [ "scale", "RATIONAL_8cc.html#abbdb744735f69287424646d3f0ca4df3", null ],
     [ "sign", "RATIONAL_8cc.html#ga4b9f5f1f7d9a34d6b4669e667003d810", null ],
     [ "swrite", "RATIONAL_8cc.html#a0ff14d529c1a3687640b939c7ccb741f", null ],
