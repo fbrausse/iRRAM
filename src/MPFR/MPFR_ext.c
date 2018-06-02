@@ -18,4 +18,5 @@ void ext_mpfr_finalize(struct iRRAM_ext_mpfr_cache_t *cache)
 		free(cache->free_vars[i-1]);
 		cache->total_freed_var_count++;
 	}
+	cache->free_var_count = 0;
 }

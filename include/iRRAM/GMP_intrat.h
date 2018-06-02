@@ -84,6 +84,15 @@ static inline void int_gmp_free(struct iRRAM_mpz_cache_t *cache, mpz_ptr z)
 	cache->int_gmp_var_count--;
 }
 
+static inline void int_gmp_finalize(struct iRRAM_mpz_cache_t *cache)
+{
+	for (int i=cache->free_var_count; i; i--) {
+		mpz_clear(cache->free_vars[i-1]);
+		free(cache->free_vars[i-1]);
+	}
+	cache->free_var_count = 0;
+}
+
 /********** Conversion functions **********/
 
 static inline void int_gmp_int2integer(const int i, mpz_t z){mpz_set_si(z,i);}
@@ -178,6 +187,15 @@ static inline void rat_gmp_free(struct iRRAM_mpq_cache_t *cache, mpq_ptr z)
 		free(z);
 	}
 	cache->rat_gmp_var_count--;
+}
+
+static inline void rat_gmp_finalize(struct iRRAM_mpq_cache_t *cache)
+{
+	for (int i=cache->free_var_count; i; i--) {
+		mpq_clear(cache->free_vars[i-1]);
+		free(cache->free_vars[i-1]);
+	}
+	cache->free_var_count = 0;
 }
 
 /* canonicalize the given rational, used for used defined rationals */

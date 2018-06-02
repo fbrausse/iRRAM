@@ -152,6 +152,9 @@ struct state_t {
 		-1,
 		-1,
 	};
+
+	state_t();
+	~state_t();
 };
 
 

@@ -49,8 +49,8 @@ MA 02111-1307, USA.
 /****** Initialization functions ******/
 
 /* Backend initialization (if necessary) */
-#define MP_initialize   ext_mpfr_initialize(&state->ext_mpfr_cache)
-#define MP_finalize     ext_mpfr_finalize(&state->ext_mpfr_cache)
+#define MP_initialize(st)   ext_mpfr_initialize(&(st)->ext_mpfr_cache)
+#define MP_finalize(st)     ext_mpfr_finalize(&(st)->ext_mpfr_cache)
 
 /* Initialization of MP/integer/rational variables */
 #define MP_init(z)      do { z = ext_mpfr_init(&state->ext_mpfr_cache); } while (0)

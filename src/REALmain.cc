@@ -64,6 +64,28 @@ state_proxy<true>::state_proxy()
 
 static struct iRRAM_init_options opts = iRRAM_INIT_OPTIONS_INIT;
 
+state_t::state_t()
+{
+	MP_initialize(this);
+}
+state_t::~state_t()
+{
+	if (ln2_val) {
+		delete ln2_val;
+		ln2_val = nullptr;
+		ln2_err = 0;
+	}
+	if (pi_val) {
+		delete pi_val;
+		pi_val = nullptr;
+		pi_err = 0;
+	}
+	using namespace iRRAM;
+	MP_finalize(this);
+	rat_gmp_finalize(&mpq_cache);
+	int_gmp_finalize(&mpz_cache);
+}
+
 iRRAM_TLS state_proxy<iRRAM_HAVE_TLS> state;
 
 iRRAM_TLS orstream cerr(&std::cerr, false);
@@ -83,7 +105,6 @@ void internal::init()
 	state->prec_skip = opts.prec_skip;
 	state->prec_start = opts.prec_start;
 
-	MP_initialize;
 	init_prec_array(state->prec_array, opts.starting_prec, opts.prec_inc,
 	                opts.prec_factor, state->debug);
 }
@@ -354,6 +375,5 @@ extern "C" void iRRAM_initialize(int argc, char **argv)
 
 extern "C" void iRRAM_finalize()
 {
-	using namespace iRRAM;
-	MP_finalize;
+	/* noop */
 }
