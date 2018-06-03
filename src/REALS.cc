@@ -553,19 +553,15 @@ REAL REAL::mp_square() const
 	return REAL(zvalue, zerror);
 }
 
-LAZY_BOOLEAN REAL::mp_less(const REAL & y) const
+LAZY_BOOLEAN REAL::mp_lt0() const
 {
-	REAL z = y - (*this);
-	sizetype s;
-	MP_getsize(z.value, s);
-	if (sizetype_less(s, z.error)) {
+	if (sizetype_less(vsize, error)) {
 		iRRAM_DEBUG2(1, "insufficient precisions %d*2^(%d) and "
-		                "%d*2^(%d) in comparing\n",
-		             this->error.mantissa, this->error.exponent,
-		             y.error.mantissa, y.error.exponent);
+		                "comparing to zero\n",
+		             error.mantissa, error.exponent);
 		return LAZY_BOOLEAN::BOTTOM;
 	}
-	return ((MP_sign((z.value)) == 1));
+	return MP_sign(value) < 0;
 }
 
 REAL REAL::mp_absval() const

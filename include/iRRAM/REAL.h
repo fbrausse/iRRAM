@@ -341,8 +341,8 @@ private:
 	REAL         mp_square          ()                const;
 	REAL         mp_absval          ()                const;
 	REAL         mp_intervall_join  (const REAL   &y) const;
-	LAZY_BOOLEAN mp_less            (const REAL   &y) const;
 	void         mp_scale(int n);
+	LAZY_BOOLEAN mp_lt0             ()                const;
 
 	void scale(int n);
 
@@ -846,7 +846,7 @@ inline REAL square(const REAL & x)
 inline LAZY_BOOLEAN operator<(const REAL & x, const REAL & y)
 {
 	if (iRRAM_unlikely(x.value || y.value))
-		return x.mp_conv().mp_less(y.mp_conv());
+		return (x-y).mp_conv().mp_lt0();
 	if ((-x.dp.upper_neg) <   y.dp.lower_pos )
 		return true;
 	if (  x.dp.lower_pos  > (-y.dp.upper_neg))
