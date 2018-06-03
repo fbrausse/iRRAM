@@ -131,12 +131,24 @@ public:
 	REAL & operator/=(const REAL &y) { return *this = *this / y; }
 //	REAL & operator/=(      int   n);
 
-	friend REAL   operator << (const REAL   &x,       int     n);
-	friend REAL   operator >> (const REAL   &x,       int     n);
+	friend REAL & operator <<=(REAL &x, int n) { x.scale(n); return x; }
+	friend REAL & operator >>=(REAL &x, int n)
+	{
+	#if INT_MIN < -INT_MAX /* two's complement signed int */
+		if (n < -INT_MAX) {
+			x.scale(INT_MAX);
+			n += INT_MAX;
+		}
+	#endif
+		x.scale(-n);
+		return x;
+	}
+	friend REAL   operator << (REAL  x, int n) { x <<= n; return x; }
+	friend REAL   operator >> (REAL  x, int n) { x >>= n; return x; }
 
 	friend REAL          sqrt        (const REAL &x);
 	friend REAL          square      (const REAL &x);
-	friend REAL          scale       (const REAL &x, const int k);
+	friend REAL          scale       (REAL x, int k) { x <<= k; return x; }
 
 	// Comparisons: --------------------------------
 
@@ -328,6 +340,8 @@ private:
 	REAL         mp_absval          ()                const;
 	REAL         mp_intervall_join  (const REAL   &y) const;
 	LAZY_BOOLEAN mp_less            (const REAL   &y) const;
+
+	void scale(int n);
 };
 
 /*! \relates REAL */
@@ -567,9 +581,6 @@ inline REAL & REAL::operator=(REAL &&y) noexcept
 		dp = y.dp;
 	return *this;
 }
-
-inline REAL operator<<(const REAL& x, int n) { return scale(x, n); }
-inline REAL operator>>(const REAL& x, int n) { return scale(x,-n); }
 
 inline REAL operator+(const REAL& x, const REAL& y)
 {

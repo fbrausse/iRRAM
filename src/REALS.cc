@@ -604,23 +604,14 @@ REAL REAL::mp_absval() const
 
 /*****************************************************/
 
-REAL scale(const REAL & x, int n)
+void REAL::scale(int n)
 {
-	if (!x.value) {
-		/* TODO: huh? why not x.mp_conv()? For instance
-		 * operator+(const REAL &, const REAL &) does the same */
-		REAL y(x);
-		return scale(y.mp_conv(), n);
-	}
-	sizetype zerror;
-	MP_type zvalue;
-	MP_init(zvalue);
-	MP_shift(x.value, zvalue, n);
-	x.geterror(zerror);
-	zerror = zerror << n;
-	return REAL(zvalue, zerror);
+	if (!value)
+		mp_make_mp();
+	MP_shift(value, value, n);
+	MP_getsize(value, vsize);
+	error = error << n;
 }
-
 
 LAZY_BOOLEAN positive(const REAL & x, int k)
 {

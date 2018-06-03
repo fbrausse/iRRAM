@@ -442,7 +442,8 @@ inline void ext_mpfr_sqrt(const mpfr_t z1,mpfr_t z,int p)
 
 inline void ext_mpfr_shift(const mpfr_t z1,mpfr_t z,int n)
 {
-  mpfr_set_prec(z,mpfr_get_prec(z1));
+  if (z != z1)
+    mpfr_set_prec(z,mpfr_get_prec(z1));
   if ( n>=  0 ) mpfr_mul_2exp(z,z1,n,iRRAM_mpfr_rounding_mode);
   else mpfr_div_2exp(z,z1,-n,iRRAM_mpfr_rounding_mode);
   return;
