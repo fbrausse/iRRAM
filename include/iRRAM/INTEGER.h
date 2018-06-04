@@ -36,8 +36,6 @@ class INTEGER
 {
 	MP_int_type value;
 
-	INTEGER(MP_int_type y);
-
 	friend INTEGER numerator(const RATIONAL &);
 	friend INTEGER denominator(const RATIONAL &);
 
@@ -46,6 +44,8 @@ class INTEGER
 	friend class DYADIC;
 
 public:
+
+	INTEGER(MP_int_type y);
 
 /****** Constructors ******/
 
