@@ -340,6 +340,7 @@ private:
 	REAL         mp_absval          ()                const;
 	REAL         mp_intervall_join  (const REAL   &y) const;
 	LAZY_BOOLEAN mp_less            (const REAL   &y) const;
+	void         mp_scale(int n);
 
 	void scale(int n);
 };
@@ -847,6 +848,16 @@ inline REAL abs(const REAL & x)
 	if (x.dp.lower_pos > x.dp.upper_neg)
 		return REAL(REAL::double_pair(0.0, x.dp.upper_neg));
 	return REAL(REAL::double_pair(0.0, x.dp.lower_pos));
+}
+
+inline void REAL::scale(int n)
+{
+	if (iRRAM_unlikely(value)) {
+		mp_scale(n);
+	} else {
+		dp.upper_neg = ldexp(dp.upper_neg, n);
+		dp.lower_pos = ldexp(dp.lower_pos, n);
+	}
 }
 
 // inline REAL intervall_join (const REAL& x,const REAL& y){

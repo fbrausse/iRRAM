@@ -56,7 +56,6 @@ MA 02111-1307, USA.
  * - upperbound(const REAL &)
  * - modulo(const REAL &, const REAL &)
  * - limit() family
- * - scale(const REAL &, int)
  * - REAL::geterror()
  * - REAL::adderror()
  * - REAL::getsize()
@@ -604,10 +603,8 @@ REAL REAL::mp_absval() const
 
 /*****************************************************/
 
-void REAL::scale(int n)
+void REAL::mp_scale(int n)
 {
-	if (!value)
-		mp_make_mp();
 	MP_shift(value, value, n);
 	MP_getsize(value, vsize);
 	error = error << n;
