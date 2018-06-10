@@ -100,6 +100,7 @@ public:
   orstream& operator<<(_SetRwidth);
   orstream& operator<<(_SetRflags);
   orstream& operator<<(std::ostream&(std::ostream&) );
+  orstream& operator<<(const std::thread::id &);
 
 // the following should be "private:"
 

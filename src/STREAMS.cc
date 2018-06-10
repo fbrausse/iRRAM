@@ -170,6 +170,7 @@ orstream& orstream::operator<<(decltype(std::setiosflags(std::ios_base::dec)) _f
 orstream& orstream::operator<<(decltype(std::resetiosflags(std::ios_base::dec)) _f) { return iRRAM_out<>(this, _f);}
 orstream& orstream::operator<<(decltype(std::setbase(0)) _f)    {return iRRAM_out<>(this, _f);}
 orstream& orstream::operator<<(std::ostream& _f(std::ostream&)) {return iRRAM_out<>(this, _f);}
+orstream& orstream::operator<<(const std::thread::id &id)       {return iRRAM_out<>(this, id);}
 
 orstream & orstream::operator<<(_SetRwidth _f) { iRRAM_out2(real_w = _f._M_n); }
 orstream & orstream::operator<<(_SetRflags _f) { iRRAM_out2(real_f = _f._M_n); }

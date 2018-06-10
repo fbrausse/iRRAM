@@ -278,7 +278,7 @@ extern "C" int iRRAM_parse_args(struct iRRAM_init_options *opts, int *argc, char
 	for (int i = 1; i < *argc; i += 1) {
 		if (!strcmp(argv[i], "-d")) {
 			opts->debug = 1;
-			iRRAM_DEBUG2(1, "Debugging Mode\n");
+			iRRAM_DEBUG2(1, "%s\n", "Debugging Mode");
 		} else
 		if (!strncmp(argv[i], "--debug=", 8)) {
 			opts->debug = atoi(&(argv[i][8]));

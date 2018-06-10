@@ -34,6 +34,10 @@ MA 02111-1307, USA.
 
 #include <iRRAM/common.h>
 
+#if iRRAM_HAVE_TLS
+# include <thread>	/* std::this_thread */
+#endif
+
 #ifndef iRRAM_BACKENDS
 # error error: no usable backend, defined iRRAM_BACKENDS
 #endif
@@ -247,8 +251,22 @@ inline bool debug_enabled(int level)
 #else
   #define iRRAM_DEBUG0(level,...)
 #endif
-#define iRRAM_DEBUG1(level,p)	iRRAM_DEBUG0((level),cerr << p)
-#define iRRAM_DEBUG2(level,...)	iRRAM_DEBUG0((level),fprintf(stderr,__VA_ARGS__))
+#if iRRAM_HAVE_TLS
+# define iRRAM_DEBUG1(level,p) \
+	iRRAM_DEBUG0((level),cerr << "thread " << std::this_thread::get_id() << ": " << p)
+# define iRRAM_DEBUG2(level,fmt,...) \
+	iRRAM_DEBUG0((level),fprintf(stderr,"thread 0x%zx " fmt,\
+	             []{\
+			union {\
+				std::thread::id id;\
+				typename std::thread::native_handle_type nat;\
+			} u = { std::this_thread::get_id() };\
+			return u.nat;}(),\
+	             __VA_ARGS__))
+#else
+# define iRRAM_DEBUG1(level,p)	iRRAM_DEBUG0((level),cerr << p)
+# define iRRAM_DEBUG2(level,...)	iRRAM_DEBUG0((level),fprintf(stderr,__VA_ARGS__))
+#endif
 
 struct Iteration {
 	int prec_diff;
