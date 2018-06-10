@@ -513,8 +513,8 @@ REALMATRIX limit_lip (REALMATRIX (*f)(int,const REALMATRIX&),
       env.inc_step(2);
       iRRAM_DEBUG2(2,"limit_lip too imprecise, increasing precision locally to %d...\n",actual_stack().actual_prec);
     } else {
-      iRRAM_DEBUG0(2,fprintf(stderr,"getting result with local error %d*2^(%d)\n",
-                lim_error.mantissa,lim_error.exponent););
+      iRRAM_DEBUG2(2,"getting result with local error %d*2^(%d)\n",
+                     lim_error.mantissa,lim_error.exponent);
     break;
   }}
     catch ( Iteration it)  {
@@ -524,9 +524,8 @@ REALMATRIX limit_lip (REALMATRIX (*f)(int,const REALMATRIX&),
   sizetype_exact(lim_error);
   lim.adderror(lim_error);
   lim.adderror(x.geterror() << lip);
-  iRRAM_DEBUG0(2,{sizetype lim_error = lim.geterror();
-                  fprintf(stderr, "end of limit_matrix_lip1 with error %d*2^(%d)\n",
-                                  lim_error.mantissa,lim_error.exponent);});
+  iRRAM_DEBUG2(2,"end of limit_matrix_lip1 with error %d*2^(%d)\n",
+                 lim.geterror().mantissa,lim.geterror().exponent);
 
   return lim;
 }
@@ -681,9 +680,8 @@ REAL limit (const FUNCTION<REAL,int> & f )
     limnew=f(element);
     limnew_error = sizetype_add_power2(limnew.geterror(), element);
     if (firsttime ==2 ) if ( limnew_error.exponent > env.saved_prec(-1)) {
-    iRRAM_DEBUG0(2,{cerr<<"computation not precise enough ("
-                  << limnew_error.mantissa <<"*2^"<< limnew_error.exponent
-                  <<"), trying normal p-sequence\n";});
+      iRRAM_DEBUG2(2,"computation not precise enough (%d*2^%d), trying normal p-sequence\n",
+                     limnew_error.mantissa, limnew_error.exponent);
        element_step=1;
        element=4+iRRAM_prec_array[element_step];
        firsttime=1;

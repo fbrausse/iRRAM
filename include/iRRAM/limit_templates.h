@@ -362,8 +362,8 @@ RESULT limit_mv (RESULT (*f)(int prec,
     limnew_error += element_error;
     if (firsttime ==2 ) if ( limnew_error.exponent > env.saved_prec(-1)
     	&&  limnew_error.exponent > x_error.exponent -env.saved_prec(-1)) {
-    iRRAM_DEBUG0(2,{fprintf(stderr,"computation not precise enough (%d*2^%d), trying normal p-sequence\n",
-                   limnew_error.mantissa,limnew_error.exponent);});
+      iRRAM_DEBUG2(2,"computation not precise enough (%d*2^%d), trying normal p-sequence\n",
+                     limnew_error.mantissa,limnew_error.exponent);
        element_step=1;
        element=4+iRRAM_prec_array[element_step];
        firsttime=1;
@@ -396,8 +396,8 @@ RESULT limit_mv (RESULT (*f)(int prec,
     element=iRRAM_prec_array[element_step];
     }
   lim.seterror(lim_error);
-  iRRAM_DEBUG0(2,{fprintf(stderr,"end of limit_mv with error %d*2^(%d)\n",
-                   lim_error.mantissa,lim_error.exponent);});
+  iRRAM_DEBUG2(2,"end of limit_mv with error %d*2^(%d)\n",
+                 lim_error.mantissa,lim_error.exponent);
   return lim;
 }
 
@@ -444,11 +444,10 @@ RESULT  limit_lip (RESULT  (*f)(int,const ARGUMENT&,DISCRETE param),
   lim.adderror(lim_error);
   lim_error = x_error << lip_value;
   lim.adderror(lim_error);
-  iRRAM_DEBUG0(2,{lim.geterror(lim_error);
-            fprintf(stderr,"end of limit_lip with error %d*2^(%d)\n",
-              lim_error.mantissa,lim_error.exponent);
-            fprintf(stderr,"  error of argument: %d*2^(%d)\n",
-              x_error.mantissa,x_error.exponent);});
+  iRRAM_DEBUG2(2,"end of limit_lip with error %d*2^(%d)\n"
+                 "  error of argument: %d*2^(%d)\n",
+                 lim.geterror().mantissa,lim.geterror().exponent,
+                 x_error.mantissa,x_error.exponent);
   return lim;
 }
 
@@ -547,11 +546,10 @@ RESULT lipschitz_1p_1a (RESULT (*f)(const DISCRETE_ARGUMENT&, const PARAM& param
              lip_result.error.mantissa, lip_result.error.exponent);
   lip_error = x_error << lip;
   lip_result.adderror(lip_error);
-  iRRAM_DEBUG0(2,{lip_result.geterror(lip_error);
-            fprintf(stderr,"end of lipschitz_1p_1a with error %d*2^(%d)\n",
-              lip_error.mantissa,lip_error.exponent);
-            fprintf(stderr,"  for argument with error %d*2^(%d)\n",
-              x_error.mantissa,x_error.exponent);});
+  iRRAM_DEBUG2(2,"end of lipschitz_1p_1a with error %d*2^(%d)\n"
+                 "  for argument with error %d*2^(%d)\n",
+                 lip_result.geterror().mantissa,lip_result.geterror().exponent,
+                 x_error.mantissa,x_error.exponent);
   return lip_result;
 }
 
