@@ -1052,68 +1052,89 @@ REAL strtoREAL2(const char *s, char **endptr)
 	return REAL(value, r ? sizetype_power2(p) : sizetype_exact());
 }
 
-REAL strtoREAL(const char* s, char** endptr){
-  stiff code;
-  int exp=0;
-  int sign=1;
-  REAL y;
-  REAL ten=10;
-  *endptr=const_cast<char*> (s);
+REAL strtoREAL(const char * s, char ** endptr)
+{
+	stiff code;
+	int exp = 0;
+	int sign = 1;
+	REAL y;
+	REAL ten = 10;
+	*endptr = const_cast<char *>(s);
 
-  while ( **endptr == '0' ) *endptr+=1;
+	while (**endptr == '0')
+		*endptr += 1;
 
-  if ( **endptr == '-' ) {sign=-1;*endptr+=1;}
-  else if ( **endptr == '+' ) {sign=1;*endptr+=1;}
+	if (**endptr == '-') {
+		sign = -1;
+		*endptr += 1;
+	} else if (**endptr == '+') {
+		sign = 1;
+		*endptr += 1;
+	}
 
-  while ( **endptr >= '0' &&  **endptr <= '9' ) {
-  y=ten*y + REAL(sign*(**endptr-'0')); *endptr+=1;}
+	while (**endptr >= '0' && **endptr <= '9') {
+		y = ten * y + REAL(sign * (**endptr - '0'));
+		*endptr += 1;
+	}
 
-  if ( **endptr == '.' ) *endptr+=1;
+	if (**endptr == '.')
+		*endptr += 1;
 
-  while ( **endptr >= '0' &&  **endptr <= '9' ) {
-  y=ten*y + REAL(sign*(**endptr-'0')); exp-=1;*endptr+=1;}
+	while (**endptr >= '0' && **endptr <= '9') {
+		y = ten * y + REAL(sign * (**endptr - '0'));
+		exp -= 1;
+		*endptr += 1;
+	}
 
-  if ( **endptr == 'E' || **endptr == 'e'  ) {
-  *endptr+=1;exp+=strtol(*endptr,endptr,10); }
+	if (**endptr == 'E' || **endptr == 'e') {
+		*endptr += 1;
+		exp += strtol(*endptr, endptr, 10);
+	}
 
-  if (exp !=0) y*=power(ten,exp);
+	if (exp != 0)
+		y *= power(ten, exp);
 
-  return y;
+	return y;
 }
 
-REAL atoREAL(const char* s){
-  char*dummy;
-  return strtoREAL(s,&dummy);
+REAL atoREAL(const char * s)
+{
+	char * dummy;
+	return strtoREAL(s, &dummy);
 }
 
+REAL modulo(const REAL & x, const REAL & y) { return x - round2(x / y) * y; }
 
-REAL modulo (const REAL& x, const REAL& y){
-   return x-round2(x/y)*y;
-}
+REAL power(const REAL & x, const REAL & y) { return exp(log(x) * y); }
 
-REAL power(const REAL& x, const REAL& y) {
-  return exp(log(x)*y);
-}
-
-
-REAL power(const REAL& x, int n) {
-   if (n==0) return 1;
-   if (n==1) return x;
-   if (n==2) return square(x);
-//   stiff_begin();
-   REAL y=1;
-   REAL xc=x;
-   if (n<0) {xc=y/x;n=-n;}
-   if (n==1) {
-//     stiff_end();
-     return xc;
-   }
-   for (int k=n;k>0;k=k/2) { 
-     if (k%2==1) y*=xc;
-     if ( k ==1) break;
-     xc=square(xc);}
-//   stiff_end();
-   return y; 
+REAL power(const REAL & x, int n)
+{
+	if (n == 0)
+		return 1;
+	if (n == 1)
+		return x;
+	if (n == 2)
+		return square(x);
+	//   stiff_begin();
+	REAL y = 1;
+	REAL xc = x;
+	if (n < 0) {
+		xc = y / x;
+		n = -n;
+	}
+	if (n == 1) {
+		//     stiff_end();
+		return xc;
+	}
+	for (int k = n; k > 0; k = k / 2) {
+		if (k % 2 == 1)
+			y *= xc;
+		if (k == 1)
+			break;
+		xc = square(xc);
+	}
+	//   stiff_end();
+	return y;
 }
 
 // maximum without using of internal representation of LAZY_BOOLEAN
@@ -1128,27 +1149,33 @@ REAL power(const REAL& x, int n) {
 // };
 
 // maximum, using of internal representation of LAZY_BOOLEAN
-REAL maximum (const REAL& x, const REAL& y){
-   LAZY_BOOLEAN larger;
-   {
-     single_valued code;
-     larger = ( x > y );
-   }
-   if ( larger.value == true  ) return x;
-   if ( larger.value == false ) return y;
-   return (x+y+abs(x-y))/2;
+REAL maximum(const REAL & x, const REAL & y)
+{
+	LAZY_BOOLEAN larger;
+	{
+		single_valued code;
+		larger = (x > y);
+	}
+	if (larger.value == true)
+		return x;
+	if (larger.value == false)
+		return y;
+	return (x + y + abs(x - y)) / 2;
 }
 
 // minimum, using of internal representation of LAZY_BOOLEAN
-REAL minimum (const REAL& x, const REAL& y){
-   LAZY_BOOLEAN larger;
-   {
-     single_valued code;
-     larger = ( x > y );
-   }
-   if ( larger.value  == true  ) return y;
-   if ( larger.value  == false ) return x;
-   return (x+y-abs(x-y))/2;
+REAL minimum(const REAL & x, const REAL & y)
+{
+	LAZY_BOOLEAN larger;
+	{
+		single_valued code;
+		larger = (x > y);
+	}
+	if (larger.value == true)
+		return y;
+	if (larger.value == false)
+		return x;
+	return (x + y - abs(x - y)) / 2;
 }
 
 //********************************************************************************
