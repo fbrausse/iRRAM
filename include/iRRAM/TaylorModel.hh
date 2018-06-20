@@ -375,6 +375,21 @@ public:
 	friend TM inverse(TM r);
 	friend TM square(const TM &r)            { return r * r; } /* TODO */
 
+	friend TM minimum(const TM &a, const TM &b)
+	{
+		LAZY_BOOLEAN rc;
+		REAL ra(a);
+		REAL rb(b);
+		{
+			single_valued code;
+			rc = ra < rb;
+		}
+		if (rc.value == true) return a;
+		if (rc.value == false) return b;
+		return TM(minimum(ra, rb));
+	}
+
+
 	friend orstream & operator<<(orstream &o, const TM &p)
 	{
 		o << swrite(p.c0,20,iRRAM_float_show)

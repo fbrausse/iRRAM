@@ -63,6 +63,7 @@ friend int check (const LAZY_BOOLEAN& x);
 
 friend REAL mp_maximum ( const REAL& x, const REAL& y);
 friend REAL mp_minimum ( const REAL& x, const REAL& y);
+friend TM minimum(const TM &, const TM &);
 friend INTERVAL operator*(const INTERVAL &, const INTERVAL &);
 
 friend LAZY_BOOLEAN operator < (const REAL&, const REAL&);
