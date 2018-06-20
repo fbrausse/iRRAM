@@ -100,6 +100,7 @@ class COMPLEX;
 class INTERVAL;
 class REALMATRIX;
 class SPARSEREALMATRIX;
+class TM;
 template <typename R,typename... Args> class FUNCTION;
 struct cachelist;
 struct mv_cache;
