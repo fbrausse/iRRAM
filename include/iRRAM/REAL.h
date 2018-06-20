@@ -182,6 +182,8 @@ public:
 	friend int         size      (const REAL& x); 
 
 	friend REAL        abs       (const REAL& x);
+	friend REAL        maximum   (const REAL& x, const REAL& y);
+	friend REAL        minimum   (const REAL& x, const REAL& y);
 
 	void          rcheck      (int n=50) const;
 
@@ -343,6 +345,9 @@ private:
 	void         mp_scale(int n);
 
 	void scale(int n);
+
+	friend REAL mp_maximum(const REAL &a, const REAL &b);
+	friend REAL mp_minimum(const REAL &a, const REAL &b);
 };
 
 /*! \relates REAL */
@@ -377,8 +382,26 @@ inline int  round (const REAL& x) { return int (x.as_INTEGER()); }
 REAL power   (const REAL& x, const REAL& y);
 REAL power   (const REAL& x, int n);
 REAL modulo  (const REAL& x, const REAL& y);
-REAL maximum (const REAL& x, const REAL& y);
-REAL minimum (const REAL& x, const REAL& y);
+
+inline REAL maximum (const REAL& x, const REAL& y)
+{
+	if (iRRAM_unlikely(x.value || y.value))
+		return mp_maximum(x, y);
+	REAL::double_pair dp;
+	dp.lower_pos = fmax(x.dp.lower_pos, y.dp.lower_pos);
+	dp.upper_neg = fmin(x.dp.upper_neg, y.dp.upper_neg);
+	return REAL(dp);
+}
+
+inline REAL minimum (const REAL& x, const REAL& y)
+{
+	if (iRRAM_unlikely(x.value || y.value))
+		return mp_minimum(x, y);
+	REAL::double_pair dp;
+	dp.lower_pos = fmin(x.dp.lower_pos, y.dp.lower_pos);
+	dp.upper_neg = fmax(x.dp.upper_neg, y.dp.upper_neg);
+	return REAL(dp);
+}
 
 /****************************************************************************/
 // roots

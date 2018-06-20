@@ -1149,7 +1149,7 @@ REAL power(const REAL & x, int n)
 // };
 
 // maximum, using of internal representation of LAZY_BOOLEAN
-REAL maximum(const REAL & x, const REAL & y)
+REAL mp_maximum(const REAL & x, const REAL & y)
 {
 	LAZY_BOOLEAN larger;
 	{
@@ -1164,7 +1164,7 @@ REAL maximum(const REAL & x, const REAL & y)
 }
 
 // minimum, using of internal representation of LAZY_BOOLEAN
-REAL minimum(const REAL & x, const REAL & y)
+REAL mp_minimum(const REAL & x, const REAL & y)
 {
 	LAZY_BOOLEAN larger;
 	{

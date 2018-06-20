@@ -61,8 +61,8 @@ friend std::size_t choose(std::initializer_list<LAZY_BOOLEAN>);
 explicit operator bool() const;
 friend int check (const LAZY_BOOLEAN& x);
 
-friend REAL maximum ( const REAL& x, const REAL& y);
-friend REAL minimum ( const REAL& x, const REAL& y);
+friend REAL mp_maximum ( const REAL& x, const REAL& y);
+friend REAL mp_minimum ( const REAL& x, const REAL& y);
 friend INTERVAL operator*(const INTERVAL &, const INTERVAL &);
 
 friend LAZY_BOOLEAN operator < (const REAL&, const REAL&);
