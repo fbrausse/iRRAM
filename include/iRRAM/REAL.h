@@ -43,6 +43,8 @@ class REAL final : conditional_comparison_overloads<REAL,LAZY_BOOLEAN>
 		double_pair(const double l,const double u) noexcept
 		: lower_pos(l), upper_neg(u) {}
 		double_pair() noexcept {}
+
+		sizetype geterror() const;
 	};
 public:
 

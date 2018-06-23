@@ -86,6 +86,21 @@ MA 02111-1307, USA.
 
 namespace iRRAM {
 
+sizetype REAL::double_pair::geterror() const
+{
+	double rwidth = (upper_neg + lower_pos);
+	if (!std::isfinite(rwidth))
+		iRRAM_REITERATE(0);
+	int e;
+	unsigned m = (unsigned)ldexp(frexp(-rwidth, &e), 30) + 2;
+	// Here, the "+2" accounts for the possible truncation error and
+	// the error on the computation of cvalue.
+	/* round to -\infty => dp.upper-dp.lower <= -rwidth <= m*2^(e-30) */
+	// So we have that the interval (dp.lower,dp.upper) is a subset
+	// of the interval (cvalue - m*2^(e-29),cvalue + m*2^(e-29))
+	return sizetype_normalize({m, e - 29});
+}
+
 void REAL::mp_make_mp()
 {
 	if (!std::isfinite(dp.upper_neg) || !std::isfinite(dp.lower_pos))
@@ -114,15 +129,7 @@ void REAL::mp_make_mp()
 		// which is sufficiently more precise than all bits even of the
 		// smallest double number (2^-1075), so here the error is as
 		// small as reasonable
-		double rwidth = (dp.upper_neg + dp.lower_pos);
-		int e;
-		unsigned m = (unsigned)ldexp(frexp(-rwidth, &e), 30) + 2;
-		// Here, the "+2" accounts for the possible truncation error and
-		// the error on the computation of cvalue.
-		/* round to -\infty => dp.upper-dp.lower <= -rwidth <= m*2^(e-30) */
-		// So we have that the interval (dp.lower,dp.upper) is a subset
-		// of the interval (cvalue - m*2^(e-29),cvalue + m*2^(e-29))
-		error = sizetype_normalize({m, e - 29});
+		error = dp.geterror();
 	}
 	MP_getsize(value, vsize);
 }
