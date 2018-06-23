@@ -56,7 +56,6 @@ MA 02111-1307, USA.
  * - upperbound(const REAL &)
  * - modulo(const REAL &, const REAL &)
  * - limit() family
- * - REAL::geterror()
  * - REAL::adderror()
  * - REAL::getsize()
  * - REAL::as_INTEGER()
@@ -856,12 +855,7 @@ void REAL::seterror(sizetype nerror)
 
 void REAL::geterror(sizetype & nerror) const
 {
-	if (!value) {
-		REAL y(*this);
-		y.mp_conv().geterror(nerror);
-	} else {
-		nerror = (*this).error;
-	}
+	nerror = value ? error : dp.geterror();
 }
 
 void REAL::getsize(sizetype & nsize) const
