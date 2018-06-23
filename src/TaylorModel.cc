@@ -445,6 +445,36 @@ TM operator*(TM q, const TM &r)
 	return f;
 }
 
+TM & TM::operator/=(TM y)
+{
+	REAL zero_one = 0;
+	sizetype l;
+	sizetype_set(l, 1, 0);
+	zero_one.seterror(l);
+
+	REAL lin_denom = 0;
+	for (const I &ix : this->c)
+		lin_denom += abs(ix.ci);
+	for (const I &iy : y.c)
+		lin_denom += abs(iy.ci);
+	lin_denom *= zero_one;
+	lin_denom += y.c0;
+	lin_denom *= y.c0;
+
+	REAL xc0 = this->c0;
+	REAL yc0 = y.c0;
+	this->c0 = 0;
+	y.c0 = 0;
+
+	*this *= yc0 / lin_denom;
+	y *= xc0 / lin_denom;
+	*this -= y;
+	this->c0 = xc0 / yc0;
+
+	return *this;
+}
+
+
 #if 0
 TM inverse(TM r)
 {

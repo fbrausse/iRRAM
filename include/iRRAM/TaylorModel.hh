@@ -353,7 +353,7 @@ public:
 	TM & operator*=(const REAL &r);
 	TM & operator*=(const TM &r)   { return *this  = *this * r; }
 	TM & operator/=(const REAL &r) { return *this *= 1 / r; }
-	TM & operator/=(const TM &r)   { return *this  = *this / r; }
+	TM & operator/=(TM r);
 
 	/* these implementations need copies of q anyway; leave possibility for
 	 * the compiler to construct them in-place: pass-by-value */
@@ -363,7 +363,7 @@ public:
 	friend TM operator*(const REAL &r, TM q) { return q *= r; }
 	friend TM operator*(TM q, const TM &r);
 	friend TM operator/(TM q, const REAL &r) { return q /= r; }
-	friend TM operator/(const TM &q, const TM &r) { return q * inverse(r); }
+	friend TM operator/(TM q, TM r)          { return q /= std::move(r); }
 	friend TM operator-(const TM &r)         { return TM(0) -= r; } /* TODO */
 	friend TM operator+(TM r)                { return std::move(r); }
 
