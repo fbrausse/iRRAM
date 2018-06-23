@@ -253,6 +253,8 @@ int main() {
 ])
 gmp_link_check([C])
 gmp_link_check([C++])
+AC_SUBST([iRRAM_HAVE_GMP_C],1)
+
 
 LIBS_INST="-lgmp $LIBS_INST"
 LIBS="$LDADD $LIBS_INST"

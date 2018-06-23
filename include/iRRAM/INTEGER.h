@@ -52,6 +52,10 @@ class INTEGER
 
 public:
 
+#if iRRAM_HAVE_GMP_C
+	explicit INTEGER(mpz_srcptr);
+#endif
+
 /****** Constructors ******/
 
 INTEGER(int i = 0);
@@ -154,6 +158,13 @@ explicit operator int()  const ;
 inline INTEGER::~INTEGER() { if (value) MP_int_clear(value); }
 
 inline INTEGER::INTEGER(MP_int_type y, INTEGER::move_t) : value(y) {}
+
+#if iRRAM_HAVE_GMP_C
+inline INTEGER::INTEGER(mpz_srcptr p)
+{
+	MP_int_duplicate_w_init(p, value);
+}
+#endif
 
 inline INTEGER::INTEGER(int i){
 	MP_int_init(value);

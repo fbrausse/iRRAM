@@ -9,6 +9,8 @@
 #define iRRAM_TLS		@iRRAM_TLS@
 #define iRRAM_TLS_STD		@iRRAM_TLS_STD@
 
+#define iRRAM_HAVE_GMP_C	@iRRAM_HAVE_GMP_C@
+
 #if !defined(__cplusplus) && iRRAM_TLS_STD && !defined(thread_local)
 # define thread_local _Thread_local
 #endif
