@@ -247,14 +247,14 @@ INTEGER denominator (const RATIONAL& x){
   MP_int_type zvalue;
   MP_int_init(zvalue);
   MP_rat_get_denominator(x.value,zvalue);
-  return zvalue;
+  return { zvalue, INTEGER::move_t{} };
 }
 
 INTEGER numerator (const RATIONAL& x){
   MP_int_type zvalue;
   MP_int_init(zvalue);
   MP_rat_get_numerator(x.value,zvalue);
-  return zvalue;
+  return { zvalue, INTEGER::move_t{} };
 }
 
 RATIONAL power(RATIONAL x, unsigned n)

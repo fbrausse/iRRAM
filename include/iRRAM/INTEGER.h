@@ -36,14 +36,19 @@ class INTEGER
 {
 	MP_int_type value;
 
-	INTEGER(MP_int_type y);
-
 	friend INTEGER numerator(const RATIONAL &);
 	friend INTEGER denominator(const RATIONAL &);
 
 	friend class RATIONAL;
 	friend class REAL;
 	friend class DYADIC;
+
+	/* internal tag type to indicate the MP_int_type passed to INTEGER's
+	 * constructor is supposed to be moved and not copied (in case MP_int_type
+	 * matches one of the other conversion sources like e.g. mpz_srcptr). */
+	struct move_t {};
+
+	INTEGER(MP_int_type y, move_t);
 
 public:
 
@@ -148,7 +153,7 @@ explicit operator int()  const ;
 
 inline INTEGER::~INTEGER() { if (value) MP_int_clear(value); }
 
-inline INTEGER::INTEGER(MP_int_type y) : value(y) {}
+inline INTEGER::INTEGER(MP_int_type y, INTEGER::move_t) : value(y) {}
 
 inline INTEGER::INTEGER(int i){
 	MP_int_init(value);
@@ -195,7 +200,7 @@ inline INTEGER scale(const INTEGER& x, const int n)
 	MP_int_type zvalue;
 	MP_int_init(zvalue);
 	MP_int_shift(x.value,zvalue,n);
-	return zvalue;
+	return { zvalue, INTEGER::move_t{} };
 }
 
 
@@ -223,7 +228,7 @@ inline INTEGER power(const INTEGER& x, unsigned n)
 	MP_int_type zvalue;
 	MP_int_init(zvalue);
 	MP_int_power_i(x.value,n,zvalue);
-	return zvalue;
+	return { zvalue, INTEGER::move_t{} };
 }
 
 //****************************************************************************************
@@ -255,7 +260,7 @@ inline INTEGER operator + (const INTEGER& x, const INTEGER& y){
   MP_int_type zvalue;
   MP_int_init(zvalue);
   MP_int_add(x.value,y.value,zvalue);
-  return zvalue;
+  return { zvalue, INTEGER::move_t{} };
 }
 
 inline INTEGER operator + (const INTEGER& x, const int y){
@@ -263,7 +268,7 @@ inline INTEGER operator + (const INTEGER& x, const int y){
   MP_int_init(zvalue);
   if (y<0) MP_int_sub_ui(x.value,-y,zvalue);
   else     MP_int_add_ui(x.value,y,zvalue);
-  return zvalue;
+  return { zvalue, INTEGER::move_t{} };
 }
 
 inline INTEGER operator + (const int     x, const INTEGER& y) {return y+x;}
@@ -292,7 +297,7 @@ inline INTEGER operator - (const INTEGER& x, const INTEGER& y){
   MP_int_type zvalue;
   MP_int_init(zvalue);
   MP_int_sub(x.value,y.value,zvalue);
-  return zvalue;
+  return { zvalue, INTEGER::move_t{} };
 }
 
 inline INTEGER operator - (const INTEGER& x, const int y)
@@ -323,7 +328,7 @@ inline INTEGER operator - (const INTEGER& x){
   MP_int_type zvalue;
   MP_int_init(zvalue);
   MP_int_neg(x.value,zvalue);
-  return zvalue;
+  return { zvalue, INTEGER::move_t{} };
 }
 
 //****************************************************************************************
@@ -334,14 +339,14 @@ inline INTEGER operator * (const INTEGER& x, const INTEGER& y){
   MP_int_type zvalue;
   MP_int_init(zvalue);
   MP_int_mul(x.value,y.value,zvalue);
-  return zvalue;
+  return { zvalue, INTEGER::move_t{} };
 }
 
 inline INTEGER operator * (const INTEGER& x, const int y){
   MP_int_type zvalue;
   MP_int_init(zvalue);
   MP_int_mul_si(x.value,y,zvalue);
-  return(zvalue);
+  return { zvalue, INTEGER::move_t{} };
 }
 
 inline INTEGER operator * (const int x, const INTEGER& y)
@@ -372,7 +377,7 @@ inline INTEGER operator / (const INTEGER& x, const INTEGER& y){
   MP_int_type zvalue;
   MP_int_init(zvalue);
   MP_int_div(x.value,y.value,zvalue);
-  return zvalue;
+  return { zvalue, INTEGER::move_t{} };
 }
 
 
@@ -385,7 +390,7 @@ inline INTEGER operator / (const INTEGER& x, const int n){
   }
   else
     MP_int_div_ui(x.value,n,zvalue);
-  return zvalue;
+  return { zvalue, INTEGER::move_t{} };
 }
 
 inline INTEGER operator / (const int      x, const INTEGER& y) {return INTEGER(x)/y;}
@@ -417,7 +422,7 @@ inline INTEGER operator % (const INTEGER& x, const INTEGER& y){
   MP_int_type zvalue;
   MP_int_init(zvalue);
   MP_int_modulo(x.value,y.value,zvalue);
-  return zvalue;
+  return { zvalue, INTEGER::move_t{} };
 }
 
 inline INTEGER & operator%=(INTEGER &x, const INTEGER &y)
@@ -436,7 +441,7 @@ inline INTEGER sqrt (const INTEGER& x)
 	MP_int_type zvalue;
 	MP_int_init(zvalue);
 	MP_int_sqrt(x.value, zvalue);
-	return zvalue;
+	return { zvalue, INTEGER::move_t{} };
 }
 
 //****************************************************************************************
@@ -451,7 +456,7 @@ inline INTEGER abs (const INTEGER& x)
   MP_int_type zvalue;
   MP_int_init(zvalue);
   MP_int_abs(x.value,zvalue);
-  return zvalue;
+  return { zvalue, INTEGER::move_t{} };
 }
 
 

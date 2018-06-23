@@ -901,7 +901,7 @@ INTEGER REAL::as_INTEGER() const
 	MP_int_type result, value;
 	if (get_cached(result)) {
 		MP_int_duplicate_w_init(result, value);
-		return value;
+		return { value, INTEGER::move_t{} };
 	}
 
 	sizetype psize;
@@ -925,7 +925,7 @@ INTEGER REAL::as_INTEGER() const
 		MP_int_duplicate_w_init(value, result);
 		put_cached(result);
 	}
-	return value;
+	return { value, INTEGER::move_t{} };
 }
 
 // conversion to type REAL from smaller types
