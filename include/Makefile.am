@@ -28,3 +28,7 @@ no_base_include_HEADERS = \
 	iRRAM/GMP_intrat.h \
 	iRRAM/MPFR_interface.h \
 	iRRAM/mpfr_extension.h
+
+if ENABLE_FLINT_INTEGER
+no_base_include_HEADERS +=
+endif

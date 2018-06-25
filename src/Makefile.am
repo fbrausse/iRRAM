@@ -22,6 +22,10 @@ main_sources = \
 	GMP_int_ext.c \
 	GMP_rat_ext.c
 
+flint_sources =
+
+flint_headers =
+
 mpfr_sources = \
 	MPFR/MPFR_ext.c \
 	MPFR/mpfr_extension.cc
@@ -35,4 +39,8 @@ libiRRAM_la_SOURCES  = $(main_sources)
 
 if WITH_BACKEND_MPFR
 libiRRAM_la_SOURCES += $(mpfr_sources)
+endif
+
+if ENABLE_FLINT_INTEGER
+libiRRAM_la_SOURCES += $(flint_sources)
 endif

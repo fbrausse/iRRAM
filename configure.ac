@@ -40,6 +40,16 @@ AC_ARG_WITH([mpfr-include],
 AC_ARG_WITH([mpfr-lib],
 	[AS_HELP_STRING([--with-mpfr-lib=DIR],[MPFR lib directory])],
 	[MPFRLDFLAGS="-L$withval"])
+AC_ARG_WITH([flint],
+	[AS_HELP_STRING([--with-flint=DIR],[Flint install directory])],
+	[FLINTCPPFLAGS="-I$withval/include"
+	 FLINTLDFLAGS="-L$withval/lib"])
+AC_ARG_WITH([flint-include],
+	[AS_HELP_STRING([--with-flint-include=DIR],[Flint include directory])],
+	[FLINTCPPFLAGS="-I$withval"])
+AC_ARG_WITH([flint-lib],
+	[AS_HELP_STRING([--with-flint-lib=DIR],[Flint lib directory])],
+	[FLINTLDFLAGS="-L$withval"])
 
 dnl Profiling
 AC_ARG_ENABLE([profiling],
@@ -50,6 +60,10 @@ dnl missing: lang, pthread, win
 AC_ARG_ENABLE([tls],
   [AS_HELP_STRING([[--disable-tls[=ARG]]],
     [select thread-local storage support @<:@default: enable if supported, possible: yes, no, KEYWORD@:>@])],,[enable_tls=detect])
+
+AC_ARG_ENABLE([flint-integer],
+	[AS_HELP_STRING([[--enable-flint-integer]],[Use FLINT as backend for iRRAM::INTEGER])],,
+	[enable_flint_integer=no])
 
 AM_INIT_AUTOMAKE([nostdinc -Wall subdir-objects])
 AM_SILENT_RULES([yes])
@@ -212,8 +226,8 @@ AS_CASE([$host],
 
 dnl Test backends
 
-AM_CPPFLAGS="$AM_CPPFLAGS $GMPCPPFLAGS $MPFRCPPFLAGS"
-AM_LDFLAGS="$AM_LDFLAGS $GMPLDFLAGS $MPFRLDFLAGS"
+AM_CPPFLAGS="$AM_CPPFLAGS $GMPCPPFLAGS $MPFRCPPFLAGS $FLINTCPPFLAGS"
+AM_LDFLAGS="$AM_LDFLAGS $GMPLDFLAGS $MPFRLDFLAGS $FLINTLDFLAGS"
 
 CPPFLAGS_INST="$AM_CPPFLAGS $CPPFLAGS"
 
@@ -255,9 +269,25 @@ gmp_link_check([C])
 gmp_link_check([C++])
 AC_SUBST([iRRAM_HAVE_GMP_C],1)
 
-
 LIBS_INST="-lgmp $LIBS_INST"
 LIBS="$LDADD $LIBS_INST"
+
+
+AS_BOX([Checking FLINT fmpz headers/lib...])
+AC_CHECK_HEADERS([flint/fmpz.h],
+	[AC_SEARCH_LIBS([flint_cleanup],[flint],
+		[have_flint_integer=yes])])
+AS_IF([test x$have_flint_integer = xyes],,
+	[AS_IF([test x$enable_flint_integer = xyes],
+		[AC_MSG_ERROR([error: --enable-flint-integer=$enable_flint_integer requested, but FLINT library not found])])
+	 enable_flint_integer=no])
+AS_IF([test x$enable_flint_integer = xyes],
+	[AC_MSG_NOTICE([Linking iRRAM against FLINT])
+	 AS_IF([test "$ac_cv_search_flint_cleanup" != "none required"],
+		[LIBS_INST="$ac_cv_search_flint_cleanup $LIBS_INST"
+		 LIBS="$LDADD $LIBS_INST"])],
+	[AC_MSG_NOTICE([Not linking iRRAM against FLINT])])
+AM_CONDITIONAL([ENABLE_FLINT_INTEGER],[test x$enable_flint_integer = xyes])
 
 # TODO: also preferred for MPFR: mpfr_get_prec(x) and mpfr_get_exp(x) as macros
 
@@ -337,4 +367,6 @@ LDFLAGS : $AM_LDFLAGS $LDFLAGS
 shared  : $enable_shared
 static  : $enable_static
 TLS     : $tls
+FLINT   : $enable_flint_integer
+
 ])
