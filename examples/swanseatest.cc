@@ -72,8 +72,10 @@ void compute()
 	         log(1 + log(1 + log(1 + exp(REAL(1))))));
 	printval("log(1+log(1+log(1log(1+log(1+log(1+pi))))))  = ", DP,
 	         log(1 + log(1 + log(1 + log(1 + log(1 + log(1 + pi())))))));
-	printval("log(1+log(1+log(1log(1+log(1+log(1+exp(1)))))))  = ", DP,
-	         log(1 + log(1 + log(1 + log(1 + log(1 + log(1 + exp(REAL(1)))))))));
+	printval(
+	        "log(1+log(1+log(1log(1+log(1+log(1+exp(1)))))))  = ", DP,
+	        log(1 +
+	            log(1 + log(1 + log(1 + log(1 + log(1 + exp(REAL(1)))))))));
 
 	printval("sin(1e50)  = ", DP, sin(REAL("1e50")));
 	printval("cos(1e50)  = ", DP, cos(REAL("1e50")));

@@ -47,18 +47,40 @@ REAL cos_new_2(int prec, const REAL & x)
 {
 	int it;
 	int wd;
-	if      (prec > -   100) { it =  10; wd =  1; }
-	else if (prec > -   400) { it =  15; wd =  2; }
-	else if (prec > -   800) { it =  20; wd =  2; }
-	else if (prec > -  1600) { it =  24; wd =  2; }
-	else if (prec > -  3200) { it =  40; wd =  3; }
-	else if (prec > -  6400) { it =  20; wd =  4; }
-	else if (prec > - 12000) { it =  60; wd =  5; }
-	else if (prec > - 24000) { it =  80; wd =  8; }
-	else if (prec > - 48000) { it = 100; wd = 12; }
-	else if (prec > -100000) { it = 120; wd = 18; }
-	else if (prec > -200000) { it = 140; wd = 26; }
-	else {
+	if (prec > -100) {
+		it = 10;
+		wd = 1;
+	} else if (prec > -400) {
+		it = 15;
+		wd = 2;
+	} else if (prec > -800) {
+		it = 20;
+		wd = 2;
+	} else if (prec > -1600) {
+		it = 24;
+		wd = 2;
+	} else if (prec > -3200) {
+		it = 40;
+		wd = 3;
+	} else if (prec > -6400) {
+		it = 20;
+		wd = 4;
+	} else if (prec > -12000) {
+		it = 60;
+		wd = 5;
+	} else if (prec > -24000) {
+		it = 80;
+		wd = 8;
+	} else if (prec > -48000) {
+		it = 100;
+		wd = 12;
+	} else if (prec > -100000) {
+		it = 120;
+		wd = 18;
+	} else if (prec > -200000) {
+		it = 140;
+		wd = 26;
+	} else {
 		it = (int)(log(double(-prec)) * 8 + 6);
 		wd = int(std::sqrt(double(-prec) / 18));
 	}
@@ -75,7 +97,6 @@ REAL cos_new_2(int prec, const REAL & x)
 	return 1 + y;
 }
 
-
 REAL cos_new_1(int prec, const REAL & x)
 {
 	if (prec >= 0)
@@ -83,8 +104,6 @@ REAL cos_new_1(int prec, const REAL & x)
 	REAL m = modulo(x, 2 * pi());
 	return cos_new_2(prec, m - 2 * pi());
 }
-
-
 
 REAL trig_norm(int & position, const REAL & x)
 {
@@ -117,20 +136,42 @@ REAL cos_new_alternative_2(int prec, const REAL & x)
 {
 	int it;
 	int wd;
-	if      (prec > -   100) {it =   8; wd =  1;}
-	else if (prec > -   400) {it =  16; wd =  2;}
-	else if (prec > -   800) {it =  20; wd =  2;}
-	else if (prec > -  1600) {it =  24; wd =  2;}
-	else if (prec > -  3200) {it =  40; wd =  3;}
-	else if (prec > -  6400) {it =  50; wd =  3;}
-	else if (prec > - 12000) {it =  60; wd =  5;}
-	else if (prec > - 24000) {it =  80; wd =  8;}
-	else if (prec > - 48000) {it = 100; wd = 12;}
-	else if (prec > -100000) {it = 120; wd = 18;}
-	else if (prec > -200000) {it = 140; wd = 26;}
-	else {
-		it=(int)(log(double(-prec))*8+6);
-		wd=int(std::sqrt(double(-prec)/18));
+	if (prec > -100) {
+		it = 8;
+		wd = 1;
+	} else if (prec > -400) {
+		it = 16;
+		wd = 2;
+	} else if (prec > -800) {
+		it = 20;
+		wd = 2;
+	} else if (prec > -1600) {
+		it = 24;
+		wd = 2;
+	} else if (prec > -3200) {
+		it = 40;
+		wd = 3;
+	} else if (prec > -6400) {
+		it = 50;
+		wd = 3;
+	} else if (prec > -12000) {
+		it = 60;
+		wd = 5;
+	} else if (prec > -24000) {
+		it = 80;
+		wd = 8;
+	} else if (prec > -48000) {
+		it = 100;
+		wd = 12;
+	} else if (prec > -100000) {
+		it = 120;
+		wd = 18;
+	} else if (prec > -200000) {
+		it = 140;
+		wd = 26;
+	} else {
+		it = (int)(log(double(-prec)) * 8 + 6);
+		wd = int(std::sqrt(double(-prec) / 18));
 	}
 	REAL y = x;
 	{
@@ -177,7 +218,6 @@ void sincos_new(REAL & s, REAL & c, const REAL & x)
 	c = cos_new(arg);
 }
 
-
 /*
 void compute(){
 
@@ -202,7 +242,6 @@ void compute(){
 #include <sys/time.h>
 #include <unistd.h>
 
-
 double cputime()
 {
 	double t;
@@ -210,9 +249,6 @@ double cputime()
 	resources(t, m);
 	return t;
 }
-
-
-
 
 void printval(std::string s, int DP, const REAL & y)
 {
@@ -223,8 +259,6 @@ void printval(std::string s, int DP, const DYADIC & y)
 {
 	cout << s << "\n" << setRwidth(DP + 8) << y << "\n\n";
 }
-
-
 
 void compute()
 {
@@ -242,54 +276,95 @@ void compute()
 	int min_fkt = 1;
 	int max_fkt = 10;
 
-	for (int fkt=min_fkt; fkt<=max_fkt; fkt++) {
-		if (fkt ==1)  value[1]=approx(x*y,prec);
-		if (fkt ==2)  value[1]=approx(x/y,prec);
-		if (fkt ==3)  value[1]=approx(sqrt(x),prec);
-		if (fkt ==4)  value[1]=approx(exp(x),prec);
-		if (fkt ==5)  value[1]=approx(log(x),prec);
-		if (fkt ==6)  value[1]=approx(sin(x),prec);
-		if (fkt ==7)  value[1]=approx(cos(x),prec);
-		if (fkt ==8)  value[1]=approx(sin_new(x),prec);
-		if (fkt ==9)  value[1]=approx(cos_new(x),prec);
-		if (fkt ==10)  value[1]=approx(cos_new2(x),prec);
+	for (int fkt = min_fkt; fkt <= max_fkt; fkt++) {
+		if (fkt == 1)
+			value[1] = approx(x * y, prec);
+		if (fkt == 2)
+			value[1] = approx(x / y, prec);
+		if (fkt == 3)
+			value[1] = approx(sqrt(x), prec);
+		if (fkt == 4)
+			value[1] = approx(exp(x), prec);
+		if (fkt == 5)
+			value[1] = approx(log(x), prec);
+		if (fkt == 6)
+			value[1] = approx(sin(x), prec);
+		if (fkt == 7)
+			value[1] = approx(cos(x), prec);
+		if (fkt == 8)
+			value[1] = approx(sin_new(x), prec);
+		if (fkt == 9)
+			value[1] = approx(cos_new(x), prec);
+		if (fkt == 10)
+			value[1] = approx(cos_new2(x), prec);
 	}
 
-	for (int fkt=min_fkt; fkt<=max_fkt; fkt++) {
+	for (int fkt = min_fkt; fkt <= max_fkt; fkt++) {
 
-		double s1=cputime(),s2=s1;
-		int   count=1;
+		double s1 = cputime(), s2 = s1;
+		int count = 1;
 		{
 			single_valued code;
-			while (s2-s1 < 1) {
-				if (fkt ==1) for (int i=1; i<=count;i++) value[1]=approx(x*y,prec);
-				if (fkt ==2) for (int i=1; i<=count;i++) value[1]=approx(x/y,prec);
-				if (fkt ==3) for (int i=1; i<=count;i++) value[1]=approx(sqrt(x),prec);
-				if (fkt ==4) for (int i=1; i<=count;i++) value[1]=approx(exp(x),prec);
-				if (fkt ==5) for (int i=1; i<=count;i++) value[1]=approx(log(x),prec);
-				if (fkt ==6) for (int i=1; i<=count;i++) value[1]=approx(sin(x),prec);
-				if (fkt ==7) for (int i=1; i<=count;i++) value[1]=approx(cos(x),prec);
-				if (fkt ==8) for (int i=1; i<=count;i++) value[1]=approx(sin_new(x),prec);
-				if (fkt ==9) for (int i=1; i<=count;i++) value[1]=approx(cos_new(x),prec);
-				if (fkt ==10) for (int i=1; i<=count;i++) value[1]=approx(cos_new2(x),prec);
-				s2=cputime();
-				count=2*count;
+			while (s2 - s1 < 1) {
+				if (fkt == 1)
+					for (int i = 1; i <= count; i++)
+						value[1] = approx(x * y, prec);
+				if (fkt == 2)
+					for (int i = 1; i <= count; i++)
+						value[1] = approx(x / y, prec);
+				if (fkt == 3)
+					for (int i = 1; i <= count; i++)
+						value[1] =
+						        approx(sqrt(x), prec);
+				if (fkt == 4)
+					for (int i = 1; i <= count; i++)
+						value[1] = approx(exp(x), prec);
+				if (fkt == 5)
+					for (int i = 1; i <= count; i++)
+						value[1] = approx(log(x), prec);
+				if (fkt == 6)
+					for (int i = 1; i <= count; i++)
+						value[1] = approx(sin(x), prec);
+				if (fkt == 7)
+					for (int i = 1; i <= count; i++)
+						value[1] = approx(cos(x), prec);
+				if (fkt == 8)
+					for (int i = 1; i <= count; i++)
+						value[1] = approx(sin_new(x),
+						                  prec);
+				if (fkt == 9)
+					for (int i = 1; i <= count; i++)
+						value[1] = approx(cos_new(x),
+						                  prec);
+				if (fkt == 10)
+					for (int i = 1; i <= count; i++)
+						value[1] = approx(cos_new2(x),
+						                  prec);
+				s2 = cputime();
+				count = 2 * count;
 			}
 		}
-		if (fkt ==  1) cout << "x*y       took ";
-		if (fkt ==  2) cout << "x/y       took ";
-		if (fkt ==  3) cout << "sqrt(x)   took ";
-		if (fkt ==  4) cout << "exp(x)    took ";
-		if (fkt ==  5) cout << "log(x)    took ";
-		if (fkt ==  6) cout << "sin(x)    took ";
-		if (fkt ==  7) cout << "cos(x)    took ";
-		if (fkt ==  8) cout << "sin_n(x)  took ";
-		if (fkt ==  9) cout << "cos_n(x)  took ";
-		if (fkt == 10) cout << "cos_n2(x) took ";
-		cout << 1000 * (s2 - s1) / (count - 1) << " ms  ("
-		     << count-1 << " tries in "
-		     << s2-s1 << " s)\n";
+		if (fkt == 1)
+			cout << "x*y       took ";
+		if (fkt == 2)
+			cout << "x/y       took ";
+		if (fkt == 3)
+			cout << "sqrt(x)   took ";
+		if (fkt == 4)
+			cout << "exp(x)    took ";
+		if (fkt == 5)
+			cout << "log(x)    took ";
+		if (fkt == 6)
+			cout << "sin(x)    took ";
+		if (fkt == 7)
+			cout << "cos(x)    took ";
+		if (fkt == 8)
+			cout << "sin_n(x)  took ";
+		if (fkt == 9)
+			cout << "cos_n(x)  took ";
+		if (fkt == 10)
+			cout << "cos_n2(x) took ";
+		cout << 1000 * (s2 - s1) / (count - 1) << " ms  (" << count - 1
+		     << " tries in " << s2 - s1 << " s)\n";
 	}
-
 }
-
