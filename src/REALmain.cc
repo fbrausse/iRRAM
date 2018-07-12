@@ -109,44 +109,6 @@ void internal::init()
 	                opts.prec_factor, state->debug);
 }
 
-
-/* for debugging (time measuring):*/
-#if defined(_WIN64) || defined(_WIN32)
-#include <windows.h>
-#include <psapi.h>
-void resources(double &time, unsigned int &memory)
-{
-	FILETIME creation_time, exit_time, kernel_time, user_time;
-	if (GetProcessTimes(GetCurrentProcess(), &creation_time, &exit_time, &kernel_time, &user_time)) {
-		time = ((kernel_time.dwLowDateTime + ((uint64_t)kernel_time.dwHighDateTime << 32))
-		        + (user_time.dwLowDateTime + ((uint64_t)  user_time.dwHighDateTime << 32))
-		       ) / 1e7;
-	} else {
-		time = 0;
-	}
-
-	PROCESS_MEMORY_COUNTERS pmc;
-	if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc))) {
-		memory = pmc.WorkingSetSize;
-	} else {
-		memory = 0;
-	}
-}
-#else
-#include <sys/time.h>
-#include <sys/resource.h>
-#include <unistd.h>
-
-void resources(double& time, unsigned int& memory){
- struct rusage r;
- getrusage (RUSAGE_SELF,&r);
- time = r.ru_utime.tv_sec+0.000001*r.ru_utime.tv_usec;
-// the following is not yet evaluated by linux.... 
- memory = r.ru_ixrss+r.ru_idrss+r.ru_isrss;
-}
-#endif
-/* end of debugging aids */
-
 void show_statistics()
 {
   cerr << "   MP-objects in use:  "<<MP_var_count<<"\n"; 
@@ -260,6 +222,44 @@ internal::run::~run()
 }
 
 } // namespace iRRAM
+
+
+/* for debugging (time measuring):*/
+#if defined(_WIN64) || defined(_WIN32)
+#include <windows.h>
+#include <psapi.h>
+void iRRAM::resources(double &time, unsigned int &memory)
+{
+	FILETIME creation_time, exit_time, kernel_time, user_time;
+	if (GetProcessTimes(GetCurrentProcess(), &creation_time, &exit_time, &kernel_time, &user_time)) {
+		time = ((kernel_time.dwLowDateTime + ((uint64_t)kernel_time.dwHighDateTime << 32))
+		        + (user_time.dwLowDateTime + ((uint64_t)  user_time.dwHighDateTime << 32))
+		       ) / 1e7;
+	} else {
+		time = 0;
+	}
+
+	PROCESS_MEMORY_COUNTERS pmc;
+	if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc))) {
+		memory = pmc.WorkingSetSize;
+	} else {
+		memory = 0;
+	}
+}
+#else
+#include <sys/time.h>
+#include <sys/resource.h>
+#include <unistd.h>
+
+void iRRAM::resources(double& time, unsigned int& memory){
+ struct rusage r;
+ getrusage (RUSAGE_SELF,&r);
+ time = r.ru_utime.tv_sec+0.000001*r.ru_utime.tv_usec;
+// the following is not yet evaluated by linux.... 
+ memory = r.ru_ixrss+r.ru_idrss+r.ru_isrss;
+}
+#endif
+/* end of debugging aids */
 
 extern "C" int iRRAM_exec(void (*f)(void *), void *data)
 {
