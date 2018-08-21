@@ -257,9 +257,15 @@ INTEGER numerator (const RATIONAL& x){
   return { zvalue, INTEGER::move_t{} };
 }
 
-RATIONAL power(RATIONAL x, unsigned n)
+RATIONAL power(RATIONAL x, unsigned long n)
 {
 	MP_rat_power(x.value, n, x.value);
+	return x;
+}
+
+RATIONAL inv(RATIONAL x)
+{
+	MP_rat_inv(x.value, x.value);
 	return x;
 }
 

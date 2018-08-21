@@ -56,7 +56,6 @@ MA 02111-1307, USA.
  * - upperbound(const REAL &)
  * - modulo(const REAL &, const REAL &)
  * - limit() family
- * - REAL::geterror()
  * - REAL::adderror()
  * - REAL::getsize()
  * - REAL::as_INTEGER()
@@ -86,6 +85,21 @@ MA 02111-1307, USA.
 
 namespace iRRAM {
 
+sizetype REAL::double_pair::geterror() const
+{
+	double rwidth = (upper_neg + lower_pos);
+	if (!std::isfinite(rwidth))
+		iRRAM_REITERATE(0);
+	int e;
+	unsigned m = (unsigned)ldexp(frexp(-rwidth, &e), 30) + 2;
+	// Here, the "+2" accounts for the possible truncation error and
+	// the error on the computation of cvalue.
+	/* round to -\infty => dp.upper-dp.lower <= -rwidth <= m*2^(e-30) */
+	// So we have that the interval (dp.lower,dp.upper) is a subset
+	// of the interval (cvalue - m*2^(e-29),cvalue + m*2^(e-29))
+	return sizetype_normalize({m, e - 29});
+}
+
 void REAL::mp_make_mp()
 {
 	if (!std::isfinite(dp.upper_neg) || !std::isfinite(dp.lower_pos))
@@ -114,15 +128,7 @@ void REAL::mp_make_mp()
 		// which is sufficiently more precise than all bits even of the
 		// smallest double number (2^-1075), so here the error is as
 		// small as reasonable
-		double rwidth = (dp.upper_neg + dp.lower_pos);
-		int e;
-		unsigned m = (unsigned)ldexp(frexp(-rwidth, &e), 30) + 2;
-		// Here, the "+2" accounts for the possible truncation error and
-		// the error on the computation of cvalue.
-		/* round to -\infty => dp.upper-dp.lower <= -rwidth <= m*2^(e-30) */
-		// So we have that the interval (dp.lower,dp.upper) is a subset
-		// of the interval (cvalue - m*2^(e-29),cvalue + m*2^(e-29))
-		error = sizetype_normalize({m, e - 29});
+		error = dp.geterror();
 	}
 	MP_getsize(value, vsize);
 }
@@ -553,19 +559,15 @@ REAL REAL::mp_square() const
 	return REAL(zvalue, zerror);
 }
 
-LAZY_BOOLEAN REAL::mp_less(const REAL & y) const
+LAZY_BOOLEAN REAL::mp_lt0() const
 {
-	REAL z = y - (*this);
-	sizetype s;
-	MP_getsize(z.value, s);
-	if (sizetype_less(s, z.error)) {
+	if (sizetype_less(vsize, error)) {
 		iRRAM_DEBUG2(1, "insufficient precisions %d*2^(%d) and "
-		                "%d*2^(%d) in comparing\n",
-		             this->error.mantissa, this->error.exponent,
-		             y.error.mantissa, y.error.exponent);
+		                "comparing to zero\n",
+		             error.mantissa, error.exponent);
 		return LAZY_BOOLEAN::BOTTOM;
 	}
-	return ((MP_sign((z.value)) == 1));
+	return MP_sign(value) < 0;
 }
 
 REAL REAL::mp_absval() const
@@ -853,12 +855,7 @@ void REAL::seterror(sizetype nerror)
 
 void REAL::geterror(sizetype & nerror) const
 {
-	if (!value) {
-		REAL y(*this);
-		y.mp_conv().geterror(nerror);
-	} else {
-		nerror = (*this).error;
-	}
+	nerror = value ? error : dp.geterror();
 }
 
 void REAL::getsize(sizetype & nsize) const

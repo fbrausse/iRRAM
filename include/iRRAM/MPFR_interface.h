@@ -188,6 +188,7 @@ MA 02111-1307, USA.
 #define MP_int_modulo(z1,z2,z)   int_gmp_modulo(z1,z2,z);
 #define MP_int_log(z)            int_gmp_log(z);
 #define MP_rat_power(z1,z2,z)    rat_gmp_power(z1,z2,z);
+#define MP_rat_inv(z1,z)         rat_gmp_inv(z1,z)
 #define MP_rat_power2(z1,z2,z)   rat_gmp_power_ii(z1,z2,z);
 #define MP_rat_get_numerator(z1,z) mpq_get_num(z,z1) 
 #define MP_rat_get_denominator(z1,z) mpq_get_den(z,z1)
