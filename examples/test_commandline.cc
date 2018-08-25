@@ -3,7 +3,7 @@
 
 using namespace iRRAM;
 
-int iRRAM_compute(const int & argc, char ** const & argv)
+static int iRRAM_compute(const int & argc, char ** const & argv)
 {
 	REAL x1, x2;
 	if (argc >= 2)
@@ -17,6 +17,6 @@ int iRRAM_compute(const int & argc, char ** const & argv)
 
 int main(int argc, char ** argv)
 {
-	iRRAM_initialize(argc, argv);
+	iRRAM_initialize2(&argc, argv);
 	return iRRAM::exec(iRRAM_compute, argc, argv);
 }
