@@ -28,7 +28,12 @@ var group__switches =
     [ "relaxed", "structiRRAM_1_1relaxed.html", [
       [ "relaxed", "structiRRAM_1_1relaxed.html#ad1d1c0c0ddae293972f53364a81a96d5", null ]
     ] ],
-    [ "limit_computation", "structiRRAM_1_1limit__computation.html", null ],
+    [ "limit_computation", "structiRRAM_1_1limit__computation.html", [
+      [ "stiff", "structiRRAM_1_1limit__computation.html#a97d650d798318e40874d4f34d3eceba1", null ],
+      [ "stiff", "structiRRAM_1_1limit__computation.html#afdc3d3aaba98a6b27336770b14d1df80", null ],
+      [ "stiff", "structiRRAM_1_1limit__computation.html#aee57c4eb630f14b0e46bf7c3974bc6ed", null ],
+      [ "stiff", "structiRRAM_1_1limit__computation.html#a82005f2bcd48aa800462f86569d7a164", null ]
+    ] ],
     [ "iRRAM_ABSOLUTE", "group__switches.html#ga77747c24046eb3885a58c08175b8c5cd", null ],
     [ "iRRAM_RELATIVE", "group__switches.html#ga3a96f5b11185e16e02aea64ded7d7cba", null ]
 ];

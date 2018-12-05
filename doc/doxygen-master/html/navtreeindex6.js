@@ -1,5 +1,11 @@
 var NAVTREEINDEX6 =
 {
+"limit__templates_8h.html#ga2b9a87d47dfd157c7200a335410650ba":[4,0,0,0,13,9],
+"limit__templates_8h.html#ga322172a761ed4983ad267bfb18e312cc":[4,0,0,0,13,8],
+"limit__templates_8h.html#ga4701681603f8346e74299e0e7305d705":[4,0,0,0,13,5],
+"limit__templates_8h.html#ga648e2e0b9dd7c4dc99a4bd6c3c313546":[4,0,0,0,13,20],
+"limit__templates_8h.html#ga6b67d44b058fd3fa1ae2a1fd8b19faed":[4,0,0,0,13,19],
+"limit__templates_8h.html#ga7f5fdfcf5a359c2bea9bbb7891499e64":[4,0,0,0,13,7],
 "limit__templates_8h.html#gaaa6d6676161a4af3841f017a3427e945":[4,0,0,0,13,14],
 "limit__templates_8h.html#gaacf2f074f2347b40178aeee4dcbc3806":[4,0,0,0,13,22],
 "limit__templates_8h.html#gac1c500e8496f9b972a83a985607e3f37":[4,0,0,0,13,11],
@@ -54,10 +60,10 @@ var NAVTREEINDEX6 =
 "mpfr__extension_8h.html#aa7a4acb012f502bfbf7dacbab136fd00":[4,0,0,0,14,4],
 "mpfr__extension_8h.html#af49fb1a0d6aee2be2029b90aae8ef718":[4,0,0,0,14,2],
 "mpfr__extension_8h_source.html":[4,0,0,0,14],
-"namespaceiRRAM.html":[3,0,0],
 "namespaceiRRAM.html":[2,0,0],
-"namespaceiRRAM_1_1internal.html":[2,0,0,0],
+"namespaceiRRAM.html":[3,0,0],
 "namespaceiRRAM_1_1internal.html":[3,0,0,0],
+"namespaceiRRAM_1_1internal.html":[2,0,0,0],
 "namespacemembers.html":[2,1,0],
 "namespacemembers.html":[2,1,0,0],
 "namespacemembers_b.html":[2,1,0,1],
@@ -243,11 +249,5 @@ var NAVTREEINDEX6 =
 "structiRRAM_1_1is__cacheable_3_01bool_01_4.html":[3,0,0,27],
 "structiRRAM_1_1is__cacheable_3_01double_01_4.html":[3,0,0,28],
 "structiRRAM_1_1is__cacheable_3_01float_01_4.html":[3,0,0,29],
-"structiRRAM_1_1is__cacheable_3_01int_01_4.html":[3,0,0,30],
-"structiRRAM_1_1is__cacheable_3_01long_01_4.html":[3,0,0,31],
-"structiRRAM_1_1is__cacheable_3_01long_01long_01_4.html":[3,0,0,32],
-"structiRRAM_1_1is__cacheable_3_01short_01_4.html":[3,0,0,35],
-"structiRRAM_1_1is__cacheable_3_01std_1_1istream_01_5_01_4.html":[3,0,0,36],
-"structiRRAM_1_1is__cacheable_3_01std_1_1ostream_01_5_01_4.html":[3,0,0,37],
-"structiRRAM_1_1is__cacheable_3_01std_1_1string_01_4.html":[3,0,0,38]
+"structiRRAM_1_1is__cacheable_3_01int_01_4.html":[3,0,0,30]
 };

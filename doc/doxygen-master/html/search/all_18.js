@@ -15,6 +15,7 @@ var searchData=
   ['_7erun',['~run',['../classiRRAM_1_1internal_1_1run.html#a766b3ad39b7c307bc357145b08bb408e',1,'iRRAM::internal::run']]],
   ['_7esingle_5fvalued',['~single_valued',['../structiRRAM_1_1single__valued.html#a3275794dedbb9acb3001db66c8a4f71a',1,'iRRAM::single_valued']]],
   ['_7esparserealmatrix',['~SPARSEREALMATRIX',['../classiRRAM_1_1SPARSEREALMATRIX.html#a348bdbadff3992f15ff1e388bca379af',1,'iRRAM::SPARSEREALMATRIX']]],
+  ['_7estate_5ft',['~state_t',['../structiRRAM_1_1state__t.html#ad56cc5bfcd59922fbeac763eae12c7ed',1,'iRRAM::state_t']]],
   ['_7estiff',['~stiff',['../classiRRAM_1_1stiff.html#a5f5022fc786a6f42e46045ddf971debc',1,'iRRAM::stiff']]],
   ['_7ewrap_5ftype',['~wrap_type',['../structiRRAM_1_1wrap__type.html#a0ef9814ea76b17a7a97d82d301a29f61',1,'iRRAM::wrap_type']]]
 ];

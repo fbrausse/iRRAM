@@ -6,7 +6,6 @@ var REALmain_8cc =
     [ "iRRAM_initialize2", "REALmain_8cc.html#a1f0b2e2bd4484f897f00853e3be068e7", null ],
     [ "iRRAM_initialize3", "REALmain_8cc.html#a1f021bbd9b1d920efbd23244909c3c21", null ],
     [ "iRRAM_parse_args", "REALmain_8cc.html#a7caf47334725795bbfa68448568caf46", null ],
-    [ "resources", "REALmain_8cc.html#ab403fac4ada58233596feebff9f5988e", null ],
     [ "show_statistics", "REALmain_8cc.html#ace6b7638282c02f8c7dcfdfd8dc17cbd", null ],
     [ "cin", "REALmain_8cc.html#a861f6a94c5866cdd3899413e17043136", null ],
     [ "cout", "REALmain_8cc.html#a925203afb7c242ff6e06612487466d52", null ],

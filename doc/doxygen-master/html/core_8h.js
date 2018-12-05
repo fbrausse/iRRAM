@@ -29,6 +29,6 @@ var core_8h =
     [ "get_cached", "core_8h.html#a66aef9911e94cbe5047bdd4c6dfb5e24", null ],
     [ "modify_cached", "core_8h.html#aa3a6c1da9039ee5f03c3e77e362f4fa8", null ],
     [ "put_cached", "core_8h.html#aab1f0c0b031f86822d682b491e08d180", null ],
-    [ "resources", "core_8h.html#ab403fac4ada58233596feebff9f5988e", null ],
+    [ "resources", "core_8h.html#ac2821869710c7f9dfd1843a3a480501a", null ],
     [ "show_statistics", "core_8h.html#ace6b7638282c02f8c7dcfdfd8dc17cbd", null ]
 ];

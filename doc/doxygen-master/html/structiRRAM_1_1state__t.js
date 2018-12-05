@@ -1,5 +1,7 @@
 var structiRRAM_1_1state__t =
 [
+    [ "state_t", "structiRRAM_1_1state__t.html#a4edd40bcf7285e276d83185e86a1caf6", null ],
+    [ "~state_t", "structiRRAM_1_1state__t.html#ad56cc5bfcd59922fbeac763eae12c7ed", null ],
     [ "ACTUAL_STACK", "structiRRAM_1_1state__t.html#ab6536bdc9b51918a963fba70221a663e", null ],
     [ "cache_active", "structiRRAM_1_1state__t.html#aace2f0340a268408360785bb08e4f8a3", null ],
     [ "cache_address", "structiRRAM_1_1state__t.html#a39bcc6e9f4a2571f6295b4b8f0439d2a", null ],

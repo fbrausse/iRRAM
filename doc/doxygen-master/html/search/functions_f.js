@@ -12,7 +12,7 @@ var searchData=
   ['relaxed',['relaxed',['../structiRRAM_1_1relaxed.html#ad1d1c0c0ddae293972f53364a81a96d5',1,'iRRAM::relaxed']]],
   ['release',['release',['../structiRRAM_1_1state__proxy_3_01false_01_4.html#a16c4cb3138c433673d8563d013e6b741',1,'iRRAM::state_proxy&lt; false &gt;']]],
   ['reset',['reset',['../classiRRAM_1_1orstream.html#a9d6225ff03cb9fab1af54fe636ed7c97',1,'iRRAM::orstream']]],
-  ['resources',['resources',['../namespaceiRRAM.html#ab403fac4ada58233596feebff9f5988e',1,'iRRAM']]],
+  ['resources',['resources',['../namespaceiRRAM.html#ac2821869710c7f9dfd1843a3a480501a',1,'iRRAM']]],
   ['rewind',['rewind',['../structiRRAM_1_1cache__type.html#abb0ac34d39d0a35b7c780d606d1ad8fe',1,'iRRAM::cache_type::rewind()'],['../classiRRAM_1_1cache.html#a875461e41bbaa38d1fcd73622af5ea45',1,'iRRAM::cache::rewind()'],['../classiRRAM_1_1orstream.html#a2dd2c3306874a047576e43872da8a1ce',1,'iRRAM::orstream::rewind()']]],
   ['root',['root',['../group__maths.html#ga5afeb059421acdb704c4bc4d15bec8f3',1,'iRRAM']]],
   ['round',['round',['../namespaceiRRAM.html#a98315096709930d83a97a047ce739f13',1,'iRRAM']]],

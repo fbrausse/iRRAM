@@ -26,7 +26,7 @@ var searchData=
   ['release',['release',['../structiRRAM_1_1state__proxy_3_01false_01_4.html#a16c4cb3138c433673d8563d013e6b741',1,'iRRAM::state_proxy&lt; false &gt;']]],
   ['requests',['requests',['../structiRRAM_1_1state__t.html#abc4da744c236efcdbb2a5575fab3bdd9',1,'iRRAM::state_t']]],
   ['reset',['reset',['../classiRRAM_1_1orstream.html#a9d6225ff03cb9fab1af54fe636ed7c97',1,'iRRAM::orstream']]],
-  ['resources',['resources',['../namespaceiRRAM.html#ab403fac4ada58233596feebff9f5988e',1,'iRRAM']]],
+  ['resources',['resources',['../namespaceiRRAM.html#ac2821869710c7f9dfd1843a3a480501a',1,'iRRAM']]],
   ['result_5fof_5ft',['result_of_t',['../namespaceiRRAM.html#a51526e301e8615e9db8958737ff78253',1,'iRRAM']]],
   ['ret_5fvalue_5ft',['ret_value_t',['../namespaceiRRAM.html#ab40321dd8f24582c15c524bb8e2b7481',1,'iRRAM']]],
   ['ret_5fvoid_5ft',['ret_void_t',['../namespaceiRRAM.html#ab2384bdeb80ac67f6ca96eb8add5ec41',1,'iRRAM']]],

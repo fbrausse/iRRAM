@@ -6,5 +6,6 @@ var searchData=
   ['inf',['inf',['../classiRRAM_1_1INTERVAL.html#af3e582deb503f87f495138e0cc8b9ebe',1,'iRRAM::INTERVAL']]],
   ['integer',['INTEGER',['../classiRRAM_1_1DYADIC.html#acf3e4225e52c1f5641054741dc52ad8c',1,'iRRAM::DYADIC::INTEGER()'],['../classiRRAM_1_1RATIONAL.html#acf3e4225e52c1f5641054741dc52ad8c',1,'iRRAM::RATIONAL::INTEGER()']]],
   ['intersect',['intersect',['../classiRRAM_1_1INTERVAL.html#ae07dfa68fc438fd7fa3cdea1d54474df',1,'iRRAM::INTERVAL']]],
-  ['interval_5fhull',['interval_hull',['../classiRRAM_1_1INTERVAL.html#a54a1b01c216669be0016fb1b1ece9283',1,'iRRAM::INTERVAL']]]
+  ['interval_5fhull',['interval_hull',['../classiRRAM_1_1INTERVAL.html#a54a1b01c216669be0016fb1b1ece9283',1,'iRRAM::INTERVAL']]],
+  ['inv',['inv',['../classiRRAM_1_1RATIONAL.html#a801107f063c863fd46bbb8b0b30cd0c8',1,'iRRAM::RATIONAL']]]
 ];

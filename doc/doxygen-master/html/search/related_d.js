@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['scale',['scale',['../classiRRAM_1_1DYADIC.html#a9f27d7ab0cfbeb6e117c68383ad4dbac',1,'iRRAM::DYADIC::scale()'],['../classiRRAM_1_1INTEGER.html#aacf7534e4f3e6d33214dddc7f16ff62a',1,'iRRAM::INTEGER::scale()'],['../classiRRAM_1_1RATIONAL.html#afb2b559184424456ba2d7973e0e78278',1,'iRRAM::RATIONAL::scale()'],['../classiRRAM_1_1REAL.html#a6f5d0bd1d7cb05b6d1d23b4c51861371',1,'iRRAM::REAL::scale()']]],
+  ['scale',['scale',['../classiRRAM_1_1DYADIC.html#a9f27d7ab0cfbeb6e117c68383ad4dbac',1,'iRRAM::DYADIC::scale()'],['../classiRRAM_1_1INTEGER.html#aacf7534e4f3e6d33214dddc7f16ff62a',1,'iRRAM::INTEGER::scale()'],['../classiRRAM_1_1RATIONAL.html#afb2b559184424456ba2d7973e0e78278',1,'iRRAM::RATIONAL::scale()'],['../classiRRAM_1_1REAL.html#a8493d20d3d8516ed45b404636c3f90b1',1,'iRRAM::REAL::scale()']]],
   ['sign',['sign',['../classiRRAM_1_1INTEGER.html#a5fb4078c9569147ae01221aabaa6fd67',1,'iRRAM::INTEGER::sign()'],['../classiRRAM_1_1RATIONAL.html#a41a08eee3faa9e72aa234a93438d0626',1,'iRRAM::RATIONAL::sign()']]],
   ['sin',['sin',['../classiRRAM_1_1INTERVAL.html#a35ee1a757ddfb10dff98a83d31dbb041',1,'iRRAM::INTERVAL']]],
   ['size',['size',['../classiRRAM_1_1DYADIC.html#a7f6cbe8a76928d4a55b44a69b3e5533e',1,'iRRAM::DYADIC::size()'],['../classiRRAM_1_1INTEGER.html#a158a716a3840c07d2561718ae820c4f4',1,'iRRAM::INTEGER::size()'],['../classiRRAM_1_1REAL.html#a114722c519cbd98d63791f48d2b082df',1,'iRRAM::REAL::size()']]],

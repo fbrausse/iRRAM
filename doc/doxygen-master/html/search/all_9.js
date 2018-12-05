@@ -23,6 +23,7 @@ var searchData=
   ['interval_2ecc',['INTERVAL.cc',['../INTERVAL_8cc.html',1,'']]],
   ['interval_2eh',['INTERVAL.h',['../INTERVAL_8h.html',1,'']]],
   ['interval_5fhull',['interval_hull',['../classiRRAM_1_1INTERVAL.html#a54a1b01c216669be0016fb1b1ece9283',1,'iRRAM::INTERVAL::interval_hull()'],['../namespaceiRRAM.html#a1a967debdd5426906728cfd1da0f4333',1,'iRRAM::interval_hull()']]],
+  ['inv',['inv',['../classiRRAM_1_1RATIONAL.html#a801107f063c863fd46bbb8b0b30cd0c8',1,'iRRAM::RATIONAL::inv()'],['../namespaceiRRAM.html#aa51a812cd465d2ace316622e0fd3a3ab',1,'iRRAM::inv()']]],
   ['irram',['iRRAM',['../namespaceiRRAM.html',1,'']]],
   ['irram_2eh',['iRRAM.h',['../iRRAM_8h.html',1,'']]],
   ['irram_5fabsolute',['iRRAM_ABSOLUTE',['../group__switches.html#ga77747c24046eb3885a58c08175b8c5cd',1,'SWITCHES.h']]],

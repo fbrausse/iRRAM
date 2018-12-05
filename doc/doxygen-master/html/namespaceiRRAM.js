@@ -57,7 +57,7 @@ var namespaceiRRAM =
     [ "Iteration", "structiRRAM_1_1Iteration.html", "structiRRAM_1_1Iteration" ],
     [ "ITERATION_DATA", "structiRRAM_1_1ITERATION__DATA.html", "structiRRAM_1_1ITERATION__DATA" ],
     [ "LAZY_BOOLEAN", "classiRRAM_1_1LAZY__BOOLEAN.html", "classiRRAM_1_1LAZY__BOOLEAN" ],
-    [ "limit_computation", "structiRRAM_1_1limit__computation.html", null ],
+    [ "limit_computation", "structiRRAM_1_1limit__computation.html", "structiRRAM_1_1limit__computation" ],
     [ "mv_cache", "structiRRAM_1_1mv__cache.html", "structiRRAM_1_1mv__cache" ],
     [ "negation", "structiRRAM_1_1negation.html", null ],
     [ "orstream", "classiRRAM_1_1orstream.html", "classiRRAM_1_1orstream" ],
