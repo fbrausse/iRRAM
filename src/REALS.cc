@@ -777,8 +777,10 @@ int upperbound(const REAL & x)
  * where \f$\hat x=m\cdot2^e\f$.
  * Otherwise, \f$\bot\f$ is returned. These are the cases:
  * 1. \f$\bot\f$: \f$\neg P_k(\hat x,x_\varepsilon)\Longrightarrow\hat x+x_\varepsilon>2^k=2\cdot2^{k-1}>2(\hat x-x_\varepsilon)\Longrightarrow x_\varepsilon>\hat x/3>|x|/3\f$.
- * 2. \f$T\f$: \f$P_k(\hat x,x_\varepsilon)\wedge\hat x<2^k\Longrightarrow2^k>\hat x+x_\varepsilon>|x|\f$
- * 3. \f$F\f$: \f$P_k(\hat x,x_\varepsilon)\wedge\hat x\geq2^k\Longrightarrow\hat x-x_\varepsilon\geq 2^{k-1}\Longrightarrow|x|\geq 2^{k-1}-2^e\f$ for \f$\hat x=m\cdot2^e\f$.
+ * 2. \f$T\f$: \f$P_k(\hat x,x_\varepsilon)\wedge2^k\geq\hat x+x_\varepsilon>|x|\f$
+ * 3. \f$F\f$: \f$P_k(\hat x,x_\varepsilon)\wedge2^k<\hat x+x_\varepsilon
+ *    \Longrightarrow\hat x\geq x_\varepsilon+2^{k-1}+2^e
+ *    \Longrightarrow2^{k-1}\leq\check x-x_\varepsilon\leq|x|\f$.
  *
  * \param x real number to bound the absolute value of
  * \param k base-2 logarithm of the bound
