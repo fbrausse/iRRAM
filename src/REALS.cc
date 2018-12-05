@@ -683,15 +683,14 @@ DYADIC approx(const REAL & x, const int p)
  * this function computes
  * \f$k=\lceil\log_2(\hat x+x_\varepsilon)\rceil>\log_2|x|\f$
  * and via reiteration enforces that
- * \f$\hat x\geq x_\varepsilon+2^{k-2}\f$ which is equivalent to
- * \f$2^{k-2}\leq\hat x-x_\varepsilon=(m-1)\cdot2^e-x_\varepsilon+2^e
- *           \leq|x|+2^e\f$,
- * the guarrantee therefore is \f$2^{k-2}-2^e\leq|x|<2^k\f$.
+ * \f$\hat x\geq x_\varepsilon+2^{k-2}+2^e\f$ which is equivalent to
+ * \f$2^{k-2}\leq\check x-x_\varepsilon=(m-1)\cdot2^e-x_\varepsilon
+ *           \leq|x|\f$,
+ * the guarrantee therefore is \f$2^{k-2}\leq|x|<2^k\f$.
  *
  * \param x non-zero real number
- * \return \f$k\in\mathbb Z:2^{k-2}-2^e\leq|x|<2^k\f$,
- *         where \a e is `x.vsize.exponent` and
- *         \ref min_exponent <= \a k < \ref MP_max
+ * \return \f$k\in\mathbb Z:2^{k-2}\leq|x|<2^k\f$,
+ *         where \ref min_exponent <= \a k < \ref MP_max
  * \exception iRRAM_Numerical_Exception(iRRAM_underflow_error)
  *    if x is exact with value zero. If x is not exact but zero, reiterations
  *    will be performed.
@@ -721,7 +720,10 @@ int size(const REAL & x)
 
 	result = sizetype_log2(x_max);
 
-	if (sizetype_less(x.vsize, sizetype_add_power2(x.error, result - 2))) {
+	sizetype lb = x.error;
+	sizetype_add_power2(lb, result - 2);
+	sizetype_add_power2(lb, x.vsize.exponent);
+	if (sizetype_less(x.vsize, lb)) {
 		iRRAM_DEBUG2(
 		        1,
 		        "insufficient precision %d*2^(%d) in size %d*2^(%d)\n",
