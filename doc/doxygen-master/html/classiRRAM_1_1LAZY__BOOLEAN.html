@@ -331,8 +331,8 @@ Friends</h2></td></tr>
 <p>If it is necessary to check that a number is small enough (e.g. given as the error of an approximating algorithm), bound(x,k) should be preferred over size(x)&lt;k as there is no singularity at x=0.</p>
 <p>The current approximation to \(x\) is deemed precise enough, predicate \(P_k(\hat x,x_\varepsilon)\), when \(\neg(\hat x&lt;x_\varepsilon+2^{k-1}+2^e\wedge2^k&lt;\hat x+x_\varepsilon)\) where \(\hat x=m\cdot2^e\). Otherwise, \(\bot\) is returned. These are the cases:</p><ol type="1">
 <li>\(\bot\): \(\neg P_k(\hat x,x_\varepsilon)\Longrightarrow\hat x+x_\varepsilon&gt;2^k=2\cdot2^{k-1}&gt;2(\hat x-x_\varepsilon)\Longrightarrow x_\varepsilon&gt;\hat x/3&gt;|x|/3\).</li>
-<li>\(T\): \(P_k(\hat x,x_\varepsilon)\wedge\hat x&lt;2^k\Longrightarrow2^k&gt;\hat x+x_\varepsilon&gt;|x|\)</li>
-<li>\(F\): \(P_k(\hat x,x_\varepsilon)\wedge\hat x\geq2^k\Longrightarrow\hat x-x_\varepsilon\geq 2^{k-1}\Longrightarrow|x|\geq 2^{k-1}-2^e\) for \(\hat x=m\cdot2^e\).</li>
+<li>\(T\): \(P_k(\hat x,x_\varepsilon)\wedge2^k\geq\hat x+x_\varepsilon&gt;|x|\)</li>
+<li>\(F\): \(P_k(\hat x,x_\varepsilon)\wedge2^k&lt;\hat x+x_\varepsilon \Longrightarrow\hat x\geq x_\varepsilon+2^{k-1}+2^e \Longrightarrow2^{k-1}\leq\check x-x_\varepsilon\leq|x|\).</li>
 </ol>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -344,7 +344,7 @@ Friends</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>\(\text{bound}(x,k)=\begin{cases} \bot,&amp;\neg P_k(\hat x,x_\varepsilon)\Longrightarrow x_\varepsilon&gt;|x|/3 \\ T,&amp;P_k(\hat x,x_\varepsilon)\wedge2^k\geq\hat x+x_\varepsilon\Longrightarrow |x|&lt;2^k \\ F,&amp;P_k(\hat x,x_\varepsilon)\wedge2^k&lt;\hat x+x_\varepsilon\Longrightarrow |x|\geq 2^{k-1} \end{cases}\)</dd></dl>
 <p>According to documentation, this function should compute \(\begin{cases} T,&amp;|x|\leq 2^k \\ F,&amp;|x|\geq 2^{k-2} \\ \bot,&amp;\text{otherwise} \end{cases}\) and does indeed compute a tightening. </p>
 
-<p class="definition">Definition at line <a class="el" href="REALS_8cc_source.html#l00798">798</a> of file <a class="el" href="REALS_8cc_source.html">REALS.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="REALS_8cc_source.html#l00800">800</a> of file <a class="el" href="REALS_8cc_source.html">REALS.cc</a>.</p>
 
 </div>
 </div>
@@ -500,7 +500,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="REALS_8cc_source.html#l01166">1166</a> of file <a class="el" href="REALS_8cc_source.html">REALS.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="REALS_8cc_source.html#l01168">1168</a> of file <a class="el" href="REALS_8cc_source.html">REALS.cc</a>.</p>
 
 </div>
 </div>
@@ -538,7 +538,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="REALS_8cc_source.html#l01181">1181</a> of file <a class="el" href="REALS_8cc_source.html">REALS.cc</a>.</p>
+<p class="definition">Definition at line <a class="el" href="REALS_8cc_source.html#l01183">1183</a> of file <a class="el" href="REALS_8cc_source.html">REALS.cc</a>.</p>
 
 </div>
 </div>
@@ -794,7 +794,7 @@ Friends</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceiRRAM.html">iRRAM</a></li><li class="navelem"><a class="el" href="classiRRAM_1_1LAZY__BOOLEAN.html">LAZY_BOOLEAN</a></li>
-    <li class="footer">Generated on Wed Dec 5 2018 19:50:46 for iRRAM by
+    <li class="footer">Generated on Wed Dec 5 2018 20:02:05 for iRRAM by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
   </ul>
