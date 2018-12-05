@@ -54,6 +54,8 @@ public:
 
 #if iRRAM_HAVE_GMP_C
 	explicit INTEGER(mpz_srcptr);
+
+	explicit operator mpz_srcptr() const { return value; }
 #endif
 
 /****** Constructors ******/
