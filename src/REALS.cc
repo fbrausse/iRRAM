@@ -771,7 +771,8 @@ int upperbound(const REAL & x)
  *
  * The current approximation to \f$x\f$ is deemed precise enough,
  * predicate \f$P_k(\hat x,x_\varepsilon)\f$, when
- * \f$\neg(\hat x<x_\varepsilon+2^{k-1}\wedge2^k<\hat x+x_\varepsilon)\f$.
+ * \f$\neg(\hat x<x_\varepsilon+2^{k-1}+2^e\wedge2^k<\hat x+x_\varepsilon)\f$
+ * where \f$\hat x=m\cdot2^e\f$.
  * Otherwise, \f$\bot\f$ is returned. These are the cases:
  * 1. \f$\bot\f$: \f$\neg P_k(\hat x,x_\varepsilon)\Longrightarrow\hat x+x_\varepsilon>2^k=2\cdot2^{k-1}>2(\hat x-x_\varepsilon)\Longrightarrow x_\varepsilon>\hat x/3>|x|/3\f$.
  * 2. \f$T\f$: \f$P_k(\hat x,x_\varepsilon)\wedge\hat x<2^k\Longrightarrow2^k>\hat x+x_\varepsilon>|x|\f$
@@ -781,15 +782,16 @@ int upperbound(const REAL & x)
  * \param k base-2 logarithm of the bound
  * \return \f$\text{bound}(x,k)=\begin{cases}
  *    \bot,&\neg P_k(\hat x,x_\varepsilon)\Longrightarrow x_\varepsilon>|x|/3
- * \\ T,&P_k(\hat x,x_\varepsilon)\wedge\hat x<2^k\Longrightarrow |x|<2^k
- * \\ F,&P_k(\hat x,x_\varepsilon)\wedge\hat x\not<2^k\Longrightarrow |x|\geq 2^{k-1}-2^e
+ * \\ T,&P_k(\hat x,x_\varepsilon)\wedge2^k\geq\hat x+x_\varepsilon\Longrightarrow |x|<2^k
+ * \\ F,&P_k(\hat x,x_\varepsilon)\wedge2^k<\hat x+x_\varepsilon\Longrightarrow |x|\geq 2^{k-1}
  * \end{cases}\f$
- * \todo According to documentation, this function should compute
+ *
+ * According to documentation, this function should compute
  * \f$\begin{cases}
  *    T,&|x|\leq 2^k
  * \\ F,&|x|\geq 2^{k-2}
  * \\ \bot,&\text{otherwise}
- * \end{cases}\f$
+ * \end{cases}\f$ and does indeed compute a tightening.
  */
 LAZY_BOOLEAN bound(const REAL & x, const int k)
 {
@@ -800,15 +802,28 @@ LAZY_BOOLEAN bound(const REAL & x, const int k)
 	sizetype lowsize, ksize, highsize;
 	sizetype_set(ksize, 1, k);
 	lowsize = sizetype_add_power2(x.error, k - 1);
+	lowsize = sizetype_add_power2(lowsize, x.vsize.exponent);
 	sizetype_add(highsize, x.vsize, x.error);
-	if (sizetype_less(x.vsize, lowsize) && sizetype_less(ksize, highsize)) {
+	bool lower_low  = sizetype_less(x.vsize, lowsize);
+	bool upper_high = sizetype_less(ksize, highsize);
+	if (lower_low && upper_high) {
 		iRRAM_DEBUG2(1, "insufficient precision %d*2^(%d) in bounding "
 		                "by 2^(%d) for argument of size  %d*2^(%d)\n",
 		             x.error.mantissa, x.error.exponent, k,
 		             x.vsize.mantissa, x.vsize.exponent);
 		return LAZY_BOOLEAN::BOTTOM;
 	}
-	return (sizetype_less(x.vsize, ksize));
+
+	/*         2^(k-1)           2^k
+	 *           |                |
+	 *         [ |                | )      -> bottom
+	 *           |        [       | )      -> false
+	 *         [ |        )       |        -> true
+	 *           |   [       )    |        -> true (or false)
+	 *  [      ) |                |        -> true
+	 *           |                | [   )  -> false
+	 */
+	return !upper_high;
 }
 
 
