@@ -35,7 +35,6 @@ class RATIONAL
 {
 	/****** Private ******/
 	MP_rat_type value;
-	RATIONAL(MP_rat_type y) : value(y) {}
 
 public:
 
@@ -55,6 +54,12 @@ RATIONAL(RATIONAL &&y) : value(y.value) { y.value = nullptr; }
 
 RATIONAL(int i, int j);
 RATIONAL(const INTEGER& x, const INTEGER& y);
+
+#if iRRAM_HAVE_GMP_C
+	explicit RATIONAL(mpq_srcptr);
+
+	explicit operator mpq_srcptr() const { return value; }
+#endif
 
 /****** Copy constructor ******/
 

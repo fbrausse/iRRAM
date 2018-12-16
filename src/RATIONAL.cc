@@ -105,6 +105,13 @@ RATIONAL::RATIONAL(const char* s){
   MP_string_to_RATIONAL(s,value);
 }
 
+#ifdef iRRAM_HAVE_GMP_C
+RATIONAL::RATIONAL(mpq_srcptr p)
+{
+	MP_rat_duplicate_w_init(p, value);
+}
+#endif
+
 //******************************************************************************
 // Copy assignment
 // left side (this) is already initialized
