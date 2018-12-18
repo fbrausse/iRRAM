@@ -532,7 +532,7 @@ inline REAL operator - (const REAL& x)
 {
     if ( iRRAM_unlikely ( x.value ) )
 	{ return x.mp_invsubtraction(int(0)); }
-    iRRAM_double_pair z(-x.dp.lower_pos,-x.dp.upper_neg);
+    iRRAM_double_pair z(x.dp.upper_neg,x.dp.lower_pos);
     return REAL(z);
 }
 
