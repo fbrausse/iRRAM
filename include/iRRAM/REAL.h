@@ -667,8 +667,7 @@ inline REAL REAL::operator-() const
 {
 	if (iRRAM_unlikely(value))
 		return mp_invsubtraction(int(0));
-	return REAL(REAL::double_pair(-dp.lower_pos,
-	                              -dp.upper_neg));
+	return REAL(REAL::double_pair(dp.upper_neg, dp.lower_pos));
 }
 
 inline REAL & REAL::operator-=(const REAL &y) { return *this = *this - y; }
