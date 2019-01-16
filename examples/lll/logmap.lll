@@ -1,0 +1,44 @@
+
+logmap_itr:	# c x n
+  rot 2 1	# c n x
+  ipush 1	# c n x 1
+  zconv
+  rconv
+  dup 2 1	# c n x 1 x
+  rneg		# c n x 1 -x
+  radd		# c n x 1-x
+  rmul		# c n x*(1-x)
+  dup 3 1	# c n x*(1-x) c
+  rmul		# c n x*(1-x)*c
+  rot 2 1	# c x*(1-x)*c n
+  ipush -1
+  iadd		# c x*(1-x)*c n-1
+logmap:		# c x n
+  dup 1 1	# c x n n
+  jnz logmap_itr
+  rot 3 1	# x 0 c
+  pop 2
+  ret
+
+main:
+  entc
+  ipush 375
+  zconv
+  rconv
+  ipush 100
+  zconv
+  rconv
+  rinv
+  rmul
+  ipush 1
+  zconv
+  rconv
+  ipush -1
+  rsh
+  ipush 40000
+  scall logmap
+  rsgn
+  dup 1 1
+  kch 2
+  pop 1
+  lvc 0

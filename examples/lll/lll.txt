@@ -1,0 +1,104 @@
+
+input : initial elements on the stack
+output: final elements on the stack after last ret
+
+types:
+ Z  : reference to arbitrary size integer (on heap)
+ K  : reference to name of kleenean (on heap)
+ R  : reference to name of real number (on heap)
+ a64: 64-bit instruction offset (address)
+ u64: 64-bit unsigned int in binary
+ i64: 64-bit signed int in two's complement
+ a* : reference to array of type a, where a is any of the above or array of type a
+ a?, p?, r?: objects of any of the above kinds
+
+opcode | imm params  | stack before -> after         | mv | comment
+-------+-------------+-------------------------------+----+---------------------------------
+ dup   | u64:k u64:n | an..a1       -> an..a1 an..ak |    | duplicate values on stack
+ pop   | u64:n       | a1..an       ->               |    | pop n elements off the stack
+ rot   | i64:k u64:n | a0..an       -> ak..a(k-1)%n  |    | rotate start of stack
+
+ scall | a64:f       | p1..pn       -> r1..rm        |    | call immediate f(p1,..,pn) -> (r1,..rm)
+ ret   |             |              ->               |    | function return
+ jnz   | a64:a       | Z            ->               |    | conditional jump to address a if not zero
+
+ ipush | i64:v       |              -> i64           |    | push 64-bit int value v to stack
+ ineg  |             | i64          -> i64           |    | 64-bit int negation with overflow
+ iadd  |             | i64 i64      -> i64           |    | 64-bit int addition with overflow
+ idiv  |             | i64 i64      -> i64           |    | 64-bit int division with truncation
+ imul  |             | i64 i64      -> i64           |    | 64-bit int multiplication with overflow
+ i2z   |             | i64          -> Z             |    | convert 64-bit int to Z
+
+ zneg  |             | Z            -> Z             |    | integer negation
+ zadd  |             | Z Z          -> Z             |    | integer addition
+ zmul  |             | Z Z          -> Z             |    | integer multiplication
+ zsh   | u64:v       | Z            -> Z             |    | multiply by 2^v
+ zcmp  |             | Z Z          -> Z             |    | compare integers -> {-1,0,+1}
+
+ bor   |             | Z Z          -> Z             |    | boolean disjunction
+ band  |             | Z Z          -> Z             |    | boolean conjunction
+ bnot  |             | Z            -> Z             |    | boolean negation
+
+ rneg  |             | R            -> R             |    | real negation
+ radd  |             | R R          -> R             |    | real addition
+ rinv  |             | R            -> R             |    | real inversion
+ rmul  |             | R R          -> R             |    | real multiplication
+ rsh   | i64:v       | R            -> R             |    | multiply by 2^v
+ rlim  | a64:f       | p1..pn       -> r0..rm        |    | limit immediate f(p,p1,..,pn) -> (r0,..,rm)
+ rcmp  |             | R R          -> K             |    | compare reals -> N \to {-1,bot,+1}
+
+ kand  |             | K K          -> K             |    | kleenean conjunction
+ kor   |             | K K          -> K             |    | kleenean disjunction
+ knot  |             | K            -> K             |    | kleenean negation
+ kch   | u64:n       | K1..Kn       -> Z             |  y | parallel-or
+
+ arnew |             | i64          -> R*            |    | create array of reals (init: 0) of length n
+ arld  |             | R* i64       -> R             |    | load element k of array of reals to stack
+ arst  |             | R* R i64     ->               |    | store real to element k of array of reals
+
+ aznew |             | i64          -> Z*            |    | create array of integers (init: 0) of length n
+ azld  |             | Z* i64       -> Z             |    | load element k of array of integers to stack
+ azst  |             | Z* Z i64     ->               |    | store integer to element k of array of integers
+
+
+potentially useful abbreviations:
+
+ i2z   | i64:v       |              -> Z             |    | convert immediate v to Z and push
+ z2r   |             | Z            -> R             |    | convert Z to R                        [expressed through rlim]
+ jmp   | a64:a       |              ->               |    | jump to address a                     [expressed through jne]
+ trunc |             | R            -> Z             |  y | truncate R to Z multi-valued          [expressed through kch]
+ round |             | R            -> Z             |  y | round R to Z multi-valued             [expressed through kch]
+ dcall |             | p1..pn addr  -> r1..rm        |    | call dynamic f(p1,..,pn) -> (r1,..rm) [expressed through trampoline]
+
+
+Discrete computation: no change from current state in C/Java/Haskell/...
+Continuous computation: no communication with outside world except discrete output
+
+
+ entc  |             |                              |    | enter continuous section
+ rlvc  |             | R Z          -> Z            |  y | leave continuous section, approximating real with accuracy p
+ klvc  |             | K            -> Z            |  y | leave continuous section, determining kleenean
+
+Inside continuous section (of any nesting level), there must be no communication
+with outside world.  The program starts in a discrete state, that is, there is
+no initial continuous section.
+Any datum (on the stack) is associated with an topology.
+For datums created in a discrete section, it is the discrete topology.
+Every 'entc' instructions lifts the state/stack before to a state/stack after of
+sequences, each converging to its corresponding value before with the identity
+modulus of convergence.  Operations \theta on values before in such a section
+are interpreted as operations \theta' on sequences of values after, each having
+their own modulus of continuity \mu'.  The stack of outer sections may not be
+modified, i.e. 'rot k n' must only be called when already n elements created by
+operations in this section are on the stack.
+A sequence f : N->Z is a name of a real number r if ...; \forall n, |f(n)/2^n-r|<=1/2^n.
+The instruction 'radd' transforms two sequences a,b : N->Z into a sequence
+c : N->Z with the property that \forall n, |a(n)+b(n)-c(n)|/2^n
+Functions N -> N -> ... -> N -> X can only 
+Operations on functions, like 'scall', however, are not lifted to Nat -> f.
+The 'lvc' instruction then 
+
+Otherwise, it is the Scott topology.
+
+Any datum (on the stack) can be approximated.
+Approximations to discrete 

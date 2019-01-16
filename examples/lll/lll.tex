@@ -1,0 +1,293 @@
+\documentclass[a4paper,parskip=half]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{amsmath,amssymb,mathtools,geometry}
+\usepackage[textsize=footnotesize]{todonotes}
+\usepackage[hyperref,standard,thmmarks]{ntheorem}
+\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
+\usepackage{cleveref,comment,xspace,alltt,subcaption,here}
+
+\renewtheorem{theorem}{Theorem}[section]
+\renewtheorem{proposition}[theorem]{Proposition}
+\renewtheorem{lemma}[theorem]{Lemma}
+\renewtheorem{corollary}[theorem]{Corollary}
+\theorembodyfont{\upshape}
+\renewtheorem{example}[theorem]{Example}
+\renewtheorem{remark}[theorem]{Remark}
+\renewtheorem{definition}[theorem]{Definition}
+
+\newcommand*{\iRRAM}{\texttt{iRRAM}\xspace}
+\newcommand*\mto{\rightrightarrows}
+
+\author{Franz Brauße}
+\title{LLL}
+\date{\today}
+
+\begin{document}
+\newgeometry{left=5mm,right=5mm,top=2.5cm,bottom=5cm}
+\begin{figure}[h]
+\centering
+\begin{tabular}{l|l|l|l@{\;\,\vline\,}c@{\,\vline\;\,}l}
+  opcode & imm.\ params & stack before & stack after & mv & comment \\ \hline
+  \ttfamily dup & u64:$n$ u64:$k$ & $a_1..a_n$ & $a_1..a_n\;a_1..a_k$     && duplicate values on the stack \\
+  \ttfamily pop & u64:$n$         & $a_1..a_n$ &                          && pop $n$ entries off the stack \\
+  \ttfamily rot & u64:$n$ u64:$k$ & $a_1..a_n$ & $a_{k+1}..a_n\;a_1..a_k$ && rotate $n$ entries on stack left by $k<n$ \\
+  \hline
+  \ttfamily apush & adr:$f$ &                    & $f$        && push immediate address to stack \\
+  \ttfamily dcall &         & adr:$f$ $a_1..a_n$ & $b_1..b_m$ && call dynamic $f(a_1,\ldots,a_n) = (b_1,\ldots,b_m)$, $n,m$ unspec. \\
+  \ttfamily scall & adr:$f$ & $a_1..a_n$         & $b_1..b_m$ && call immediate $f(a_1,\ldots,a_n) = (b_1,\ldots,b_m)$, $n,m$ unspec. \\
+  \ttfamily ret   &         &                    &            && return from function call or exit \\
+  \ttfamily jmp   & adr:$l$ &                    &            && unconditional jump to $l$ \\
+  \ttfamily jnz   & adr:$l$ & i64:$v$            &            && conditional jump to $l$ if $v\neq 0$ \\
+  \hline
+  \ttfamily ipush & i64:$v$ &                 & i64:$v$          && push immediate 64-bit two's complement $v$ to stack \\
+  \ttfamily ineg  &         & i64:$v$         & i64:$(-v)$       && 64-bit two's complement negation \\
+  \ttfamily iadd  &         & i64:$v$ i64:$w$ & i64:$(v+w)$      && 64-bit binary addition with overflow \\
+  \ttfamily imul  &         & i64:$v$ i64:$w$ & i64:$(v\cdot w)$ && 64-bit two's complement multiplication with overflow \\
+  \ttfamily idiv  &         & i64:$v$ i64:$w$ & i64:$(v/w)$      && 64-bit two's complement division with truncation \\
+  \ttfamily isgn  &         & i64:$v$         & i64:$(\operatorname{sgn}v)$ && sign of 64-bit two's complement int \\
+  \hline
+  \ttfamily zconv &         & i64:$v$         & Z:$v$            && convert 64-bit two's complement int to integer \\
+  \ttfamily zneg  &         & Z:$v$           & Z:$(-v)$         && integer negation \\
+  \ttfamily zadd  &         & Z:$v$ Z:$w$     & Z:$(v+w)$        && integer addition \\
+  \ttfamily zmul  &         & Z:$v$ Z:$w$     & Z:$(v\cdot w)$   && integer multiplication \\
+  \ttfamily zdiv  &         & Z:$v$ Z:$w$     & Z:$(v/w)$        && integer division with truncation \\
+  \ttfamily zsgn  &         & Z:$v$           & i64:$(\operatorname{sgn}v)$ && sign of integer \\
+  \hline
+  \ttfamily bor   &         & i64:$v$ i64:$w$ & i64:$x\in\{0,1\}$ && boolean disjunction $x=0\iff v=0=w$ \\
+  \ttfamily band  &         & i64:$v$ i64:$w$ & i64:$x\in\{0,1\}$ && boolean conjunction $x=1\iff v\neq0\neq w$ \\
+  \ttfamily bnot  &         & i64:$v$         & i64:$x\in\{0,1\}$ && boolean negation $x=1\iff v=0$ \\
+  \hline
+  \ttfamily arnew &         & i64:$n$         & R$^*$ && create array of reals (init: 0) of length $n$ \\
+  \ttfamily arld  &         & R$^*$ i64:$k$   & R     && load element $k$ of array of reals to stack \\
+  \ttfamily arst  &         & R$^*$ i64:$k$ R &       && store to element $k$ of array of reals \\
+  \hline
+  \ttfamily aznew &         & i64:$n$         & Z$^*$ && create array of integers (init: 0) of length $n$ \\
+  \ttfamily azld  &         & Z$^*$ i64:$k$   & Z     && load element $k$ of array of integers to stack \\
+  \ttfamily azst  &         & Z$^*$ i64:$k$ Z &       && store to element $k$ of array of integers \\
+  \hline
+  \ttfamily kor   &         & K K               & K && kleenean disjunction \\
+  \ttfamily kand  &         & K K               & K && kleenean conjunction \\
+  \ttfamily knot  &         & K                 & K && kleenean negation \\
+  \ttfamily kch   & u64:$n$ & K$_1..$K$_n$ & i64:$x$ & y & multi-valued choice, $x\in\{0,\ldots,n\}$ \\
+  \hline
+  \ttfamily rconv &         & Z:$v$           & R:$v$           & & convert an integer to real \\
+  \ttfamily rneg  &         & R:$v$           & R:$(-v)$        & & real negation \\
+  \ttfamily radd  &         & R:$v$ R:$w$     & R:$(v+w)$       & & real addition \\
+  \ttfamily rinv  &         & R:$v$           & R:$(1/v)$       & & real inversion \\
+  \ttfamily rmul  &         & R:$v$ R:$w$     & R:$(v\cdot w)$  & & real multiplication \\
+  \ttfamily rsh   &         & R:$v$ i64:$w$   & R:$(v\cdot2^w)$ & & multiplication by $2^w$ \\
+  \ttfamily rlim  & adr:$f$ & $a_1..a_n$ & $b_0..b_m$ &?& $\lim_{p\to\infty}{(f(-p,a_1,\ldots,a_n))_p} = (b_0,\ldots,b_m)$, $n,m$ unspec. \\[-1.35ex]\hline\noalign{\vspace{\dimexpr 1.35ex-.5pt}}
+  \ttfamily rsgn  &         & R:$v$           & K:$(\operatorname{sgn}v)$ && sign of $v$ as kleenean: $+1\mapsto T$, $-1\mapsto F$, $0\mapsto\bot$ \\
+  \hline
+  \ttfamily entc  &         &                           & Z:$\tilde p$ && enter continuous section with (volatile) prec.\ $\tilde p$ \\
+  \ttfamily lvc   & u64:$n$ & Z:$\tilde p$ $a_1'..a_n'$ & $a_1..a_n$   && leave continuous section ($\tau(a_i)\in\{\text{R,K}\}$ only if not last)
+\end{tabular}
+\caption{Instruction set of the low-level language.}
+\label{fig:instrs}
+\end{figure}
+
+\restoregeometry
+\newpage
+
+\newcommand*\dom{\operatorname{dom}}
+\newcommand*\Top{\operatorname{top}}
+
+Let $\tau\coloneqq\{\text{i64},\text{adr},\text Z,\text K,\text R\}$ and for
+$t\in\tau$ let
+\[ \dom t\coloneqq\begin{cases}
+	\{-2^{63},\ldots,2^{63}-1\}\subseteq\mathbb Z &\text{if}~t=\text{i64} \\
+	\mathbb Z_{2^{64}} &\text{if}~t=\text{adr} \\
+	\mathbb Z &\text{if}~t=\text Z \\
+	\mathbb K &\text{if}~t=\text K \\
+	\mathbb R &\text{if}~t=\text R
+\end{cases} \]
+and let $\Top t$ be the discrete topology on $\dom t$ for $t\in\{\text{i64},\text{adr},\text Z\}$,
+the topology $\{\varnothing,\{0\},\{1\},\{0,1\},\{0,1,\bot\}\}$ of the lifted
+booleans $\dom t$ for $t=\text K$ and the standard topology on the real line
+$\dom t$ for $t=\text R$. Note that for all $t\in\tau$, $(\dom t,\Top t)$ are
+complete and for $t\neq\text K$ these are also metric spaces. In the following
+$d:(\dom t)^2\to\mathbb R$ denotes the respective metric if it exists.
+For finite sequences $s\in\tau^*$ let
+$\dom s\coloneqq\bigtimes_{i=1}^{|s|}\dom s_i$
+be the product space of $(\dom s_i)_i$, $\Top s$ be its product topology and
+if all $\dom s_i$ are metric spaces, let also $d:(\dom s)^2\to\mathbb R$ denote
+the metric induced by $\Vert\cdot\Vert_\infty$ on $\dom s$.
+
+
+Let $s\in(\tau\setminus\text K)^*$ and $\tilde p\in\mathbb Z$ and $x,x'\in\dom s$.
+Then $x'$ is a \emph{$\tilde p$-approximation} of $x$ if
+$d(x,x')\leq2^{\tilde p}$.
+
+Let $\mathcal T=\bigcup_{t\in\tau}\dom t$ and let $p$ be a \emph{program}, that
+is, a finite word over the set of
+instructions from \cref{fig:instrs} of length $n\leq 2^{64}$.
+We call $(c,v,s,r)$
+a \emph{configuration of $p$} where $c\in\mathbb Z_{2^{64}}$ with $c<n$ is the
+\emph{program counter}, $v\in\mathcal T^*$ is the
+\emph{value stack}, $s\in(\mathbb Z_{2^{64}})^*$ is the \emph{continuous section
+stack} and $r\in(\mathbb Z_{2^{64}})^*$ is the
+\emph{return stack}.
+For any \emph{program} $p$ (that is, ) of length $n$ and any $1\leq i\leq n$,
+$(i,\epsilon,\epsilon,\epsilon)$ is an \emph{initial configuration of $p$},
+where $\epsilon$ denotes the empty word.
+
+We will now give the context in which \cref{fig:instrs} defines the transition
+relation $\vdash$ on configurations of $p$ for a program $p$. Let $(c,v,s,r)$ be
+a configuration of $p$ and let $I=p_c$.
+Then $(c,v,s,r)\vdash(c',v',s',r')$ iff
+\begin{itemize}
+\item
+\end{itemize}
+
+
+%With the exception of $\texttt{entc},\texttt{lvc}$ and $\texttt{dcall},\texttt{scall},
+
+
+If code inside a continuous section enclosed by the pair of instructions
+$(\texttt{entc},\texttt{lvc}~n)$ computes a $\tilde p$-approximation
+$(a_1',\ldots,a_n')$ of $(a_1,\ldots,a_n)$, then the continous section computes
+$(a_1,\ldots,a_n)$.
+
+\newpage
+
+How to implement \verb!main()! depends on what we want to express by our
+program. Should it compute $f:\mathbb R\to\mathbb R$,
+$g:\mathbb Z\times\mathbb R\to\mathbb Q$ or
+$h:\mathbb Z\times\mathbb Q\to\mathbb Q$?
+
+\begin{figure}[h]
+\small
+\begin{minipage}[b]{.33\linewidth}
+\begin{verbatim}
+#include <iRRAM/lib.h>
+/* define input() and
+ * output() via kirk */
+
+using namespace iRRAM;
+int main() {
+  iRRAM_init();
+  exec([]{
+
+    REAL x = input();
+    REAL y = sqrt(x);
+    output(y);
+
+  }); }
+\end{verbatim}
+\subcaption{$f:\mathbb R\to\mathbb R$}
+\end{minipage}%
+\begin{minipage}[b]{.33\linewidth}
+\begin{verbatim}
+#include <iRRAM/lib.h>
+/* define input()
+   using kirk */
+
+using namespace iRRAM;
+int main() {
+  iRRAM_init();
+  exec([]{
+    int n; cin >> n;
+    REAL x = input();
+    REAL y = sqrt(x);
+    cout << setRwidth(n)
+         << y;
+  }); }
+\end{verbatim}
+\subcaption{$g:\mathbb Z\times\mathbb R\to\mathbb Q$}
+\end{minipage}%
+\begin{minipage}[b]{.33\linewidth}
+\begin{verbatim}
+#include <iRRAM/lib.h>
+
+
+
+using namespace iRRAM;
+int main() {
+  iRRAM_init();
+  exec([]{
+    int  n; cin >> n;
+    REAL x; cin >> x;
+    REAL y = sqrt(x);
+    cout << setRwidth(n)
+         << y;
+  }); }
+\end{verbatim}
+\subcaption{$h:\mathbb Z\times\mathbb Q\to\mathbb Q$}
+\end{minipage}
+\caption{Implementations of square root with different composeability.}
+\end{figure}
+The only line common to the continous parts of the algorithms is
+\verb!REAL y = sqrt(x);!, which is exactly the composeable part of these
+algorithms.
+
+Actually, the kirk-versions are cheated, it might look like \cref{fig:kirk-lib}.
+\begin{figure}[H]
+\begin{verbatim}
+#include <kirk/kirk-irram.hh>
+
+extern "C" void sqrt(kirk_real_t **in, int n_in, kirk_real_t **out) {
+  iRRAM_init();
+  using namespace iRRAM;
+  assert(n_in == 1);
+  auto machine = kirk::irram::eval(in, n_in, out, 1,
+    [](const REAL *in, REAL *out){
+      const REAL &x = in[0];
+      REAL &y = out[0];
+      y = iRRAM::sqrt(x);
+    });
+  /* can't make use of the machine, yet, forget it */
+}
+
+/* what should main() do? */
+\end{verbatim}
+\caption{Library-like implementation of $f:\mathbb R\to\mathbb R$.}
+\label{fig:kirk-lib}
+\end{figure}
+
+What should \verb!main()! do? The point being, in the discrete setting of
+\verb!main()!, ``executing'' a function on continuous data does not make sense
+using a model like oracle machines. Only as a transformation of a stream of
+approximations. Therefore, there are two options.
+\begin{enumerate}
+\item
+	Implement algorithms on continuous data not in terms of \verb!main()!
+	but as library functions that operate on (e.g.\ kirk-provided) function
+	pointers as in \cref{fig:kirk-lib}.
+\item
+	Transform a stream of approximations from \verb!stdin! to \verb!stdout!,
+	an example is provided in \cref{fig:stream}.
+\end{enumerate}
+
+\begin{figure}[H]
+\begin{verbatim}
+#include <kirk/kirk-c-types.h>
+int main() {
+  kirk_real_t *x[] = { kirk_real_from_file(stdin) };
+  kirk_real_t *y[1];
+  sqrt(x, 1, y);
+  kirk_real_to_file(y[0], stdout); /* returns only when stream errors */
+}
+\end{verbatim}
+\caption{Stream-like implementation of $f:\mathbb R\to\mathbb R$.}
+\label{fig:stream}
+\end{figure}
+
+It does not seem as if a program like \cref{fig:stream} in general would be of
+much use.
+
+With respect to composeability, it is my impression that a design like
+$g:\mathbb Z\times\mathbb R\to\mathbb Q$ or
+$h:\mathbb Z\times\mathbb Q\to\mathbb Q$ is not the right choice for the
+language. Therefore, programs in this language are meant to be library-like,
+i.e.\ for the stack-based variant of the low-level language this would mean
+an initial configuration where there already are real numbers (type R) on the
+stack and when the program returns, it leaves zero or more objects of type R on
+the stack.
+
+Programs that expect this kind of input/output have to be executed in a
+continuous section or a limit respectively and they are library-like functions,
+that is, not \verb!main()!.
+
+\end{document}

@@ -1,0 +1,86 @@
+
+abs:            # x
+  entc          # x p
+  ipush 1       # x p 1
+  zconv         # x p 1
+  rconv         # x p 1
+  dup 2 1       # x p 1 p
+  rsh           # x p 2^p
+  dup 3 1       # x p 2^p x
+  rot 2 1       # x p x 2^p
+  dup 2 2       # x p x 2^p x 2^p
+  rneg          # x p x 2^p x -2^p
+  radd          # x p x 2^p x-2^p
+  rsgn          # x p x 2^p -sm
+  knot          # x p x 2^p sm
+  rot 3 2       # x p sm x 2^p
+  rot 2 1       # x p sm 2^p x
+  rneg          # x p sm 2^p -x
+  radd          # x p sm 2^p-x
+  rsgn          # x p sm -sp
+#  knot          # x p sm sp
+  kch 2         # x p i
+  # sm = T: x <  2^p => i = 1, -x
+  # sp = T: x > -2^p => i = 2,  x
+  ipush -1      # x p i -1
+  iadd          # x p i-1
+  ineg          # x p -(i-1)
+  zconv         # x p -(i-1)
+  rconv         # x p -(i-1)
+  dup 3 1       # x p -(i-1) x
+  rmul          # x p y
+  lvc 1         # x y
+  rot 2 1       # y x
+  pop 1         # y
+  ret
+
+#               # stack                      types
+bounded:        # x p                        [R Z]
+  rot 2 1       # p x
+  scall abs     # p |x|
+  dup 2 1       # p |x| p
+  ipush 1       # p |x| p 1
+  zconv         # p |x| p 1
+  rconv         # p |x| p 1
+  rot 2 1       # p |x| 1 p
+  dup 2 2       # p |x| 1 p 1 p
+  ipush -1      # p |x| 1 p 1 p -1
+  iadd          # p |x| 1 p 1 p-1
+  rsh           # p |x| 1 p 2^(p-1)
+  dup 4 1       # p |x| 1 p 2^(p-1) |x|
+  rot 2 1       # p |x| 1 p |x| 2^(p-1)
+  rneg          # p |x| 1 p |x| -2^(p-1)
+  radd          # p |x| 1 p |x|-2^(p-1)
+  rsgn          # p |x| 1 p s_(p-1)
+  knot          # p |x| 1 p lt_(p-1)
+  rot 4 3       # p lt_(p-1) |x| 1 p
+  rsh           # p lt_(p-1) |x| 2^p
+  rneg          # p lt_(p-1) |x| -2^p
+  radd          # p lt_(p-1) |x|-2^p
+  rsgn          # p lt_(p-1) s_p             [Z K K]
+  knot          # p lt_(p-1) lt_p
+  kch 2         # p z                        [Z i64]
+  # lt_(p-1) =  1               => z =  0
+  #                   lt_p = 1  => z =  1
+  # lt_(p-1) =  0 and lt_p = 0  => reiterate Limit introducing x
+  # lt_(p-1) = -1 and lt_p = 0  => reiterate Limit introducing x
+  # lt_(p-1) =  0 and lt_p = -1 => reiterate Limit introducing x
+  # lt_(p-1) = -1 and lt_p = -1 => z = -1
+  ipush 1       # p z 1
+  iadd          # p z+1
+  isgn          # p sgn(z+1)
+  rot 2 1       # z p
+  pop 1         # z
+  ret
+
+main:
+  ipush 1       # 1
+  entc          # 1 p
+  dup 2 1       # 1 p 1
+  zconv         # 1 p 1
+  rconv         # 1 p 1
+  ipush 2       # 1 p 1 2
+  scall bounded # 1 p z
+  lvc 1         # 1 z
+  rot 2 1       # z 1
+  pop 1         # z
