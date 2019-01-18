@@ -2,6 +2,7 @@
 #include <variant>
 #include <cstdio>
 #include <map>
+#include <string>
 #include <iRRAM/lib.h>
 
 using namespace iRRAM;
@@ -10,12 +11,11 @@ enum opcode {
 	DUP, POP, ROT,
 	APUSH, DCALL, SCALL, RET, JMP, JNZ,
 	IPUSH, INEG, IADD, IMUL, IDIV, ISGN,
-	ZCONV, ZNEG, ZADD, ZMUL, ZDIV, ZSGN,
-	BOR, BAND, BNOT,
+	ZCONV, ZNEG, ZADD, ZMUL, ZDIV, ZSGN, ZSH,
+	OR, AND, NOT,
 	/* ARNEW, ARLD, ARST, */
 	/* AZNEW, AZLD, AZST, */
-	KOR, KAND, KNOT, KCH,
-	RCONV, RNEG, RADD, RINV, RMUL, RSH, RSGN,
+	RCONV, RNEG, RADD, RINV, RMUL, RSH, RCH, RIN, RAPX, RILOG,
 	ENTC, LVC,
 };
 
@@ -62,20 +62,20 @@ static const std::map<std::string_view,op_info> instrs {
 	{ "zmul",  { ZMUL ,          } },
 	{ "zdiv",  { ZDIV ,          } },
 	{ "zsgn",  { ZSGN ,          } },
-	{ "bor",   { BOR  ,          } },
-	{ "band",  { BAND ,          } },
-	{ "bnot",  { BNOT ,          } },
-	{ "kor",   { KOR  ,          } },
-	{ "kand",  { KAND ,          } },
-	{ "knot",  { KNOT ,          } },
-	{ "kch",   { KCH  , U64      } },
+	{ "zsh",   { ZSH  ,          } },
+	{ "or",    { OR   ,          } },
+	{ "and",   { AND  ,          } },
+	{ "not",   { NOT  ,          } },
 	{ "rconv", { RCONV,          } },
 	{ "rneg",  { RNEG ,          } },
 	{ "radd",  { RADD ,          } },
 	{ "rinv",  { RINV ,          } },
 	{ "rmul",  { RMUL ,          } },
 	{ "rsh",   { RSH  ,          } },
-	{ "rsgn",  { RSGN ,          } },
+	{ "rch",   { RCH  ,          } },
+	{ "rin",   { RIN  ,          } },
+	{ "rapx",  { RAPX ,          } },
+	{ "rilog", { RILOG,          } },
 	{ "entc",  { ENTC ,          } },
 	{ "lvc",   { LVC  , U64      } },
 };
@@ -102,20 +102,20 @@ static const char *const opstrs[] = {
 	[ZMUL ] = "zmul",
 	[ZDIV ] = "zdiv",
 	[ZSGN ] = "zsgn",
-	[BOR  ] = "bor",
-	[BAND ] = "band",
-	[BNOT ] = "bnot",
-	[KOR  ] = "kor",
-	[KAND ] = "kand",
-	[KNOT ] = "knot",
-	[KCH  ] = "kch",
+	[ZSH  ] = "zsh",
+	[OR   ] = "or",
+	[AND  ] = "and",
+	[NOT  ] = "not",
 	[RCONV] = "rconv",
 	[RNEG ] = "rneg",
 	[RADD ] = "radd",
 	[RINV ] = "rinv",
 	[RMUL ] = "rmul",
 	[RSH  ] = "rsh",
-	[RSGN ] = "rsgn",
+	[RCH  ] = "rch",
+	[RIN  ] = "rin",
+	[RAPX ] = "rapx",
+	[RILOG] = "rilog",
 	[ENTC ] = "entc",
 	[LVC  ] = "lvc",
 };
@@ -292,6 +292,11 @@ static std::pair<prog_t,std::map<std::string,uint64_t>> parse(FILE *f) noexcept(
 #undef WHITE
 		if (state != BEGIN && state != END)
 			throw parse_exception("not in END state");
+		if (*begin) {
+			std::stringstream ss;
+			ss << "unhandled params: " << begin;
+			throw parse_exception(std::move(ss.str()));
+		}
 		if (state == END)
 			dbg("parsed instr ", prog.back());
 		} catch (const parse_exception &ex) {
@@ -319,7 +324,7 @@ using K = LAZY_BOOLEAN;
 using R = REAL;
 
 /*                       i64   adr        */
-using elem = std::variant<I,uint64_t,Z,K,R>;
+using elem = std::variant<I,uint64_t,Z,R>;
 
 sizetype geterror(const elem &el)
 {
@@ -328,9 +333,7 @@ sizetype geterror(const elem &el)
 	case 1: /* adr */
 	case 2: /* Z */
 		return sizetype_exact();
-	case 3: /* K */
-		return geterror(std::get<K>(el));
-	case 4: /* R */
+	case 3: /* R */
 		return geterror(std::get<R>(el));
 	}
 	abort();
@@ -343,10 +346,7 @@ void seterror(elem &el, const sizetype &err)
 	case 1: /* adr */
 	case 2: /* Z */
 		return;
-	case 3: /* K */
-		seterror(std::get<K>(el), err);
-		return;
-	case 4: /* R */
+	case 3: /* R */
 		seterror(std::get<R>(el), err);
 		return;
 	}
@@ -358,8 +358,7 @@ std::ostream & operator<<(std::ostream &s, const elem &e)
 	case 0: return s << "i64:" << std::get<I>(e);
 	case 1: return s << "adr:" << std::get<uint64_t>(e);
 	case 2: return s << "Z:" << swrite(std::get<Z>(e));
-	case 3: return s << "K:" << *reinterpret_cast<const int *>(&std::get<K>(e));
-	case 4: return s << "R:" << swrite(std::get<R>(e), 10);
+	case 3: return s << "R:" << swrite(std::get<R>(e), 10);
 	}
 	return s;
 }
@@ -398,6 +397,7 @@ struct lll_stack : protected std::vector<elem> {
 
 	void push(uint64_t adr) { emplace_back(adr); }
 	void push(int64_t i64) { emplace_back(i64); }
+	void push(Z z) { emplace_back(std::move(z)); }
 
 	using vector::back;
 	using vector::size;
@@ -473,11 +473,11 @@ static lll_state interpret_limit(int p, const prog_t &prog, const lll_state &_st
 
 bool lll_state::next(const prog_t &p)
 {
-//	dbg("stack : ", stack);
-//	dbg("rstack: ", rstack);
-//	dbg("pstack: ", pstack);
 	const instr &i = p[pc];
-//	dbg("interpreting '", i, "' @ pc: ", pc);
+	dbg("stack : ", stack);
+	dbg("rstack: ", rstack);
+	dbg("pstack: ", pstack);
+	dbg("interpreting '", i, "' @ pc: ", pc);
 	switch (i.op) {
 	/* generic stack operations */
 	case DUP: stack.dup(i.imm[0].u64, i.imm[1].u64); break;
@@ -526,21 +526,9 @@ bool lll_state::next(const prog_t &p)
 	case ZDIV : stack.op2<Z,Z>([](auto &a, auto b){ a /= b; }); break;
 	case ZSGN : stack.op1<Z>([](auto &a){ a = a < 0 ? -1 : a > 0 ? +1 : 0; }); break;
 	/* boolean ops */
-	case BOR  : stack.op2<I,I>([](auto &a, auto b){ a |= b; }); break;
-	case BAND : stack.op2<I,I>([](auto &a, auto b){ a &= b; }); break;
-	case BNOT : stack.op1<I>([](auto &a){ a = !a; }); break;
-	/* kleenean ops */
-	case KOR  : stack.op2<K,K>([](auto &a, auto b){ a = a || b; }); break; /* TODO: |= */
-	case KAND : stack.op2<K,K>([](auto &a, auto b){ a = a && b; }); break; /* TODO: &= */
-	case KNOT : stack.op1<K>([](auto &a){ a = !a; }); break;
-	case KCH  : {
-		assert("only 'kch 2' supported" && i.imm[0].u64 == 2);
-		I r = choose(std::get<K>(stack[stack.size()-2]),
-		             std::get<K>(stack[stack.size()-1]));
-		stack.pop(2);
-		stack.push(r);
-		break;
-	}
+	case OR   : stack.op2<I,I>([](auto &a, auto b){ a |= b; }); break;
+	case AND  : stack.op2<I,I>([](auto &a, auto b){ a &= b; }); break;
+	case NOT  : stack.op1<I>([](auto &a){ a = !a; }); break;
 	/* R ops */
 	case RCONV: stack.back() = R(std::get<Z>(stack.back())); break;
 	case RNEG : stack.op1<R>([](auto &a){ a = -a; }); break;
@@ -551,7 +539,36 @@ bool lll_state::next(const prog_t &p)
 			assert(INT_MIN <= b && b <= INT_MAX); /* TODO */
 			a = scale(a, b);
 		}); break;
-	case RSGN : stack.back() = std::get<R>(stack.back()) > 0; break;
+	case RCH  : {
+		int64_t n = std::get<I>(stack.back());
+		assert(n > 0);
+		assert(stack.size() > (uint64_t)n);
+		size_t s = stack.size()-1-n;
+		assert(n == 2 && "sorry, 'rch' implemented only for n=2");
+		I k = choose(std::get<R>(stack[s+0]) > 0,
+		             std::get<R>(stack[s+1]) > 0);
+		stack.pop(3);
+		stack.push(k);
+		break;
+	}
+	case RAPX : {
+		assert(stack.size() >= 2);
+		int64_t p = std::get<I>(stack.back());
+		assert(INT_MIN <= p && p <= INT_MAX); /* TODO */
+		DYADIC d = approx(std::get<R>(stack[stack.size()-2]), p);
+		uint64_t k = (mpfr_get_prec(d.value)+GMP_NUMB_BITS-1)/GMP_NUMB_BITS;
+		assert(k <= INT_MAX);
+		int s = mpfr_signbit(d.value);
+		__mpz_struct z = {
+			._mp_alloc = (int)k,
+			._mp_size = s ? -(int)k : (int)k,
+			._mp_d = d.value->_mpfr_d,
+		};
+		stack.pop(2);
+		stack.push(Z(&z));
+		stack.push(I(mpfr_get_exp(d.value)));
+		break;
+	}
 	/* continuous section ops */
 	case ENTC : {
 		pstack.push_back(stack.size());

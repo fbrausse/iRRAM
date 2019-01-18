@@ -37,8 +37,6 @@ main:
   rsh
   ipush 40000
   scall logmap
-  rsgn
-  dup 1 1
-  kch 2
-  pop 1
-  lvc 0
+  ipush -1
+  rapx
+  lvc 2

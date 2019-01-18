@@ -70,18 +70,6 @@ friend LAZY_BOOLEAN operator < (const REAL&, const REAL&);
 friend LAZY_BOOLEAN positive (const REAL& x, int k);
 friend LAZY_BOOLEAN bound (const REAL& x, const int k);
 
-friend sizetype geterror(const LAZY_BOOLEAN &b)
-{
-	return b.value == BOTTOM ? sizetype { 1, 0 } : sizetype_exact();
-}
-
-friend void seterror(LAZY_BOOLEAN &b, const sizetype &err)
-{
-	sizetype boterr = { 1, 0 };
-	if (sizetype_less(boterr, err))
-		b.value = BOTTOM;
-}
-
 friend class REAL;
 
 private:
