@@ -36,12 +36,11 @@
   \ttfamily pop & u64:$n$    & $a_1..a_n$ &                          &&& pop $n$ entries off the stack \\
   \ttfamily rot & u64:$n\;k$ & $a_1..a_n$ & $a_{k+1}..a_n\;a_1..a_k$ &&& rotate $n$ entries on stack left by $k<n$ \\
   \hline
-  \ttfamily tpack &         & $a_1..a_n$ i64:$n$ & $(a_1..a_n)$   && & pack $n$ elements from stack into a new tuple \\
-  \ttfamily tsplt &         & $(a_1..a_n)$ i64:$k$ & $(a_1..a_k)$ $(a_{k+1}..a_n)$ && & split tuple $s$ at index $k\in\{0,\ldots,n\}$ \\
-  \ttfamily tconc &         & $(a_1..a_n)$ $(b_1..b_m)$ & $(a_1..a_n,b_1..b_m)$  && & concatenate $a$ and $b$ \\
-  \ttfamily tlen  &         & $(a_1..a_n)$              & $(a_1..a_n)$ i64:$n$ && & extract length of $a$ \\
-  \ttfamily tload &         & $(a_1..a_n)$ i64:$k$      & $(a_1..a_n)$ $a_k$ &&& load $k$-th element from $a$, $k\in\{1,\ldots,n\}$ \\
-  \ttfamily tins  &         & $(a_1..a_n)$ $b$ i64:$k$  & $(a_1..a_k,b,a_{k+1}..a_n)$ &&& insert $b$ after index $k$ into $a$, $k\in\{0,\ldots,n\}$ \\
+  \ttfamily tpack &         & $a_1..a_n$ i64:$n$        & $(a_1..a_n)$                  &&& pack $n$ elements from stack into a new tuple \\
+  \ttfamily texpl &         & $(a_1..a_n)$              & $a_1..a_n$ i64:$n$            &&& unpack tuple onto stack \\
+  \ttfamily tsplt &         & $(a_1..a_n)$ i64:$k$      & $(a_1..a_k)$ $(a_{k+1}..a_n)$ &&& split tuple at index $k\in\{0,\ldots,n\}$ \\
+  \ttfamily tcat  &         & $(a_1..a_n)$ $(b_1..b_m)$ & $(a_1..a_n,b_1..b_m)$         &&& concatenate tuples \\
+  \ttfamily tlen  &         & $(a_1..a_n)$              & $(a_1..a_n)$ i64:$n$          &&& extract length of tuple \\
   \hline
   \ttfamily apush & adr:$f$ &                    & $f$        &&& push immediate address to stack \\
   \ttfamily dcall &         & adr:$f$ $a_1..a_n$ & $b_1..b_m$ &&& call dyn. $f(a_1,\ldots,a_n) = (b_1,\ldots,b_m)$, $n,m$ unspec. \\

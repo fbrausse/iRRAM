@@ -9,7 +9,7 @@ using namespace iRRAM;
 
 enum opcode {
 	DUP, POP, ROT,
-	TPACK, TSPLT, TCONC, TLEN, TLOAD, TINS,
+	TPACK, TEXPL, TSPLT, TCAT, TLEN,
 	APUSH, DCALL, SCALL, RET, JMP, JNZ,
 	IPUSH, INEG, IADD, IMUL, IDIV, ISGN,
 	ZCONV, ZNEG, ZADD, ZMUL, ZDIV, ZSGN, ZSH,
@@ -44,11 +44,10 @@ static const std::map<std::string_view,op_info> instrs {
 	{ "pop",   { POP  , U64      } },
 	{ "rot",   { ROT  , U64, U64 } },
 	{ "tpack", { TPACK,          } },
+	{ "texpl", { TEXPL,          } },
 	{ "tsplt", { TSPLT,          } },
-	{ "tconc", { TCONC,          } },
+	{ "tcat",  { TCAT ,          } },
 	{ "tlen" , { TLEN ,          } },
-	{ "tload", { TLOAD,          } },
-	{ "tins" , { TINS ,          } },
 	{ "apush", { APUSH, ADR      } },
 	{ "dcall", { DCALL,          } },
 	{ "scall", { SCALL, ADR      } },
@@ -90,11 +89,10 @@ static const char *const opstrs[] = {
 	[POP  ] = "pop",
 	[ROT  ] = "rot",
 	[TPACK] = "tpack",
+	[TEXPL] = "texpl",
 	[TSPLT] = "tsplt",
-	[TCONC] = "tconc",
+	[TCAT ] = "tcat",
 	[TLEN ] = "tlen",
-	[TLOAD] = "tload",
-	[TINS ] = "tins",
 	[APUSH] = "apush",
 	[DCALL] = "dcall",
 	[SCALL] = "scall",
@@ -168,7 +166,7 @@ std::ostream & operator<<(std::ostream &s, const std::vector<T> &v)
 }
 
 template <typename... Ts>
-void dbg(Ts &&... args)
+static void dbg(Ts &&... args)
 {
 	(std::cerr << ... << args);
 	std::cerr << "\n";
@@ -335,7 +333,6 @@ struct elem;
 using I = int64_t;
 using U = uint64_t;
 using Z = INTEGER;
-using K = LAZY_BOOLEAN;
 using R = REAL;
 using T = std::vector<elem>;
 
@@ -445,6 +442,8 @@ struct lll_stack : protected std::vector<elem> {
 	using vector::operator[];
 	using vector::begin;
 	using vector::end;
+	using vector::insert;
+	using vector::reserve;
 
 	template <typename T>
 	void op1(void (*f)(T &a))
@@ -516,10 +515,12 @@ static lll_state interpret_limit(int p, const prog_t &prog, const lll_state &_st
 bool lll_state::next(const prog_t &p)
 {
 	const instr &i = p[pc];
+#if 0
 	dbg("stack : ", stack);
 	dbg("rstack: ", rstack);
 	dbg("pstack: ", pstack);
 	dbg("interpreting '", i, "' @ pc: ", pc);
+#endif
 	switch (i.op) {
 	/* generic stack operations */
 	case DUP: stack.dup(i.imm[0].u64, i.imm[1].u64); break;
@@ -536,6 +537,16 @@ bool lll_state::next(const prog_t &p)
 		stack.push(std::move(t));
 		break;
 	}
+	case TEXPL: {
+		T t = std::move(std::get<T>(stack.back()));
+		stack.pop(1);
+		stack.reserve(stack.size() + t.size()+1);
+		stack.insert(stack.end(),
+		             std::move_iterator(t.begin()),
+		             std::move_iterator(t.end()));
+		stack.push(I(t.size()));
+		break;
+	}
 	case TSPLT: {
 		I k = std::get<I>(stack.back());
 		stack.pop(1);
@@ -547,7 +558,7 @@ bool lll_state::next(const prog_t &p)
 		stack.push(std::move(t));
 		break;
 	}
-	case TCONC: {
+	case TCAT: {
 		T &t = std::get<T>(stack.back());
 		T &s = std::get<T>(stack[stack.size()-2]);
 		s.reserve(s.size() + t.size());
@@ -558,22 +569,6 @@ bool lll_state::next(const prog_t &p)
 	case TLEN:
 		stack.push(I(std::get<T>(stack.back()).size()));
 		break;
-	case TLOAD: {
-		I k = std::get<I>(stack.back());
-		T &t = std::get<T>(stack[stack.size()-2]);
-		assert(1 <= k && (size_t)k <= t.size());
-		stack.back() = t[k-1];
-		break;
-	}
-	case TINS: {
-		I k = std::get<I>(stack.back());
-		elem &e = stack[stack.size()-2];
-		T &t = std::get<T>(stack[stack.size()-3]);
-		assert(0 <= k && (size_t)k <= t.size());
-		t.insert(t.begin()+k, std::move(e));
-		stack.pop(2);
-		break;
-	}
 	/* control flow */
 	case APUSH: stack.push(i.imm[0].adr); break;
 	case DCALL:

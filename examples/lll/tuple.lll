@@ -7,15 +7,12 @@ main:
   ipush 1	# () 1 1
   tpack		# () (1)
   ipush 2	# () (1) 2
-  ipush 1	# () (1) 2 1
-  tpack		# () (1) (2)
-  tlen		# () (1) (2) 1
-  tins		# () (1 (2))
-  tconc		# (1 (2))
-  ipush 2	# (1 (2)) 2
-  tload		# (1 (2)) (2)
-  ipush 0	# (1 (2)) (2) 0
-  tsplt		# (1 (2)) () (2)
-  tconc
-  tconc
+  ipush 2	# () (1) 2 2
+  tpack		# () ((1) 2)
+  tlen		# () ((1) 2) 2
+  pop 1		# () ((1) 2)
+  tcat		# ((1) 2)
+  ipush 0	# ((1) 2) 0
+  tsplt		# () ((1) 2)
+  tcat
   rot 1 1
