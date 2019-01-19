@@ -32,7 +32,7 @@
 \centering
 \begin{tabular}{l|l|l|l@{\;\,\vline\,}c@{\,\vline\,}c@{\,\vline\;\,}l}
   opcode & imm. & stack before & stack after & mv & $\bot$ & comment \\ \hline
-  \ttfamily dup & u64:$n\;k$ & $a_1..a_n$ & $a_1..a_n\;a_1..a_k$     &&& duplicate values on the stack \\
+  \ttfamily dup & u64:$n\;k$ & $a_1..a_n$ & $a_1..a_n\;a_1..a_k$     &&& duplicate values on the stack, $k\leq n$ \\
   \ttfamily pop & u64:$n$    & $a_1..a_n$ &                          &&& pop $n$ entries off the stack \\
   \ttfamily rot & u64:$n\;k$ & $a_1..a_n$ & $a_{k+1}..a_n\;a_1..a_k$ &&& rotate $n$ entries on stack left by $k<n$ \\
   \hline
@@ -43,7 +43,7 @@
   \ttfamily tlen  &         & $(a_1..a_n)$              & $(a_1..a_n)$ i64:$n$          &&& extract length of tuple \\
   \hline
   \ttfamily apush & adr:$f$ &                    & $f$        &&& push immediate address to stack \\
-  \ttfamily dcall &         & adr:$f$ $a_1..a_n$ & $b_1..b_m$ &&& call dyn. $f(a_1,\ldots,a_n) = (b_1,\ldots,b_m)$, $n,m$ unspec. \\
+  \ttfamily dcall &         & $a_1..a_n$ adr:$f$ & $b_1..b_m$ &&& call dyn. $f(a_1,\ldots,a_n) = (b_1,\ldots,b_m)$, $n,m$ unspec. \\
   \ttfamily scall & adr:$f$ & $a_1..a_n$         & $b_1..b_m$ &&& call imm. $f(a_1,\ldots,a_n) = (b_1,\ldots,b_m)$, $n,m$ unspec. \\
   \ttfamily ret   &         &                    &            &&& return from function call or exit \\
   \ttfamily jmp   & adr:$l$ &                    &            &&& unconditional jump to $l$ \\
@@ -74,7 +74,7 @@
   \ttfamily rinv  &         & R:$v$           & R:$(1/v)$       & &y& real inversion \\
   \ttfamily rmul  &         & R:$v$ R:$w$     & R:$(v\cdot w)$  & && real multiplication \\
   \ttfamily rsh   &         & R:$v$ i64:$w$   & R:$(v\cdot2^w)$ & && multiplication by $2^w$ \\
-  \ttfamily rin   &         &                 & $(a_1..a_n)$    & && get real input \\
+  \ttfamily rin   &         &                 & $(a_1..a_n)$    & && get real input, $n$ unspec. \\
   \hline
   \ttfamily rlim  & adr:$f$ & $a_1..a_n$ & $b_0..b_m$ &?&y& $\lim_{p\to\infty}{(f(-p,a_1..a_n))_p} = (b_0..b_m)$, $n,m$ unspec. \\[-1.35ex]\hline\noalign{\vspace{\dimexpr 1.35ex-.5pt}}
   \ttfamily rch   &         & R:$r_1..r_n$ i64:$n$ & i64:$k$    &y&& mv-choice, $\{0\}$ if all $<0$, $\{i:r_i>0\}$ otherwise \\
