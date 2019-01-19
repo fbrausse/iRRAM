@@ -1,0 +1,21 @@
+main:
+  ipush 1	# 1
+  zconv		# 1
+  ipush 0	# 1 0
+  tpack		# 1 ()
+  rot 2 1	# () 1
+  ipush 1	# () 1 1
+  tpack		# () (1)
+  ipush 2	# () (1) 2
+  ipush 1	# () (1) 2 1
+  tpack		# () (1) (2)
+  tlen		# () (1) (2) 1
+  tins		# () (1 (2))
+  tconc		# (1 (2))
+  ipush 2	# (1 (2)) 2
+  tload		# (1 (2)) (2)
+  ipush 0	# (1 (2)) (2) 0
+  tsplt		# (1 (2)) () (2)
+  tconc
+  tconc
+  rot 1 1

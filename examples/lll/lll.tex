@@ -36,6 +36,13 @@
   \ttfamily pop & u64:$n$    & $a_1..a_n$ &                          &&& pop $n$ entries off the stack \\
   \ttfamily rot & u64:$n\;k$ & $a_1..a_n$ & $a_{k+1}..a_n\;a_1..a_k$ &&& rotate $n$ entries on stack left by $k<n$ \\
   \hline
+  \ttfamily tpack &         & $a_1..a_n$ i64:$n$ & $(a_1..a_n)$   && & pack $n$ elements from stack into a new tuple \\
+  \ttfamily tsplt &         & $(a_1..a_n)$ i64:$k$ & $(a_1..a_k)$ $(a_{k+1}..a_n)$ && & split tuple $s$ at index $k\in\{0,\ldots,n\}$ \\
+  \ttfamily tconc &         & $(a_1..a_n)$ $(b_1..b_m)$ & $(a_1..a_n,b_1..b_m)$  && & concatenate $a$ and $b$ \\
+  \ttfamily tlen  &         & $(a_1..a_n)$              & $(a_1..a_n)$ i64:$n$ && & extract length of $a$ \\
+  \ttfamily tload &         & $(a_1..a_n)$ i64:$k$      & $(a_1..a_n)$ $a_k$ &&& load $k$-th element from $a$, $k\in\{1,\ldots,n\}$ \\
+  \ttfamily tins  &         & $(a_1..a_n)$ $b$ i64:$k$  & $(a_1..a_k,b,a_{k+1}..a_n)$ &&& insert $b$ after index $k$ into $a$, $k\in\{0,\ldots,n\}$ \\
+  \hline
   \ttfamily apush & adr:$f$ &                    & $f$        &&& push immediate address to stack \\
   \ttfamily dcall &         & adr:$f$ $a_1..a_n$ & $b_1..b_m$ &&& call dyn. $f(a_1,\ldots,a_n) = (b_1,\ldots,b_m)$, $n,m$ unspec. \\
   \ttfamily scall & adr:$f$ & $a_1..a_n$         & $b_1..b_m$ &&& call imm. $f(a_1,\ldots,a_n) = (b_1,\ldots,b_m)$, $n,m$ unspec. \\
@@ -68,7 +75,7 @@
   \ttfamily rinv  &         & R:$v$           & R:$(1/v)$       & &y& real inversion \\
   \ttfamily rmul  &         & R:$v$ R:$w$     & R:$(v\cdot w)$  & && real multiplication \\
   \ttfamily rsh   &         & R:$v$ i64:$w$   & R:$(v\cdot2^w)$ & && multiplication by $2^w$ \\
-  \ttfamily rin   &         &                 & R$^*$ i64:$n$   & && get real input \\
+  \ttfamily rin   &         &                 & $(a_1..a_n)$    & && get real input \\
   \hline
   \ttfamily rlim  & adr:$f$ & $a_1..a_n$ & $b_0..b_m$ &?&y& $\lim_{p\to\infty}{(f(-p,a_1..a_n))_p} = (b_0..b_m)$, $n,m$ unspec. \\[-1.35ex]\hline\noalign{\vspace{\dimexpr 1.35ex-.5pt}}
   \ttfamily rch   &         & R:$r_1..r_n$ i64:$n$ & i64:$k$    &y&& mv-choice, $\{0\}$ if all $<0$, $\{i:r_i>0\}$ otherwise \\

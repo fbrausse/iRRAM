@@ -2,19 +2,18 @@
 #include <variant>
 #include <cstdio>
 #include <map>
-#include <string>
+#include <numeric>	/* std::accumulate */
 #include <iRRAM/lib.h>
 
 using namespace iRRAM;
 
 enum opcode {
 	DUP, POP, ROT,
+	TPACK, TSPLT, TCONC, TLEN, TLOAD, TINS,
 	APUSH, DCALL, SCALL, RET, JMP, JNZ,
 	IPUSH, INEG, IADD, IMUL, IDIV, ISGN,
 	ZCONV, ZNEG, ZADD, ZMUL, ZDIV, ZSGN, ZSH,
 	OR, AND, NOT,
-	/* ARNEW, ARLD, ARST, */
-	/* AZNEW, AZLD, AZST, */
 	RCONV, RNEG, RADD, RINV, RMUL, RSH, RCH, RIN, RAPX, RILOG,
 	ENTC, LVC,
 };
@@ -44,6 +43,12 @@ static const std::map<std::string_view,op_info> instrs {
 	{ "dup",   { DUP  , U64, U64 } },
 	{ "pop",   { POP  , U64      } },
 	{ "rot",   { ROT  , U64, U64 } },
+	{ "tpack", { TPACK,          } },
+	{ "tsplt", { TSPLT,          } },
+	{ "tconc", { TCONC,          } },
+	{ "tlen" , { TLEN ,          } },
+	{ "tload", { TLOAD,          } },
+	{ "tins" , { TINS ,          } },
 	{ "apush", { APUSH, ADR      } },
 	{ "dcall", { DCALL,          } },
 	{ "scall", { SCALL, ADR      } },
@@ -84,6 +89,12 @@ static const char *const opstrs[] = {
 	[DUP  ] = "dup",
 	[POP  ] = "pop",
 	[ROT  ] = "rot",
+	[TPACK] = "tpack",
+	[TSPLT] = "tsplt",
+	[TCONC] = "tconc",
+	[TLEN ] = "tlen",
+	[TLOAD] = "tload",
+	[TINS ] = "tins",
 	[APUSH] = "apush",
 	[DCALL] = "dcall",
 	[SCALL] = "scall",
@@ -326,10 +337,11 @@ using U = uint64_t;
 using Z = INTEGER;
 using K = LAZY_BOOLEAN;
 using R = REAL;
+using T = std::vector<elem>;
 
 namespace std {
-template <> struct variant_size<elem> : variant_size<std::variant<I,U,Z,R>> {};
-template <size_t n> struct variant_alternative<n,elem> : variant_alternative<n,std::variant<I,U,Z,R>> {};
+template <> struct variant_size<elem> : variant_size<std::variant<I,U,Z,R,T>> {};
+template <size_t n> struct variant_alternative<n,elem> : variant_alternative<n,std::variant<I,U,Z,R,T>> {};
 }
 
 /* <https://en.cppreference.com/mwiki/index.php?title=cpp/utility/variant/visit&oldid=106987> */
@@ -337,10 +349,18 @@ template <size_t n> struct variant_alternative<n,elem> : variant_alternative<n,s
 template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
 template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 
+/* corresponds to the type
+ * elem = eI I
+ *      | eU U
+ *      | eZ Z
+ *      | eR R
+ *      | eT (list elem)
+ * where list T = nil | cons T (list T)
+ */
 /*                       i64 adr      */
-struct elem : std::variant<I,U,Z,R> {
+struct elem : std::variant<I,U,Z,R,T> {
 
-	using std::variant<I,U,Z,R>::variant;
+	using std::variant<I,U,Z,R,T>::variant;
 
 	friend sizetype geterror(const elem &el)
 	{
@@ -349,6 +369,13 @@ struct elem : std::variant<I,U,Z,R> {
 			[](const U &){ return sizetype_exact(); },
 			[](const Z &){ return sizetype_exact(); },
 			[](const R &v){ return geterror(v); },
+			[](const T &v){
+				auto f = [](const auto &a, const elem &b){
+					return max(a, geterror(b));
+				};
+				return accumulate(begin(v), end(v),
+				                  sizetype_exact(), f);
+			},
 		}, el);
 	}
 
@@ -359,6 +386,7 @@ struct elem : std::variant<I,U,Z,R> {
 			[](U &){},
 			[](Z &){},
 			[&r](R &v){ seterror(v, r); },
+			[&r](T &v){ for (elem &e : v) seterror(e, r); },
 		}, el);
 	}
 
@@ -369,6 +397,7 @@ struct elem : std::variant<I,U,Z,R> {
 			[&s](const U &v) -> auto & { return s << "a:" << v; },
 			[&s](const Z &v) -> auto & { return s << "Z:" << swrite(v); },
 			[&s](const R &v) -> auto & { return s << "R:" << swrite(v, 10); },
+			[&s](const T &v) -> auto & { return s << "T:" << v; },
 		}, e);
 	}
 };
@@ -408,11 +437,14 @@ struct lll_stack : protected std::vector<elem> {
 	void push(U adr) { emplace_back(adr); }
 	void push(I i64) { emplace_back(i64); }
 	void push(Z z) { emplace_back(std::move(z)); }
+	void push(T t) { emplace_back(std::move(t)); }
 
 	using vector::back;
 	using vector::size;
 	using vector::pop_back;
 	using vector::operator[];
+	using vector::begin;
+	using vector::end;
 
 	template <typename T>
 	void op1(void (*f)(T &a))
@@ -493,6 +525,55 @@ bool lll_state::next(const prog_t &p)
 	case DUP: stack.dup(i.imm[0].u64, i.imm[1].u64); break;
 	case POP: stack.pop(i.imm[0].u64); break;
 	case ROT: stack.rot(i.imm[0].u64, i.imm[1].u64); break;
+	/* tuple operations */
+	case TPACK: {
+		I n = std::get<I>(stack.back());
+		stack.pop(1);
+		assert(0 <= n && (size_t)n < stack.size());
+		T t(std::move_iterator(stack.begin()+stack.size()-n),
+		    std::move_iterator(stack.end()));
+		stack.pop(n);
+		stack.push(std::move(t));
+		break;
+	}
+	case TSPLT: {
+		I k = std::get<I>(stack.back());
+		stack.pop(1);
+		T &s = std::get<T>(stack.back());
+		assert(0 <= k && (size_t)k <= s.size());
+		T t(std::move_iterator(s.begin()+k),
+		    std::move_iterator(s.end()));
+		s.erase(s.begin()+k, s.end());
+		stack.push(std::move(t));
+		break;
+	}
+	case TCONC: {
+		T &t = std::get<T>(stack.back());
+		T &s = std::get<T>(stack[stack.size()-2]);
+		s.reserve(s.size() + t.size());
+		std::move(t.begin(), t.end(), std::back_inserter(s));
+		stack.pop(1);
+		break;
+	}
+	case TLEN:
+		stack.push(I(std::get<T>(stack.back()).size()));
+		break;
+	case TLOAD: {
+		I k = std::get<I>(stack.back());
+		T &t = std::get<T>(stack[stack.size()-2]);
+		assert(1 <= k && (size_t)k <= t.size());
+		stack.back() = t[k-1];
+		break;
+	}
+	case TINS: {
+		I k = std::get<I>(stack.back());
+		elem &e = stack[stack.size()-2];
+		T &t = std::get<T>(stack[stack.size()-3]);
+		assert(0 <= k && (size_t)k <= t.size());
+		t.insert(t.begin()+k, std::move(e));
+		stack.pop(2);
+		break;
+	}
 	/* control flow */
 	case APUSH: stack.push(i.imm[0].adr); break;
 	case DCALL:
