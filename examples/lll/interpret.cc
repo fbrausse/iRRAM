@@ -165,6 +165,7 @@ void dbg(Ts &&... args)
 
 using prog_t = std::vector<instr>;
 
+template <>
 std::ostream & operator<<(std::ostream &s, const prog_t &p)
 {
 	for (const instr &i : p)
@@ -318,50 +319,59 @@ struct interpret_exception : std::runtime_error {
 	using std::runtime_error::runtime_error;
 };
 
+struct elem;
+
 using I = int64_t;
+using U = uint64_t;
 using Z = INTEGER;
 using K = LAZY_BOOLEAN;
 using R = REAL;
 
-/*                       i64   adr        */
-using elem = std::variant<I,uint64_t,Z,R>;
-
-sizetype geterror(const elem &el)
-{
-	switch (el.index()) {
-	case 0: /* i64 */
-	case 1: /* adr */
-	case 2: /* Z */
-		return sizetype_exact();
-	case 3: /* R */
-		return geterror(std::get<R>(el));
-	}
-	abort();
+namespace std {
+template <> struct variant_size<elem> : variant_size<std::variant<I,U,Z,R>> {};
+template <size_t n> struct variant_alternative<n,elem> : variant_alternative<n,std::variant<I,U,Z,R>> {};
 }
 
-void seterror(elem &el, const sizetype &err)
-{
-	switch (el.index()) {
-	case 0: /* i64 */
-	case 1: /* adr */
-	case 2: /* Z */
-		return;
-	case 3: /* R */
-		seterror(std::get<R>(el), err);
-		return;
-	}
-}
+/* <https://en.cppreference.com/mwiki/index.php?title=cpp/utility/variant/visit&oldid=106987> */
+// helper type for the visitor #4
+template<class... Ts> struct overloaded : Ts... { using Ts::operator()...; };
+template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 
-std::ostream & operator<<(std::ostream &s, const elem &e)
-{
-	switch (e.index()) {
-	case 0: return s << "i64:" << std::get<I>(e);
-	case 1: return s << "adr:" << std::get<uint64_t>(e);
-	case 2: return s << "Z:" << swrite(std::get<Z>(e));
-	case 3: return s << "R:" << swrite(std::get<R>(e), 10);
+/*                       i64 adr      */
+struct elem : std::variant<I,U,Z,R> {
+
+	using std::variant<I,U,Z,R>::variant;
+
+	friend sizetype geterror(const elem &el)
+	{
+		return visit(overloaded {
+			[](const I &){ return sizetype_exact(); },
+			[](const U &){ return sizetype_exact(); },
+			[](const Z &){ return sizetype_exact(); },
+			[](const R &v){ return geterror(v); },
+		}, el);
 	}
-	return s;
-}
+
+	friend void seterror(elem &el, const sizetype &r)
+	{
+		visit(overloaded {
+			[](I &){},
+			[](U &){},
+			[](Z &){},
+			[&r](R &v){ seterror(v, r); },
+		}, el);
+	}
+
+	friend std::ostream & operator<<(std::ostream &s, const elem &e)
+	{
+		return visit(overloaded {
+			[&s](const I &v) -> auto & { return s << "i:" << v; },
+			[&s](const U &v) -> auto & { return s << "a:" << v; },
+			[&s](const Z &v) -> auto & { return s << "Z:" << swrite(v); },
+			[&s](const R &v) -> auto & { return s << "R:" << swrite(v, 10); },
+		}, e);
+	}
+};
 
 struct lll_stack : protected std::vector<elem> {
 
@@ -395,8 +405,8 @@ struct lll_stack : protected std::vector<elem> {
 
 	void rot(uint64_t n, uint64_t k) { rotl(n, k); }
 
-	void push(uint64_t adr) { emplace_back(adr); }
-	void push(int64_t i64) { emplace_back(i64); }
+	void push(U adr) { emplace_back(adr); }
+	void push(I i64) { emplace_back(i64); }
 	void push(Z z) { emplace_back(std::move(z)); }
 
 	using vector::back;
@@ -487,7 +497,7 @@ bool lll_state::next(const prog_t &p)
 	case APUSH: stack.push(i.imm[0].adr); break;
 	case DCALL:
 		rstack.push_back(pc+1);
-		pc = std::get<uint64_t>(stack.back());
+		pc = std::get<U>(stack.back());
 		stack.pop_back();
 		goto ret;
 	case SCALL:
