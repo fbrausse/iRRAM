@@ -8,6 +8,8 @@
 \usepackage[colorlinks=true,linkcolor=blue]{hyperref}
 \usepackage{cleveref,comment,xspace,alltt,subcaption,here}
 
+\synctex=1
+
 \renewtheorem{theorem}{Theorem}[section]
 \renewtheorem{proposition}[theorem]{Proposition}
 \renewtheorem{lemma}[theorem]{Lemma}
@@ -25,26 +27,30 @@
 \date{\today}
 
 \begin{document}
-\newgeometry{left=5mm,right=5mm,top=2.5cm,bottom=5cm}
+\newgeometry{left=2mm,right=2mm,top=2.5cm,bottom=5cm}
 \begin{figure}[h]
 \centering
 \begin{tabular}{l|l|l|l@{\;\,\vline\,}c@{\,\vline\,}c@{\,\vline\;\,}l}
   opcode & imm. & stack before & stack after & mv & $\bot$ & comment \\ \hline
   \ttfamily dup & u64:$n\;k$ & $a_1..a_n$ & $a_1..a_n\;a_1..a_k$     &&& duplicate values on the stack \\
-  \ttfamily pop & u64:$n$         & $a_1..a_n$ &                          &&& pop $n$ entries off the stack \\
+  \ttfamily pop & u64:$n$    & $a_1..a_n$ &                          &&& pop $n$ entries off the stack \\
   \ttfamily rot & u64:$n\;k$ & $a_1..a_n$ & $a_{k+1}..a_n\;a_1..a_k$ &&& rotate $n$ entries on stack left by $k<n$ \\
   \hline
   \ttfamily apush & adr:$f$ &                    & $f$        &&& push immediate address to stack \\
-  \ttfamily dcall &         & adr:$f$ $a_1..a_n$ & $b_1..b_m$ &&& call dynamic $f(a_1,\ldots,a_n) = (b_1,\ldots,b_m)$, $n,m$ unspec. \\
-  \ttfamily scall & adr:$f$ & $a_1..a_n$         & $b_1..b_m$ &&& call immediate $f(a_1,\ldots,a_n) = (b_1,\ldots,b_m)$, $n,m$ unspec. \\
+  \ttfamily dcall &         & adr:$f$ $a_1..a_n$ & $b_1..b_m$ &&& call dyn. $f(a_1,\ldots,a_n) = (b_1,\ldots,b_m)$, $n,m$ unspec. \\
+  \ttfamily scall & adr:$f$ & $a_1..a_n$         & $b_1..b_m$ &&& call imm. $f(a_1,\ldots,a_n) = (b_1,\ldots,b_m)$, $n,m$ unspec. \\
   \ttfamily ret   &         &                    &            &&& return from function call or exit \\
   \ttfamily jmp   & adr:$l$ &                    &            &&& unconditional jump to $l$ \\
   \ttfamily jnz   & adr:$l$ & i64:$v$            &            &&& conditional jump to $l$ if $v\neq 0$ \\
   \hline
+  \ttfamily or    &         & i64:$v$ i64:$w$ & i64:$x\in\{0,1\}$ &&& boolean disjunction $x=0\iff v=0=w$ \\
+  \ttfamily and   &         & i64:$v$ i64:$w$ & i64:$x\in\{0,1\}$ &&& boolean conjunction $x=1\iff v\neq0\neq w$ \\
+  \ttfamily not   &         & i64:$v$         & i64:$x\in\{0,1\}$ &&& boolean negation $x=1\iff v=0$ \\
+  \hline
   \ttfamily ipush & i64:$v$ &                 & i64:$v$          && & push imm.\ 64-bit two's complement $v$ to stack \\
   \ttfamily ineg  &         & i64:$v$         & i64:$(-v)$       && & 64-bit two's complement negation \\
   \ttfamily iadd  &         & i64:$v$ i64:$w$ & i64:$(v+w)$      && & 64-bit binary addition with overflow \\
-  \ttfamily imul  &         & i64:$v$ i64:$w$ & i64:$(v\cdot w)$ && & 64-bit two's complement multiplication with overflow \\
+  \ttfamily imul  &         & i64:$v$ i64:$w$ & i64:$(v\cdot w)$ && & 64-bit two's complement multiplication w/ overflow \\
   \ttfamily idiv  &         & i64:$v$ i64:$w$ & i64:$(v/w)$      &&y& 64-bit two's complement division with truncation \\
   \ttfamily isgn  &         & i64:$v$         & i64:$(\operatorname{sgn}v)$ &&& sign of 64-bit two's complement int \\
   \hline
@@ -56,18 +62,6 @@
   \ttfamily zsgn  &         & Z:$v$           & i64:$(\operatorname{sgn}v)$ &&& sign of integer \\
   \ttfamily zsh   &         & Z:$v$ i64:$n$   & Z:$(v\cdot2^n)$  && & integer multiplication by $2^n$ with truncation \\
   \hline
-  \ttfamily or    &         & i64:$v$ i64:$w$ & i64:$x\in\{0,1\}$ &&& boolean disjunction $x=0\iff v=0=w$ \\
-  \ttfamily and   &         & i64:$v$ i64:$w$ & i64:$x\in\{0,1\}$ &&& boolean conjunction $x=1\iff v\neq0\neq w$ \\
-  \ttfamily not   &         & i64:$v$         & i64:$x\in\{0,1\}$ &&& boolean negation $x=1\iff v=0$ \\
-  \hline
-  \ttfamily arnew &         & i64:$n$         & R$^*$ && & create array of reals (init: 0) of length $n\geq0$ \\
-  \ttfamily arld  &         & R$^*$ i64:$k$   & R     &&y& load element $k$ of array of reals to stack \\
-  \ttfamily arst  &         & R$^*$ i64:$k$ R &       &&y& store to element $k$ of array of reals \\
-  \hline
-  \ttfamily aznew &         & i64:$n$         & Z$^*$ && & create array of integers (init: 0) of length $n\geq0$ \\
-  \ttfamily azld  &         & Z$^*$ i64:$k$   & Z     &&y& load element $k$ of array of integers to stack \\
-  \ttfamily azst  &         & Z$^*$ i64:$k$ Z &       &&y& store to element $k$ of array of integers \\
-  \hline
   \ttfamily rconv &         & Z:$v$           & R:$v$           & && convert an integer to real \\
   \ttfamily rneg  &         & R:$v$           & R:$(-v)$        & && real negation \\
   \ttfamily radd  &         & R:$v$ R:$w$     & R:$(v+w)$       & && real addition \\
@@ -76,13 +70,13 @@
   \ttfamily rsh   &         & R:$v$ i64:$w$   & R:$(v\cdot2^w)$ & && multiplication by $2^w$ \\
   \ttfamily rin   &         &                 & R$^*$ i64:$n$   & && get real input \\
   \hline
-  \ttfamily rlim  & adr:$f$ & $a_1..a_n$ & $b_0..b_m$ &?&y& $\lim_{p\to\infty}{(f(-p,a_1,\ldots,a_n))_p} = (b_0,\ldots,b_m)$, $n,m$ unspec. \\[-1.35ex]\hline\noalign{\vspace{\dimexpr 1.35ex-.5pt}}
+  \ttfamily rlim  & adr:$f$ & $a_1..a_n$ & $b_0..b_m$ &?&y& $\lim_{p\to\infty}{(f(-p,a_1..a_n))_p} = (b_0..b_m)$, $n,m$ unspec. \\[-1.35ex]\hline\noalign{\vspace{\dimexpr 1.35ex-.5pt}}
   \ttfamily rch   &         & R:$r_1..r_n$ i64:$n$ & i64:$k$    &y&& mv-choice, $\{0\}$ if all $<0$, $\{i:r_i>0\}$ otherwise \\
-  \ttfamily rapx  &         & R:$x$ i64:$p$   & Z:$m$ i64:$e$   &y&& approx.\ to absolute prec.: $|x-m\cdot2^{e-\lceil\log_2(|m|+1)\rceil}|<2^p$ \\
+  \ttfamily rapx  &         & R:$x$ i64:$p$   & Z:$m$ i64:$e$   &y&& approx.\ to abs.\ prec.: $|x-m\cdot2^{e-\lceil\log_2(|m|+1)\rceil}|<2^p$ \\
   \ttfamily rilog &         & R:$x$ i64:$p$   & i64:$k$         &y&& approx.\ integer logarithm $\{k:2^k\leq|x|+2^p<2^{k+2}\}$ \\
   \hline
   \ttfamily entc  &         &                           & Z:$\tilde p$ && & enter continuous section with (volatile) prec.\ $\tilde p$ \\
-  \ttfamily lvc   & u64:$n$ & Z:$\tilde p$ $a_1'..a_n'$ & $a_1..a_n$   &&y& leave continuous section ($\tau(a_i)\in\{\text{R,K}\}$ only if not last)
+  \ttfamily lvc   & u64:$n$ & Z:$\tilde p$ $a_1'..a_n'$ & $a_1..a_n$   &&y& leave continuous section (last $\implies\tau(a_i)\neq\text{R}$)
 \end{tabular}
 \caption{Instruction set of the low-level language.}
 \label{fig:instrs}
