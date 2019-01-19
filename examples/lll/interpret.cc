@@ -499,9 +499,7 @@ bool lll_state::next(const prog_t &p)
 		rstack.pop_back();
 		goto ret;
 	case JNZ: {
-		auto v = std::get<int64_t>(stack.back());
-		stack.pop_back();
-		if (!v)
+		if (!std::get<I>(stack.back()))
 			break;
 		[[fallthrough]];
 	}

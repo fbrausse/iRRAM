@@ -41,7 +41,7 @@
   \ttfamily scall & adr:$f$ & $a_1..a_n$         & $b_1..b_m$ &&& call imm. $f(a_1,\ldots,a_n) = (b_1,\ldots,b_m)$, $n,m$ unspec. \\
   \ttfamily ret   &         &                    &            &&& return from function call or exit \\
   \ttfamily jmp   & adr:$l$ &                    &            &&& unconditional jump to $l$ \\
-  \ttfamily jnz   & adr:$l$ & i64:$v$            &            &&& conditional jump to $l$ if $v\neq 0$ \\
+  \ttfamily jnz   & adr:$l$ & i64:$v$            & $v$        &&& conditional jump to $l$ if $v\neq 0$ \\
   \hline
   \ttfamily or    &         & i64:$v$ i64:$w$ & i64:$x\in\{0,1\}$ &&& boolean disjunction $x=0\iff v=0=w$ \\
   \ttfamily and   &         & i64:$v$ i64:$w$ & i64:$x\in\{0,1\}$ &&& boolean conjunction $x=1\iff v\neq0\neq w$ \\

@@ -14,7 +14,6 @@ logmap_itr:	# c x n
   ipush -1
   iadd		# c x*(1-x)*c n-1
 logmap:		# c x n
-  dup 1 1	# c x n n
   jnz logmap_itr
   rot 3 1	# x 0 c
   pop 2
