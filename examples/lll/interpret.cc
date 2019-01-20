@@ -14,7 +14,7 @@ enum opcode {
 	IPUSH, INEG, IADD, IMUL, IDIV, ISGN,
 	ZCONV, ZNEG, ZADD, ZMUL, ZDIV, ZSGN, ZSH,
 	OR, AND, NOT,
-	RCONV, RNEG, RADD, RINV, RMUL, RSH, RCH, RIN, RAPX, RILOG,
+	RCONV, RNEG, RADD, RINV, RMUL, RSH, RCH, RIN, RAPX,
 	ENTC, LVC,
 };
 
@@ -79,7 +79,6 @@ static const std::map<std::string_view,op_info> instrs {
 	{ "rch",   { RCH  ,          } },
 	{ "rin",   { RIN  ,          } },
 	{ "rapx",  { RAPX ,          } },
-	{ "rilog", { RILOG,          } },
 	{ "entc",  { ENTC ,          } },
 	{ "lvc",   { LVC  , U64      } },
 };
@@ -124,7 +123,6 @@ static const char *const opstrs[] = {
 	[RCH  ] = "rch",
 	[RIN  ] = "rin",
 	[RAPX ] = "rapx",
-	[RILOG] = "rilog",
 	[ENTC ] = "entc",
 	[LVC  ] = "lvc",
 };
