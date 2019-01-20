@@ -328,7 +328,9 @@ struct interpret_exception : std::runtime_error {
 	using std::runtime_error::runtime_error;
 };
 
+namespace {
 struct elem;
+}
 
 using I = int64_t;
 using U = uint64_t;
@@ -340,6 +342,8 @@ namespace std {
 template <> struct variant_size<elem> : variant_size<std::variant<I,U,Z,R,T>> {};
 template <size_t n> struct variant_alternative<n,elem> : variant_alternative<n,std::variant<I,U,Z,R,T>> {};
 }
+
+namespace {
 
 /* <https://en.cppreference.com/mwiki/index.php?title=cpp/utility/variant/visit&oldid=106987> */
 // helper type for the visitor #4
@@ -358,6 +362,21 @@ template<class... Ts> overloaded(Ts...) -> overloaded<Ts...>;
 struct elem : std::variant<I,U,Z,R,T> {
 
 	using std::variant<I,U,Z,R,T>::variant;
+
+	static_assert(std::is_nothrow_move_constructible_v<I>);
+	static_assert(std::is_nothrow_move_assignable_v<I>);
+
+	static_assert(std::is_nothrow_move_constructible_v<U>);
+	static_assert(std::is_nothrow_move_assignable_v<U>);
+
+	static_assert(std::is_nothrow_move_constructible_v<Z>);
+	static_assert(std::is_nothrow_move_assignable_v<Z>);
+
+	static_assert(std::is_nothrow_move_constructible_v<R>);
+	static_assert(std::is_nothrow_move_assignable_v<R>);
+
+	static_assert(std::is_nothrow_move_constructible_v<T>);
+	static_assert(std::is_nothrow_move_assignable_v<T>);
 
 	friend sizetype geterror(const elem &el)
 	{
@@ -399,6 +418,20 @@ struct elem : std::variant<I,U,Z,R,T> {
 	}
 };
 
+static_assert(std::is_nothrow_move_constructible_v<elem>);
+static_assert(std::is_nothrow_move_assignable_v<elem>);
+static_assert(std::is_nothrow_destructible_v<elem>);
+
+#if 1
+template <typename T> inline const T &  get(const elem &e)          { return std::get<T>(e); }
+template <typename T> inline       T &  get(elem &e)                { return std::get<T>(e); }
+template <typename T> inline       T && get(elem &&e)               { return std::get<T>(std::move(e)); }
+#else
+template <typename T> inline const T &  get(const elem &e) noexcept { return *std::get_if<T>(&e); }
+template <typename T> inline       T &  get(elem &e)       noexcept { return *std::get_if<T>(&e); }
+template <typename T> inline       T && get(elem &&e)      noexcept { return std::move(*std::get_if<T>(&e)); }
+#endif
+
 struct lll_stack : protected std::vector<elem> {
 
 	void dup(uint64_t n, uint64_t k)
@@ -406,6 +439,7 @@ struct lll_stack : protected std::vector<elem> {
 		assert(n <= size());
 		assert(n >= k);
 		size_t s = size()-n;
+		reserve(size() + k);
 		for (size_t i=0; i<k; i++)
 			push_back((*this)[i+s]);
 	}
@@ -448,15 +482,15 @@ struct lll_stack : protected std::vector<elem> {
 	template <typename T>
 	void op1(void (*f)(T &a))
 	{
-		f(std::get<T>(back()));
+		f(get<T>(back()));
 	}
 
 	template <typename T, typename S>
 	void op2(void (*f)(T &a, const S &b))
 	{
-		S b = std::move(std::get<S>(back()));
+		S b = get<S>(std::move(back()));
 		pop_back();
-		f(std::get<T>(back()), std::move(b));
+		f(get<T>(back()), std::move(b));
 	}
 
 	friend std::ostream & operator<<(std::ostream &s, const lll_stack &v)
@@ -473,12 +507,13 @@ struct lll_state {
 	lll_stack stack;
 	/* stack of return addresses */
 	std::vector<uint64_t> rstack;
-	/* stack of addresses where the precisions from ENTC are stored */
+	/* stack of indices into stack where the precisions from ENTC are stored */
 	std::vector<uint64_t> pstack;
 
 	lll_state(uint64_t pc = 0) : pc(pc) {}
 
-	bool next(const prog_t &p);
+	template <bool discrete>
+	void go(const prog_t &p);
 
 	friend sizetype geterror(const lll_state &st)
 	{
@@ -495,6 +530,8 @@ struct lll_state {
 	}
 };
 
+}
+
 namespace iRRAM {
 template <> struct is_continuous<lll_state> : std::true_type {};
 }
@@ -505,15 +542,17 @@ static lll_state interpret_limit(int p, const prog_t &prog, const lll_state &_st
 	st.stack.push(static_cast<I>(p));
 	assert(prog[st.pc].op == ENTC);
 	st.pc++;
-	while (st.next(prog));
-	assert(std::get<I>(st.stack.back()) == p);
+	st.go<false>(prog);
+	assert(get<I>(st.stack.back()) == p);
 	st.stack.pop(1);
 	assert(prog[st.pc].op == LVC);
 	return st;
 }
 
-bool lll_state::next(const prog_t &p)
+template <bool discrete>
+void lll_state::go(const prog_t &p)
 {
+	while (pc < p.size()) {
 	const instr &i = p[pc];
 #if 0
 	dbg("stack : ", stack);
@@ -528,7 +567,7 @@ bool lll_state::next(const prog_t &p)
 	case ROT: stack.rot(i.imm[0].u64, i.imm[1].u64); break;
 	/* tuple operations */
 	case TPACK: {
-		I n = std::get<I>(stack.back());
+		I n = get<I>(stack.back());
 		stack.pop(1);
 		assert(0 <= n && (size_t)n < stack.size());
 		T t(std::move_iterator(stack.begin()+stack.size()-n),
@@ -538,7 +577,7 @@ bool lll_state::next(const prog_t &p)
 		break;
 	}
 	case TEXPL: {
-		T t = std::move(std::get<T>(stack.back()));
+		T t = get<T>(std::move(stack.back()));
 		stack.pop(1);
 		stack.reserve(stack.size() + t.size()+1);
 		stack.insert(stack.end(),
@@ -548,9 +587,9 @@ bool lll_state::next(const prog_t &p)
 		break;
 	}
 	case TSPLT: {
-		I k = std::get<I>(stack.back());
+		I k = get<I>(std::move(stack.back()));
 		stack.pop(1);
-		T &s = std::get<T>(stack.back());
+		T &s = get<T>(stack.back());
 		assert(0 <= k && (size_t)k <= s.size());
 		T t(std::move_iterator(s.begin()+k),
 		    std::move_iterator(s.end()));
@@ -559,21 +598,21 @@ bool lll_state::next(const prog_t &p)
 		break;
 	}
 	case TCAT: {
-		T &t = std::get<T>(stack.back());
-		T &s = std::get<T>(stack[stack.size()-2]);
+		T &t = get<T>(stack.back());
+		T &s = get<T>(stack[stack.size()-2]);
 		s.reserve(s.size() + t.size());
 		std::move(t.begin(), t.end(), std::back_inserter(s));
 		stack.pop(1);
 		break;
 	}
 	case TLEN:
-		stack.push(I(std::get<T>(stack.back()).size()));
+		stack.push(I(get<T>(stack.back()).size()));
 		break;
 	/* control flow */
 	case APUSH: stack.push(i.imm[0].adr); break;
 	case DCALL:
 		rstack.push_back(pc+1);
-		pc = std::get<U>(stack.back());
+		pc = get<U>(stack.back());
 		stack.pop_back();
 		goto ret;
 	case SCALL:
@@ -585,7 +624,7 @@ bool lll_state::next(const prog_t &p)
 		rstack.pop_back();
 		goto ret;
 	case JNZ: {
-		if (!std::get<I>(stack.back()))
+		if (!get<I>(stack.back()))
 			break;
 		[[fallthrough]];
 	}
@@ -601,8 +640,8 @@ bool lll_state::next(const prog_t &p)
 	case ISGN : stack.op1<I>([](auto &a){ a = a < 0 ? -1 : a > 0 ? +1 : 0; }); break;
 	/* Z ops */
 	case ZCONV:
-		assert(INT_MIN <= std::get<I>(stack.back()) && std::get<I>(stack.back()) <= INT_MAX);
-		stack.back() = INTEGER(static_cast<int>(std::get<I>(stack.back()))); /* TODO */
+		assert(INT_MIN <= get<I>(stack.back()) && get<I>(stack.back()) <= INT_MAX);
+		stack.back() = INTEGER(static_cast<int>(get<I>(stack.back()))); /* TODO */
 		break;
 	case ZNEG : stack.op1<Z>([](auto &a){ a = -a; }); break;
 	case ZADD : stack.op2<Z,Z>([](auto &a, auto b){ a += b; }); break;
@@ -614,7 +653,7 @@ bool lll_state::next(const prog_t &p)
 	case AND  : stack.op2<I,I>([](auto &a, auto b){ a &= b; }); break;
 	case NOT  : stack.op1<I>([](auto &a){ a = !a; }); break;
 	/* R ops */
-	case RCONV: stack.back() = R(std::get<Z>(stack.back())); break;
+	case RCONV: stack.back() = R(get<Z>(std::move(stack.back()))); break;
 	case RNEG : stack.op1<R>([](auto &a){ a = -a; }); break;
 	case RADD : stack.op2<R,R>([](auto &a, auto b){ a += b; }); break;
 	case RINV : stack.op1<R>([](auto &a){ a = 1/a; }); break; /* TODO? */
@@ -624,22 +663,22 @@ bool lll_state::next(const prog_t &p)
 			a = scale(a, b);
 		}); break;
 	case RCH  : {
-		int64_t n = std::get<I>(stack.back());
+		int64_t n = get<I>(stack.back());
 		assert(n > 0);
 		assert(stack.size() > (uint64_t)n);
 		size_t s = stack.size()-1-n;
 		assert(n == 2 && "sorry, 'rch' implemented only for n=2");
-		I k = choose(std::get<R>(stack[s+0]) > 0,
-		             std::get<R>(stack[s+1]) > 0);
+		I k = choose(get<R>(stack[s+0]) > 0,
+		             get<R>(stack[s+1]) > 0);
 		stack.pop(3);
 		stack.push(k);
 		break;
 	}
 	case RAPX : {
 		assert(stack.size() >= 2);
-		int64_t p = std::get<I>(stack.back());
+		int64_t p = get<I>(stack.back());
 		assert(INT_MIN <= p && p <= INT_MAX); /* TODO */
-		DYADIC d = approx(std::get<R>(stack[stack.size()-2]), p);
+		DYADIC d = approx(get<R>(stack[stack.size()-2]), p);
 		uint64_t k = (mpfr_get_prec(d.value)+GMP_NUMB_BITS-1)/GMP_NUMB_BITS;
 		assert(k <= INT_MAX);
 		int s = mpfr_signbit(d.value);
@@ -656,7 +695,8 @@ bool lll_state::next(const prog_t &p)
 	/* continuous section ops */
 	case ENTC : {
 		pstack.push_back(stack.size());
-		*this = limit(interpret_limit, p, *this);
+		*this = discrete ? iRRAM::exec(interpret_limit, -1, p, *this)
+		                 : limit(interpret_limit, p, *this);
 		pstack.pop_back();
 		break;
 	}
@@ -666,16 +706,17 @@ bool lll_state::next(const prog_t &p)
 			for (uint64_t i=stack.size()-pstack.back(); i<stack.size(); i++)
 				assert("no cont data in last section" && stack[i].index() < 3);
 		stack.rot(i.imm[0].u64+1, 1);
-		return false;
+		return;
 	}
 	pc++;
 ret:
-	return pc < p.size();
+	continue;
+	}
 }
 
 static lll_state interpret(const prog_t &prog, lll_state st={})
 {
-	while (st.next(prog));
+	st.go<true>(prog);
 	return st;
 }
 
@@ -691,7 +732,7 @@ int main(int argc, char **argv)
 			          << "' not defined in the program\n";
 			return 2;
 		}
-		lll_state st = iRRAM::exec(interpret, prog, start->second);
+		lll_state st = interpret(prog, start->second);
 	} catch (const parse_exception &ex) {
 		std::cerr << ex.what() << "\n";
 		return 1;
