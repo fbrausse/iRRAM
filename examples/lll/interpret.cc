@@ -524,9 +524,9 @@ int main(int argc, char **argv)
 	iRRAM_initialize2(&argc, argv);
 
 	const char *start_label = "main";
-	for (int opt; (opt = getopt(argc, argv, ":hl:")) != -1;)
+	for (int opt; (opt = getopt(argc, argv, ":Hl:")) != -1;)
 		switch (opt) {
-		case 'h':
+		case 'H':
 			printf("usage: %s [OPTS] [--] {LLL-FILE|-} [i64:params]\n", argv[0]);
 			exit(0);
 		case 'l': start_label = optarg; break;
