@@ -8,6 +8,7 @@
 /* from <https://github.com/fbrausse/kay> */
 #include <kay/numbers.hh>	/* kay::Z */
 #include <iRRAM/lib.h>
+#include <unistd.h>		/* getopt(3) */
 
 using iRRAM::REAL;
 using iRRAM::DYADIC;
@@ -354,6 +355,8 @@ void lll_state::go(const prog_t &p)
 		pc = i.imm[0].adr;
 		goto ret;
 	case RET:
+		if (rstack.empty())
+			return;
 		pc = rstack.back();
 		rstack.pop_back();
 		goto ret;
@@ -439,6 +442,7 @@ void lll_state::go(const prog_t &p)
 		break;
 	}
 	case LVC  :
+		assert(!discrete);
 		assert(stack.size() - pstack.back() - 1 == i.imm[0].u64);
 		if (pstack.size() == 1)
 			for (uint64_t i=stack.size()-pstack.back(); i<stack.size(); i++)
@@ -456,31 +460,99 @@ struct interpret_exception : std::runtime_error {
 	using std::runtime_error::runtime_error;
 };
 
-lll_state interpret(const prog_t &prog, lll_state st={})
+lll_state interpret(const prog_t &prog, int n, char **args, lll_state st={})
 {
+	std::vector<elem> a;
+	a.reserve(n);
+	for (int i=0; i<n; i++) {
+		char *endptr;
+		errno = 0;
+		long v = strtol(args[i], &endptr, 0);
+		if (errno)
+			throw std::system_error(errno, std::system_category(),
+			                        args[i]);
+		if (*endptr) {
+			std::stringstream ss;
+			ss << "cannot interpret '" << endptr
+			   << "' as part of i64 input '" << args[i]
+			   << "'";
+			throw std::runtime_error(ss.str());
+		}
+		a.push_back(I(v));
+	}
+	st.stack.push(T(std::move(a)));
 	st.go<true>(prog);
 	return st;
 }
 
 }
 
+template <typename... Ts>
+static void die(Ts &&... args)
+{
+	fprintf(stderr, std::forward<Ts>(args)...);
+	exit(1);
+}
+
+struct file {
+
+	FILE *f;
+
+	file(const char *path, const char *mode)
+	: f(fopen(path, mode))
+	{
+		if (!f)
+			throw std::system_error(errno, std::system_category(),
+			                        path);
+	}
+
+	~file() { fclose(f); }
+
+	file(const file &) = delete;
+};
+
+static auto read_input(const char *fname)
+{
+	if (!strcmp(fname, "-"))
+		return parse(stdin);
+	else
+		return parse(file(fname, "r").f);
+}
+
 int main(int argc, char **argv)
 {
+	iRRAM_initialize2(&argc, argv);
+
+	const char *start_label = "main";
+	for (int opt; (opt = getopt(argc, argv, ":hl:")) != -1;)
+		switch (opt) {
+		case 'h':
+			printf("usage: %s [OPTS] [--] {LLL-FILE|-} [i64:params]\n", argv[0]);
+			exit(0);
+		case 'l': start_label = optarg; break;
+		case ':': die("error: option '-%c' requires a parameter\n", optopt);
+		case '?': die("error: unknown option '-%c'\n", optopt);
+		}
+	if (optind >= argc)
+		die("error: argument LLL-FILE or '-' required\n");
+
 	try {
-		auto [prog,labels] = parse(stdin);
-		iRRAM_initialize2(&argc, argv);
-		const char *start_label = argc > 1 ? argv[1] : "main";
+		auto [prog,labels] = read_input(argv[optind++]);
 		auto start = labels.find(start_label);
 		if (start == labels.end()) {
 			std::cerr << "error: start label '" << start_label
 			          << "' not defined in the program\n";
 			return 2;
 		}
-		lll_state st = interpret(prog, start->second);
+		lll_state st = interpret(prog, argc - optind, argv + optind,
+		                         start->second);
 	} catch (const parse_exception &ex) {
 		std::cerr << ex.what() << "\n";
 		return 1;
 	} catch (const interpret_exception &ex) {
+		std::cerr << ex.what() << "\n";
+		return 1;
+	} catch (const std::runtime_error &ex) {
 		std::cerr << ex.what() << "\n";
 		return 1;
 	}
