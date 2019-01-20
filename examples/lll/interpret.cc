@@ -14,7 +14,7 @@ enum opcode {
 	IPUSH, INEG, IADD, IMUL, IDIV, ISGN,
 	ZCONV, ZNEG, ZADD, ZMUL, ZDIV, ZSGN, ZSH,
 	OR, AND, NOT,
-	RCONV, RNEG, RADD, RINV, RMUL, RSH, RCH, RIN, RAPX,
+	RCONV, RNEG, RADD, RINV, RMUL, RSH, RCH, RIN, RAPX, RLMAP,
 	ENTC, LVC,
 };
 
@@ -79,6 +79,7 @@ static const std::map<std::string_view,op_info> instrs {
 	{ "rch",   { RCH  ,          } },
 	{ "rin",   { RIN  ,          } },
 	{ "rapx",  { RAPX ,          } },
+	{ "rlmap", { RLMAP,          } },
 	{ "entc",  { ENTC ,          } },
 	{ "lvc",   { LVC  , U64      } },
 };
@@ -123,6 +124,7 @@ static const char *const opstrs[] = {
 	[RCH  ] = "rch",
 	[RIN  ] = "rin",
 	[RAPX ] = "rapx",
+	[RLMAP] = "rlmap",
 	[ENTC ] = "entc",
 	[LVC  ] = "lvc",
 };
@@ -688,6 +690,13 @@ void lll_state::go(const prog_t &p)
 		stack.pop(2);
 		stack.push(Z(&z));
 		stack.push(I(mpfr_get_exp(d.value)));
+		break;
+	}
+	case RLMAP: {
+		I &n = get<I>(stack[stack.size()-1]);
+		R &x = get<R>(stack[stack.size()-2]);
+		const R &c = get<R>(stack[stack.size()-3]);
+		while (n--) x *= c*(1-x);
 		break;
 	}
 	/* continuous section ops */
