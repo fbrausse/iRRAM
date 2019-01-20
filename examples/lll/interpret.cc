@@ -560,6 +560,7 @@ inline REAL to_REAL(mpz_class v)
 	return iRRAM::INTEGER(v.get_mpz_t());
 }
 
+#if KAY_HAVE_FLINT
 inline REAL to_REAL(kay::flintxx::Z v)
 {
 	fmpz *p = v.get_fmpz_t();
@@ -573,6 +574,7 @@ inline REAL to_REAL(kay::flintxx::Z v)
 			return (int)a;
 	}
 }
+#endif
 
 template <bool discrete>
 void lll_state::go(const prog_t &p)
