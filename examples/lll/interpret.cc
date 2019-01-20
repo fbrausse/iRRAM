@@ -2,10 +2,15 @@
 #include <variant>
 #include <cstdio>
 #include <map>
-#include <numeric>	/* std::accumulate */
+#include <numeric>		/* std::accumulate */
+/* from <https://github.com/fbrausse/kay> */
+#include <kay/numbers.hh>	/* kay::Z */
 #include <iRRAM/lib.h>
 
-using namespace iRRAM;
+using iRRAM::REAL;
+using iRRAM::DYADIC;
+using iRRAM::sizetype;
+using iRRAM::sizetype_exact;
 
 enum opcode {
 	DUP, POP, ROT,
@@ -334,7 +339,7 @@ struct elem;
 
 using I = int64_t;
 using U = uint64_t;
-using Z = INTEGER;
+using Z = kay::Z;
 using R = REAL;
 using T = std::vector<elem>;
 
@@ -369,7 +374,7 @@ struct elem : std::variant<I,U,Z,R,T> {
 	static_assert(std::is_nothrow_move_constructible_v<U>);
 	static_assert(std::is_nothrow_move_assignable_v<U>);
 
-	static_assert(std::is_nothrow_move_constructible_v<Z>);
+//	static_assert(std::is_nothrow_move_constructible_v<Z>);
 	static_assert(std::is_nothrow_move_assignable_v<Z>);
 
 	static_assert(std::is_nothrow_move_constructible_v<R>);
@@ -411,15 +416,15 @@ struct elem : std::variant<I,U,Z,R,T> {
 		return visit(overloaded {
 			[&s](const I &v) -> auto & { return s << "i:" << v; },
 			[&s](const U &v) -> auto & { return s << "a:" << v; },
-			[&s](const Z &v) -> auto & { return s << "Z:" << swrite(v); },
+			[&s](const Z &v) -> auto & { return s << "Z:" << v; },
 			[&s](const R &v) -> auto & { return s << "R:" << swrite(v, 10); },
 			[&s](const T &v) -> auto & { return s << "T:" << v; },
 		}, e);
 	}
 };
 
-static_assert(std::is_nothrow_move_constructible_v<elem>);
-static_assert(std::is_nothrow_move_assignable_v<elem>);
+//static_assert(std::is_nothrow_move_constructible_v<elem>);
+//static_assert(std::is_nothrow_move_assignable_v<elem>);
 static_assert(std::is_nothrow_destructible_v<elem>);
 
 #if 1
@@ -536,7 +541,8 @@ namespace iRRAM {
 template <> struct is_continuous<lll_state> : std::true_type {};
 }
 
-static lll_state interpret_limit(int p, const prog_t &prog, const lll_state &_st) noexcept(false)
+namespace {
+lll_state interpret_limit(int p, const prog_t &prog, const lll_state &_st) noexcept(false)
 {
 	lll_state st = _st;
 	st.stack.push(static_cast<I>(p));
@@ -547,6 +553,25 @@ static lll_state interpret_limit(int p, const prog_t &prog, const lll_state &_st
 	st.stack.pop(1);
 	assert(prog[st.pc].op == LVC);
 	return st;
+}
+
+inline REAL to_REAL(mpz_class v)
+{
+	return iRRAM::INTEGER(v.get_mpz_t());
+}
+
+inline REAL to_REAL(kay::flintxx::Z v)
+{
+	fmpz *p = v.get_fmpz_t();
+	if (COEFF_IS_MPZ(*p))
+		return iRRAM::INTEGER(COEFF_TO_PTR(*p));
+	else {
+		slong a = *p;
+		if (a < INT_MIN || a > INT_MAX)
+			return to_REAL(kay::to_mpz_class(v));
+		else
+			return (int)a;
+	}
 }
 
 template <bool discrete>
@@ -639,10 +664,7 @@ void lll_state::go(const prog_t &p)
 	case IDIV : stack.op2<I,I>([](auto &a, auto b){ a /= b; }); break;
 	case ISGN : stack.op1<I>([](auto &a){ a = a < 0 ? -1 : a > 0 ? +1 : 0; }); break;
 	/* Z ops */
-	case ZCONV:
-		assert(INT_MIN <= get<I>(stack.back()) && get<I>(stack.back()) <= INT_MAX);
-		stack.back() = INTEGER(static_cast<int>(get<I>(stack.back()))); /* TODO */
-		break;
+	case ZCONV: stack.back() = Z(get<I>(stack.back())); break;
 	case ZNEG : stack.op1<Z>([](auto &a){ a = -a; }); break;
 	case ZADD : stack.op2<Z,Z>([](auto &a, auto b){ a += b; }); break;
 	case ZMUL : stack.op2<Z,Z>([](auto &a, auto b){ a *= b; }); break;
@@ -653,7 +675,7 @@ void lll_state::go(const prog_t &p)
 	case AND  : stack.op2<I,I>([](auto &a, auto b){ a &= b; }); break;
 	case NOT  : stack.op1<I>([](auto &a){ a = !a; }); break;
 	/* R ops */
-	case RCONV: stack.back() = R(get<Z>(std::move(stack.back()))); break;
+	case RCONV: stack.back() = to_REAL(get<Z>(std::move(stack.back()))); break;
 	case RNEG : stack.op1<R>([](auto &a){ a = -a; }); break;
 	case RADD : stack.op2<R,R>([](auto &a, auto b){ a += b; }); break;
 	case RINV : stack.op1<R>([](auto &a){ a = 1/a; }); break; /* TODO? */
@@ -703,7 +725,7 @@ void lll_state::go(const prog_t &p)
 	case ENTC : {
 		pstack.push_back(stack.size());
 		*this = discrete ? iRRAM::exec(interpret_limit, -1, p, *this)
-		                 : limit(interpret_limit, p, *this);
+		                 : iRRAM::limit(interpret_limit, p, *this);
 		pstack.pop_back();
 		break;
 	}
@@ -721,10 +743,12 @@ ret:
 	}
 }
 
-static lll_state interpret(const prog_t &prog, lll_state st={})
+lll_state interpret(const prog_t &prog, lll_state st={})
 {
 	st.go<true>(prog);
 	return st;
+}
+
 }
 
 int main(int argc, char **argv)
