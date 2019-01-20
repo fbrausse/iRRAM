@@ -30,11 +30,11 @@
 \newgeometry{left=2mm,right=2mm,top=2.5cm,bottom=5cm}
 \begin{figure}[h]
 \centering
-\begin{tabular}{l|l|l|l@{\;\,\vline\,}c@{\,\vline\,}c@{\,\vline\;\,}l}
+\begin{tabular}{l|l|l|l@{\;\,\vline\,}c@{\,\vline\,}c@{\,\vline\;\,}p{9cm}}
   opcode & imm. & stack before & stack after & mv & $\bot$ & comment \\ \hline
   \ttfamily dup & u64:$n\;k$ & $a_1..a_n$ & $a_1..a_n\;a_1..a_k$     &&& duplicate values on the stack, $k\leq n$ \\
   \ttfamily pop & u64:$n$    & $a_1..a_n$ &                          &&& pop $n$ entries off the stack \\
-  \ttfamily rot & u64:$n\;k$ & $a_1..a_n$ & $a_{k+1}..a_n\;a_1..a_k$ &&& rotate $n$ entries on stack left by $k<n$ \\
+  \ttfamily rot & u64:$n\;k$ & $a_1..a_n$ & $a_{k+1}..a_n\;a_1..a_k$ &&& rotate $n$ entries on stack left by $k\leq n$ \\
   \hline
   \ttfamily tpack &         & $a_1..a_n$ i64:$n$        & $(a_1..a_n)$                  &&& pack $n$ elements from stack into a new tuple \\
   \ttfamily texpl &         & $(a_1..a_n)$              & $a_1..a_n$ i64:$n$            &&& unpack tuple onto stack \\
@@ -77,9 +77,9 @@
   \ttfamily rin   &         &                 & $(a_1..a_n)$    & && get real input, $n$ unspec. \\
   \hline
   \ttfamily rlim  & adr:$f$ & $a_1..a_n$ & $b_0..b_m$ &?&y& $\lim_{p\to\infty}{(f(-p,a_1..a_n))_p} = (b_0..b_m)$, $n,m$ unspec. \\[-1.35ex]\hline\noalign{\vspace{\dimexpr 1.35ex-.5pt}}
-  \ttfamily rch   &         & R:$r_1..r_n$ i64:$n$ & i64:$k$    &y&& mv-choice, $\{0\}$ if all $<0$, $\{i:r_i>0\}$ otherwise \\
-  \ttfamily rapx  &         & R:$x$ i64:$p$   & Z:$m$ i64:$e$   &y&& approx.\ to abs.\ prec.: $|x-m\cdot2^{e-\lceil\log_2(|m|+1)\rceil}|<2^p$ \\
-  \ttfamily rilog &         & R:$x$ i64:$p$   & i64:$k$         &y&& approx.\ integer logarithm $\{k:2^k\leq|x|+2^p<2^{k+2}\}$ \\
+  \ttfamily rch   &         & R:$r_1..r_n$ i64:$n$ & i64:$k$    &y&y& mv-choice, $\{0\}$ if $\forall i:r_i<0$, $\{i:r_i>0\}$ otherwise \\
+  \ttfamily rapx  &         & R:$x$ i64:$p$   & Z:$m$ i64:$e$   &y&y& approx.\ to abs.\ prec.: $|x-m\cdot2^{e-\lceil\log_2(|m|+1)\rceil}|<2^p$ if $\log_2(|x|+1)<2^{63}$ \\
+  \ttfamily rilog &         & R:$x$ i64:$p$   & i64:$k$         &y&& approx.\ integer logarithm $\{k:2^k\leq|x|+2^p<2^{k+2}\}$ \\[-1.35ex]\hline\noalign{\vspace{\dimexpr 1.35ex-.5pt}}
   \hline
   \ttfamily entc  &         &                           & Z:$\tilde p$ && & enter continuous section with (volatile) prec.\ $\tilde p$ \\
   \ttfamily lvc   & u64:$n$ & Z:$\tilde p$ $a_1'..a_n'$ & $a_1..a_n$   &&y& leave continuous section (last $\implies\tau(a_i)\neq\text{R}$)
