@@ -19,30 +19,45 @@ logmap:		# c x n
   pop 2
   ret
 
-run:		# n 1
-  pop 1		# n
-  entc		# n -1
-  ipush 15	# n -1 15
+run_p_n_i:	# p n ?
+  pop 1		# p n
+run_p_n:	# p n
+  entc		# p n -1
+  ipush 15	# p n -1 15
   zconv
   rconv
-  ipush -2	# n -1 15 -2
-  rsh		# n -1 3.75
-  ipush 1	# n -1 3.75 1
+  ipush -2	# p n -1 15 -2
+  rsh		# p n -1 3.75
+  ipush 1	# p n -1 3.75 1
   zconv
   rconv
-  ipush -1	# n -1 3.75 1 -1
-  rsh		# n -1 3.75 .5
-  dup 4 1	# n -1 3.75 .5 n
-  scall logmap	# n -1 x
-  dup 2 1	# n -1 x -1
-  rapx		# n -1 m e
-  lvc 2		# n m e
+  ipush -1	# p n -1 3.75 1 -1
+  rsh		# p n -1 3.75 .5
+  dup 4 1	# p n -1 3.75 .5 n
+  scall logmap	# p n -1 x
+  dup 4 1	# p n -1 x p
+  rapx		# p n -1 m e
+  lvc 2		# p n m e
+  rot 4 2	# m e p n
+  pop 2		# m e
   ret
 
+# i >= 1 arguments
+run_n_i:	# n i
+  ipush -1	# n i -1
+  iadd		# n i-1
+  jnz run_p_n_i	# n 0
+  pop 1		# n
+  ipush -1	# n -1
+  rot 2 1	# -1 n
+  jmp run_p_n
+
+# main [[prec] n]
 main:		# (args)
   texpl		# args n
-  jnz run	# 0
+  jnz run_n_i	# 0
+# no arguments
   pop 1		#
   ipush 40000	# n
   ipush 1	# n 1
-  jmp run
+  jmp run_n_i
