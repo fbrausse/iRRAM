@@ -20,22 +20,19 @@ logmap:		# c x n
   ret
 
 main:
-  entc
-  ipush 375
+  entc		# -1
+  ipush 15	# -1 15
   zconv
   rconv
-  ipush 100
+  ipush -2	# -1 15 -2
+  rsh		# -1 3.75
+  ipush 1	# -1 3.75 1
   zconv
   rconv
-  rinv
-  rmul
-  ipush 1
-  zconv
-  rconv
-  ipush -1
-  rsh
-  ipush 40000
-  scall logmap
-  ipush -1
-  rapx
+  ipush -1	# -1 3.75 1 -1
+  rsh		# -1 3.75 .5
+  ipush 40000	# -1 3.75 .5 n
+  scall logmap	# -1 x
+  dup 2 1	# -1 x -1
+  rapx		# -1 m e
   lvc 2
