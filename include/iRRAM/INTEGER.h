@@ -64,14 +64,14 @@ INTEGER(int i = 0);
 INTEGER(const std::string &s);
 INTEGER(const char* s);
 INTEGER(const INTEGER& y);
-INTEGER(INTEGER &&o) : value(o.value) { o.value = nullptr; }
+INTEGER(INTEGER &&o) noexcept : value(o.value) { o.value = nullptr; }
 INTEGER(double d);
 
 /****** Copy/move assignment ******/
 
 INTEGER& operator = (const int y);
 INTEGER& operator = (const INTEGER& y);
-INTEGER & operator=(INTEGER &&o) { using std::swap; swap(value, o.value); return *this; }
+INTEGER & operator=(INTEGER &&o) noexcept { using std::swap; swap(value, o.value); return *this; }
 
 	/****** Destructor ******/
 	
