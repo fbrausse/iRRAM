@@ -27,7 +27,7 @@
 \date{\today}
 
 \begin{document}
-\newgeometry{left=2mm,right=2mm,top=2.5cm,bottom=5cm}
+\newgeometry{left=2mm,right=2mm,top=1.5cm,bottom=4cm}
 \begin{figure}[h]
 \centering
 \begin{tabular}{l|l|l|l@{\;\,\vline\,}c@{\,\vline\,}c@{\,\vline\;\,}p{9cm}}
@@ -76,7 +76,8 @@
   \ttfamily rsh   &         & R:$v$ i64:$w$   & R:$(v\cdot2^w)$ & && multiplication by $2^w$ \\
   \ttfamily rin   &         &                 & $(a_1..a_n)$    & && get real input, $n$ unspec. \\
   \hline
-  \ttfamily rlim  & adr:$f$ & $a_1..a_n$ & $b_0..b_m$ &?&y& $\lim_{p\to\infty}{(f(-p,a_1..a_n))_p} = (b_0..b_m)$, $n,m$ unspec. \\[-1.35ex]\hline\noalign{\vspace{\dimexpr 1.35ex-.5pt}}
+  \ttfamily rslim & adr:$f$ & $a_n..a_1$ & $a_n..a_1$ $b_m..b_1$ &?&y& $\lim_{p\to\infty}{(f(-p,a_1..a_n))_p} = (b_1..b_m)$, $n,m$ unspec. \\%[-1.35ex]\hline\noalign{\vspace{\dimexpr 1.35ex-.5pt}}
+  \ttfamily rdlim &         & $a_n..a_1$ adr:$f$ & $a_n..a_1$ $b_m..b_1$ &?&y& $\lim_{p\to\infty}{(f(-p,a_1..a_n))_p} = (b_1..b_m)$, $n,m$ unspec. \\%[-1.35ex]\hline\noalign{\vspace{\dimexpr 1.35ex-.5pt}}
   \ttfamily rch   &         & R:$r_1..r_n$ i64:$n$ & i64:$k$    &y&c& mv-choice, $\{0\}$ if $\forall i:r_i<0$, $\{i:r_i>0\}$ otherwise \\
   \ttfamily rapx  &         & R:$x$ i64:$p$   & Z:$m$ i64:$e$   &y&c& approx.\ to abs.\ prec.: $|x-m\cdot2^{e-\lceil\log_2(|m|+1)\rceil}|<2^p$ if $\log_2(|x|+1)<2^{63}$ \\
   \ttfamily rilog &         & R:$x$ i64:$p$   & i64:$k$         &y&& approx.\ integer logarithm $\{k:2^k\leq|x|+2^p<2^{k+2}\}$ \\[-1.35ex]\hline\noalign{\vspace{\dimexpr 1.35ex-.5pt}}
@@ -85,7 +86,10 @@
   \ttfamily lvc   & u64:$n$ & Z:$\tilde p$ $a_1'..a_n'$ & $a_1..a_n$   &&c& leave continuous section (last $\implies\tau(a_i)\neq\text{R}$)
 \end{tabular}
 \caption{Instruction set of the low-level language. \\
-	$\bot=\text c$: totality requires convergence.}
+	$\bot=\text c$: totality requires convergence.
+	$f$ run by \texttt{rslim}/\texttt{rdlim} on stack $a_n..a_1$~Z:$p$ resulting
+	in stack $a_n..a_1~b'_m..b'_1$ must ensure that $\Vert(b_1..b_m)-(b'_1..b'_m)\Vert_\infty\leq2^p$,
+	where $\Vert()\Vert_\infty\coloneqq0$ for $m=0$.}
 \label{fig:instrs}
 \end{figure}
 

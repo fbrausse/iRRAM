@@ -1,0 +1,66 @@
+
+logmap_itr:	# c x n
+  rot 2 1	# c n x
+  ipush 1	# c n x 1
+  zconv
+  rconv
+  dup 2 1	# c n x 1 x
+  rneg		# c n x 1 -x
+  radd		# c n x 1-x
+  rmul		# c n x*(1-x)
+  dup 3 1	# c n x*(1-x) c
+  rmul		# c n x*(1-x)*c
+  rot 2 1	# c x*(1-x)*c n
+  ipush -1
+  iadd		# c x*(1-x)*c n-1
+logmap:		# c x n
+  jnz logmap_itr
+  rot 3 1	# x 0 c
+  pop 2
+  ret
+
+limdisc:	# p n -1 -> p n m e
+  pop 1		# p n
+  ipush 15	# p n 15
+  zconv
+  rconv
+  ipush -2	# p n 15 -2
+  rsh		# p n 3.75
+  ipush 1	# p n 3.75 1
+  zconv
+  rconv
+  ipush -1	# p n 3.75 1 -1
+  rsh		# p n 3.75 .5
+  dup 3 1	# p n 3.75 .5 n
+  scall logmap	# p n x
+  dup 3 1	# p n x p
+  rapx		# p n m e
+  ret
+
+run_p_n_i:	# p n ?
+  pop 1		# p n
+run_p_n:	# p n
+  rslim limdisc	# p n m e
+  rot 4 2	# m e p n
+  pop 2		# m e
+  ret
+
+# i >= 1 arguments
+run_n_i:	# n i
+  ipush -1	# n i -1
+  iadd		# n i-1
+  jnz run_p_n_i	# n 0
+  pop 1		# n
+  ipush -1	# n -1
+  rot 2 1	# -1 n
+  jmp run_p_n
+
+# main [[prec] n]
+main:		# (args)
+  texpl		# args n
+  jnz run_n_i	# 0
+# no arguments
+  pop 1		#
+  ipush 40000	# n
+  ipush 1	# n 1
+  jmp run_n_i

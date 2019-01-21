@@ -235,6 +235,7 @@ struct lll_state {
 
 	friend sizetype geterror(const lll_state &st)
 	{
+		assert(!st.pstack.empty());
 		sizetype err = sizetype_exact();
 		for (uint64_t i=st.pstack.back(); i<st.stack.size(); i++)
 			err = max(err, geterror(st.stack[i]));
@@ -243,6 +244,7 @@ struct lll_state {
 
 	friend void seterror(lll_state &st, const sizetype &err)
 	{
+		assert(!st.pstack.empty());
 		for (uint64_t i=st.pstack.back(); i<st.stack.size(); i++)
 			seterror(st.stack[i], err);
 	}
@@ -255,6 +257,19 @@ template <> struct is_continuous<lll_state> : std::true_type {};
 }
 
 namespace {
+lll_state interpret_limit2(int p, const prog_t &prog, uint64_t adr, const lll_state &_st) noexcept(false)
+{
+	lll_state st(adr);
+	st.stack  = _st.stack;
+	st.pstack = _st.pstack;
+	st.pstack.push_back(_st.stack.size());
+	st.stack.push(I(p));
+	st.go<false>(prog);
+	assert(prog[st.pc].op == RET);
+	/* r{s,d}lim functions don't leave p on the stack */
+	return st;
+}
+
 lll_state interpret_limit(int p, const prog_t &prog, const lll_state &_st) noexcept(false)
 {
 	lll_state st = _st;
@@ -401,6 +416,28 @@ void lll_state::go(const prog_t &p)
 			assert(INT_MIN <= b && b <= INT_MAX); /* TODO */
 			a = scale(a, b);
 		}); break;
+	case RSLIM: {
+		lll_state r = discrete ? iRRAM::exec(interpret_limit2, -1, p, i.imm[0].adr, *this)
+		                       : iRRAM::limit(interpret_limit2, p, i.imm[0].adr, *this);
+		assert(stack.size() <= r.stack.size());
+		stack.reserve(r.stack.size());
+		stack.insert(stack.end(),
+		             std::move_iterator(r.stack.begin()+stack.size()),
+		             std::move_iterator(r.stack.end()));
+		break;
+	}
+	case RDLIM: {
+		uint64_t adr = get<U>(stack.back());
+		stack.pop(1);
+		lll_state r = discrete ? iRRAM::exec(interpret_limit2, -1, p, adr, *this)
+		                       : iRRAM::limit(interpret_limit2, p, adr, *this);
+		assert(stack.size() <= r.stack.size());
+		stack.reserve(r.stack.size());
+		stack.insert(stack.end(),
+		             std::move_iterator(r.stack.begin()+stack.size()),
+		             std::move_iterator(r.stack.end()));
+		break;
+	}
 	case RCH  : {
 		int64_t n = get<I>(stack.back());
 		assert(stack.size() > (uint64_t)n);
@@ -533,6 +570,9 @@ static auto read_input(const char *fname)
 int main(int argc, char **argv)
 {
 	iRRAM_initialize2(&argc, argv);
+#if KAY_USE_FLINT
+	atexit(flint_cleanup);
+#endif
 
 	const char *start_label = "main";
 	for (int opt; (opt = getopt(argc, argv, ":Hl:")) != -1;)
