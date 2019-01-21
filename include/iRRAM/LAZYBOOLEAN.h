@@ -31,7 +31,7 @@ MA 02111-1307, USA.
 #include <initializer_list>
 
 #include <iRRAM/core.h>
-#include <iRRAM/sizetype.hh>
+#include <iRRAM/STREAMS.h>	/* for iRRAM_DEBUG to work */
 
 namespace iRRAM {
 
@@ -57,7 +57,7 @@ friend int choose(const LAZY_BOOLEAN& x1,
                   const LAZY_BOOLEAN& x5,
                   const LAZY_BOOLEAN& x6 );
 
-friend std::size_t choose(std::initializer_list<LAZY_BOOLEAN>);
+template <typename Itr> friend std::size_t choose(Itr begin, Itr end);
 
 explicit operator bool() const;
 friend int check (const LAZY_BOOLEAN& x);
@@ -86,7 +86,36 @@ int choose(const LAZY_BOOLEAN& x1= false,
            const LAZY_BOOLEAN& x5= false,
            const LAZY_BOOLEAN& x6= false );
 
-std::size_t choose(std::initializer_list<LAZY_BOOLEAN>);
+template <typename Itr>
+inline std::size_t choose(Itr begin, Itr end)
+{
+	using std::find_if;
+
+	std::size_t result;
+	if (get_cached(result))
+		return result;
+
+	auto is_true = [](const LAZY_BOOLEAN &p)
+	               { return p.value == true; };
+	auto is_bot  = [](const LAZY_BOOLEAN &p)
+	               { return p.value == LAZY_BOOLEAN::BOTTOM; };
+
+	auto true_pos = find_if(begin, end, is_true);
+	if (true_pos != end) {
+		result = 1 + (true_pos - begin);
+	} else if (find_if(begin, end, is_bot) != end) {
+		iRRAM_DEBUG1(1,"choose(begin, end): lazy boolean value BOTTOM "
+		               "leading to iteration\n");
+		iRRAM_REITERATE(0);
+	} else {
+		result = 0;
+	}
+
+	put_cached(result);
+	return result;
+}
+
+std::size_t choose(std::initializer_list<LAZY_BOOLEAN> x);
 
 } // namespace iRRAM
 
