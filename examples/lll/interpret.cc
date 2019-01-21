@@ -215,6 +215,22 @@ struct lll_stack : protected std::vector<elem> {
 	{
 		return s << static_cast<const std::vector<elem> &>(v);
 	}
+
+	friend sizetype geterror(const std::pair<lll_stack,size_t> &p)
+	{
+		const lll_stack &st = p.first;
+		sizetype err = sizetype_exact();
+		for (size_t i=p.second; i<st.size(); i++)
+			err = max(err, geterror(st[i]));
+		return err;
+	}
+
+	friend void seterror(std::pair<lll_stack,size_t> &p, const sizetype &err)
+	{
+		lll_stack &st = p.first;
+		for (uint64_t i=p.second; i<st.size(); i++)
+			seterror(st[i], err);
+	}
 };
 
 struct lll_state {
@@ -228,7 +244,15 @@ struct lll_state {
 	/* stack of indices into stack where the precisions from ENTC are stored */
 	std::vector<uint64_t> pstack;
 
-	lll_state(uint64_t pc = 0) : pc(pc) {}
+	lll_state(uint64_t pc = 0)
+	: pc(pc)
+	{}
+
+	lll_state(uint64_t pc, const lll_state &outer)
+	: pc(pc)
+	, stack(outer.stack)
+	, pstack(outer.pstack)
+	{}
 
 	template <bool discrete>
 	void go(const prog_t &p);
@@ -254,20 +278,19 @@ struct lll_state {
 
 namespace iRRAM {
 template <> struct is_continuous<lll_state> : std::true_type {};
+template <typename S, typename T>
+struct is_continuous<std::pair<S,T>> : any_continuous<S,T> {};
 }
 
 namespace {
-lll_state interpret_limit2(int p, const prog_t &prog, uint64_t adr, const lll_state &_st) noexcept(false)
+std::pair<lll_stack,size_t> interpret_limit2(int p, const prog_t &prog, uint64_t adr, const lll_state &_st) noexcept(false)
 {
-	lll_state st(adr);
-	st.stack  = _st.stack;
-	st.pstack = _st.pstack;
-	st.pstack.push_back(_st.stack.size());
+	lll_state st(adr, _st);
 	st.stack.push(I(p));
 	st.go<false>(prog);
 	assert(prog[st.pc].op == RET);
 	/* r{s,d}lim functions don't leave p on the stack */
-	return st;
+	return {std::move(st.stack),_st.stack.size()};
 }
 
 lll_state interpret_limit(int p, const prog_t &prog, const lll_state &_st) noexcept(false)
@@ -304,17 +327,32 @@ inline REAL to_REAL(kay::flintxx::Z v)
 }
 #endif
 
+static bool debug = false;
+
 template <bool discrete>
 void lll_state::go(const prog_t &p)
 {
+	auto rlim = [&p,this](uint64_t adr) {
+		auto [r,s] = discrete ? iRRAM::exec(interpret_limit2, -1, p, adr, *this)
+		                      : iRRAM::limit(interpret_limit2, p, adr, *this);
+		assert(s == stack.size());
+		assert(stack.size() <= r.size());
+		stack.reserve(r.size());
+		stack.insert(stack.end(),
+		             std::move_iterator(r.begin()+stack.size()),
+		             std::move_iterator(r.end()));
+	};
+
 	while (pc < p.size()) {
 	const instr &i = p[pc];
-#if 0
-	dbg("stack : ", stack);
-	dbg("rstack: ", rstack);
-	dbg("pstack: ", pstack);
-	dbg("interpreting '", i, "' @ pc: ", pc);
-#endif
+
+	if (debug) {
+		dbg("stack : ", stack);
+		dbg("rstack: ", rstack);
+		dbg("pstack: ", pstack);
+		dbg("interpreting '", i, "' @ pc: ", pc);
+	}
+
 	switch (i.op) {
 	/* generic stack operations */
 	case DUP: stack.dup(i.imm[0].u64, i.imm[1].u64); break;
@@ -417,30 +455,18 @@ void lll_state::go(const prog_t &p)
 			a = scale(a, b);
 		}); break;
 	case RSLIM: {
-		lll_state r = discrete ? iRRAM::exec(interpret_limit2, -1, p, i.imm[0].adr, *this)
-		                       : iRRAM::limit(interpret_limit2, p, i.imm[0].adr, *this);
-		assert(stack.size() <= r.stack.size());
-		stack.reserve(r.stack.size());
-		stack.insert(stack.end(),
-		             std::move_iterator(r.stack.begin()+stack.size()),
-		             std::move_iterator(r.stack.end()));
+		rlim(i.imm[0].adr);
 		break;
 	}
 	case RDLIM: {
 		uint64_t adr = get<U>(stack.back());
 		stack.pop(1);
-		lll_state r = discrete ? iRRAM::exec(interpret_limit2, -1, p, adr, *this)
-		                       : iRRAM::limit(interpret_limit2, p, adr, *this);
-		assert(stack.size() <= r.stack.size());
-		stack.reserve(r.stack.size());
-		stack.insert(stack.end(),
-		             std::move_iterator(r.stack.begin()+stack.size()),
-		             std::move_iterator(r.stack.end()));
+		rlim(adr);
 		break;
 	}
 	case RCH  : {
 		int64_t n = get<I>(stack.back());
-		assert(stack.size() > (uint64_t)n);
+		assert(0 <= n && stack.size() > (uint64_t)n);
 		size_t s = stack.size()-1-n;
 		struct itr : lll_stack::const_iterator {
 			using lll_stack::const_iterator::const_iterator;
@@ -451,7 +477,7 @@ void lll_state::go(const prog_t &p)
 			iRRAM::LAZY_BOOLEAN * operator->() = delete;
 			iRRAM::LAZY_BOOLEAN * operator->() const = delete;
 		};
-		I k = iRRAM::choose(itr(stack.begin() + s), itr(stack.end()));
+		I k = iRRAM::choose(itr(stack.begin() + s), itr(stack.end()-1));
 		stack.pop(n+1);
 		stack.push(k);
 		break;
@@ -575,12 +601,15 @@ int main(int argc, char **argv)
 #endif
 
 	const char *start_label = "main";
-	for (int opt; (opt = getopt(argc, argv, ":Hl:")) != -1;)
+	bool quiet = false;
+	for (int opt; (opt = getopt(argc, argv, ":Hl:vq")) != -1;)
 		switch (opt) {
 		case 'H':
 			printf("usage: %s [OPTS] [--] {LLL-FILE|-} [i64:params]\n", argv[0]);
 			exit(0);
 		case 'l': start_label = optarg; break;
+		case 'q': quiet = true; break;
+		case 'v': debug = true; break;
 		case ':': die("error: option '-%c' requires a parameter\n", optopt);
 		case '?': die("error: unknown option '-%c'\n", optopt);
 		}
@@ -597,7 +626,8 @@ int main(int argc, char **argv)
 		}
 		lll_state st = interpret(prog, argc - optind, argv + optind,
 		                         start->second);
-		std::cout << st.stack << "\n";
+		if (!quiet)
+			std::cout << st.stack << "\n";
 	} catch (const parse_exception &ex) {
 		std::cerr << ex.what() << "\n";
 		return 1;
