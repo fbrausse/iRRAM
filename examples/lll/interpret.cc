@@ -3,7 +3,6 @@
 
 #include <variant>
 #include <cstdio>
-#include <map>
 #include <numeric>		/* std::accumulate */
 /* from <https://github.com/fbrausse/kay> */
 #include <kay/numbers.hh>	/* kay::Z */
@@ -82,7 +81,9 @@ struct elem : std::variant<I,U,Z,R,T> {
 	static_assert(std::is_nothrow_move_constructible_v<U>);
 	static_assert(std::is_nothrow_move_assignable_v<U>);
 
-//	static_assert(std::is_nothrow_move_constructible_v<Z>);
+#if KAY_HAVE_FLINT
+	static_assert(std::is_nothrow_move_constructible_v<Z>);
+#endif
 	static_assert(std::is_nothrow_move_assignable_v<Z>);
 
 	static_assert(std::is_nothrow_move_constructible_v<R>);
@@ -131,8 +132,10 @@ struct elem : std::variant<I,U,Z,R,T> {
 	}
 };
 
-//static_assert(std::is_nothrow_move_constructible_v<elem>);
-//static_assert(std::is_nothrow_move_assignable_v<elem>);
+#if KAY_HAVE_FLINT
+static_assert(std::is_nothrow_move_constructible_v<elem>);
+static_assert(std::is_nothrow_move_assignable_v<elem>);
+#endif
 static_assert(std::is_nothrow_destructible_v<elem>);
 
 #if 1
@@ -546,6 +549,7 @@ int main(int argc, char **argv)
 		}
 		lll_state st = interpret(prog, argc - optind, argv + optind,
 		                         start->second);
+		std::cout << st.stack << "\n";
 	} catch (const parse_exception &ex) {
 		std::cerr << ex.what() << "\n";
 		return 1;
