@@ -57,34 +57,35 @@
   \ttfamily ineg  &         & i64:$v$         & i64:$(-v)$       && & 64-bit two's complement negation \\
   \ttfamily iadd  &         & i64:$v$ i64:$w$ & i64:$(v+w)$      && & 64-bit binary addition with overflow \\
   \ttfamily imul  &         & i64:$v$ i64:$w$ & i64:$(v\cdot w)$ && & 64-bit two's complement multiplication w/ overflow \\
-  \ttfamily idiv  &         & i64:$v$ i64:$w$ & i64:$(v/w)$      &&y& 64-bit two's complement division with truncation \\
+  \ttfamily idiv  &         & i64:$v$ i64:$w$ & i64:$(v/w)$      && & 64-bit two's complement division w/ truncation, $w\neq0$ \\
   \ttfamily isgn  &         & i64:$v$         & i64:$(\operatorname{sgn}v)$ &&& sign of 64-bit two's complement int \\
   \hline
   \ttfamily zconv &         & i64:$v$         & Z:$v$            && & convert 64-bit two's complement int to integer \\
   \ttfamily zneg  &         & Z:$v$           & Z:$(-v)$         && & integer negation \\
   \ttfamily zadd  &         & Z:$v$ Z:$w$     & Z:$(v+w)$        && & integer addition \\
   \ttfamily zmul  &         & Z:$v$ Z:$w$     & Z:$(v\cdot w)$   && & integer multiplication \\
-  \ttfamily zdiv  &         & Z:$v$ Z:$w$     & Z:$(v/w)$        &&y& integer division with truncation \\
+  \ttfamily zdiv  &         & Z:$v$ Z:$w$     & Z:$(v/w)$        && & integer division with truncation, $w\neq0$ \\
   \ttfamily zsgn  &         & Z:$v$           & i64:$(\operatorname{sgn}v)$ &&& sign of integer \\
   \ttfamily zsh   &         & Z:$v$ i64:$n$   & Z:$(v\cdot2^n)$  && & integer multiplication by $2^n$ with truncation \\
   \hline
   \ttfamily rconv &         & Z:$v$           & R:$v$           & && convert an integer to real \\
   \ttfamily rneg  &         & R:$v$           & R:$(-v)$        & && real negation \\
   \ttfamily radd  &         & R:$v$ R:$w$     & R:$(v+w)$       & && real addition \\
-  \ttfamily rinv  &         & R:$v$           & R:$(1/v)$       & &y& real inversion \\
+  \ttfamily rinv  &         & R:$v$           & R:$(1/v)$       & &c& real inversion, $v\neq0$ \\
   \ttfamily rmul  &         & R:$v$ R:$w$     & R:$(v\cdot w)$  & && real multiplication \\
   \ttfamily rsh   &         & R:$v$ i64:$w$   & R:$(v\cdot2^w)$ & && multiplication by $2^w$ \\
   \ttfamily rin   &         &                 & $(a_1..a_n)$    & && get real input, $n$ unspec. \\
   \hline
   \ttfamily rlim  & adr:$f$ & $a_1..a_n$ & $b_0..b_m$ &?&y& $\lim_{p\to\infty}{(f(-p,a_1..a_n))_p} = (b_0..b_m)$, $n,m$ unspec. \\[-1.35ex]\hline\noalign{\vspace{\dimexpr 1.35ex-.5pt}}
-  \ttfamily rch   &         & R:$r_1..r_n$ i64:$n$ & i64:$k$    &y&y& mv-choice, $\{0\}$ if $\forall i:r_i<0$, $\{i:r_i>0\}$ otherwise \\
-  \ttfamily rapx  &         & R:$x$ i64:$p$   & Z:$m$ i64:$e$   &y&y& approx.\ to abs.\ prec.: $|x-m\cdot2^{e-\lceil\log_2(|m|+1)\rceil}|<2^p$ if $\log_2(|x|+1)<2^{63}$ \\
+  \ttfamily rch   &         & R:$r_1..r_n$ i64:$n$ & i64:$k$    &y&c& mv-choice, $\{0\}$ if $\forall i:r_i<0$, $\{i:r_i>0\}$ otherwise \\
+  \ttfamily rapx  &         & R:$x$ i64:$p$   & Z:$m$ i64:$e$   &y&c& approx.\ to abs.\ prec.: $|x-m\cdot2^{e-\lceil\log_2(|m|+1)\rceil}|<2^p$ if $\log_2(|x|+1)<2^{63}$ \\
   \ttfamily rilog &         & R:$x$ i64:$p$   & i64:$k$         &y&& approx.\ integer logarithm $\{k:2^k\leq|x|+2^p<2^{k+2}\}$ \\[-1.35ex]\hline\noalign{\vspace{\dimexpr 1.35ex-.5pt}}
   \hline
   \ttfamily entc  &         &                           & Z:$\tilde p$ && & enter continuous section with (volatile) prec.\ $\tilde p$ \\
-  \ttfamily lvc   & u64:$n$ & Z:$\tilde p$ $a_1'..a_n'$ & $a_1..a_n$   &&y& leave continuous section (last $\implies\tau(a_i)\neq\text{R}$)
+  \ttfamily lvc   & u64:$n$ & Z:$\tilde p$ $a_1'..a_n'$ & $a_1..a_n$   &&c& leave continuous section (last $\implies\tau(a_i)\neq\text{R}$)
 \end{tabular}
-\caption{Instruction set of the low-level language.}
+\caption{Instruction set of the low-level language. \\
+	$\bot=\text c$: totality requires convergence.}
 \label{fig:instrs}
 \end{figure}
 
