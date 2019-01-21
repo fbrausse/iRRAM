@@ -1,0 +1,98 @@
+
+# lim p => case x < 2^p => -x || x > -2^p => x end
+# cases equiv:  2^p-x > 0     || 2^p+x > 0
+abs_apx:        # x p
+  ipush 1       # x p 1
+  zconv         # x p 1
+  rconv         # x p 1
+  rot 2 1       # x 1 p
+  rsh           # x 2^p
+  dup 2 2	# x 2^p x 2^p
+  rot 2 1	# x 2^p 2^p x
+  rneg		# x 2^p 2^p -x
+  radd		# x 2^p 2^p-x
+  rot 2 1	# x 2^p-x 2^p
+  dup 3 1	# x 2^p-x 2^p x
+  radd		# x 2^p-x 2^p+x
+  ipush 2	# x 2^p-x 2^p+x 2
+  rch		# x k
+# k = 0 => 2^p-x < 0 and 2^p+x < 0 -- impossible
+# k = 1 => 2^p-x > 0               -- p-approximation is -x = (2k-3)*x
+# k = 2 => 2^p+x > 0               -- p-approximation is  x = (2k-3)*x
+  ipush 2	# x k 2
+  imul		# x 2k
+  ipush -3	# x 2k -3
+  iadd		# x 2k-3
+  zconv		# x 2k-3
+  rconv		# x 2k-3
+  dup 2 1	# x 2k-3 x
+  rmul		# x (2k-3)*x
+  ret
+
+#           case |x| > 2^(p-1) => 0 || |x| < 2^p => 1 end
+# cases equiv:   |x|-2^(p-1) > 0    || 2^p-|x| > 0
+#               # stack                      types
+bounded:        # x p                        [R Z]
+  rot 2 1       # p x
+  rslim abs_apx # p x |x|
+  dup 3 1       # p x |x| p
+  ipush 1       # p x |x| p 1
+  zconv         # p x |x| p 1
+  rconv         # p x |x| p 1
+  rot 2 1       # p x |x| 1 p
+  dup 2 2       # p x |x| 1 p 1 p
+  ipush -1      # p x |x| 1 p 1 p -1
+  iadd          # p x |x| 1 p 1 p-1
+  rsh           # p x |x| 1 p 2^(p-1)
+  dup 4 1       # p x |x| 1 p 2^(p-1) |x|
+  rot 2 1       # p x |x| 1 p |x| 2^(p-1)
+  rneg          # p x |x| 1 p |x| -2^(p-1)
+  radd          # p x |x| 1 p |x|-2^(p-1)
+  rot 4 3	# p x |x|-2^(p-1) |x| 1 p
+  rsh		# p x |x|-2^(p-1) |x| 2^p
+  rot 2 1	# p x |x|-2^(p-1) 2^p |x|
+  rneg		# p x |x|-2^(p-1) 2^p -|x|
+  radd		# p x |x|-2^(p-1) 2^p-|x|
+  ipush 2	# p x |x|-2^(p-1) 2^p-|x| 2
+  rch		# p x k
+  # k = 0 => |x|-2^(p-1) < 0 and 2^p-|x| < 0
+  # k = 1 => |x|-2^(p-1) > 0                 -- bounded x p = 0 = k-1
+  # k = 2 =>                     2^p-|x| > 0 -- bounded x p = 1 = k-1
+  ipush -1	# p x k -1
+  iadd		# p x k-1
+  rot 3 2	# k-1 p x
+  pop 2		# k-1
+  ret
+
+zero_apx:	# p
+  ipush 1	# p 1
+  zconv		# p 1
+  rconv		# p 1
+  dup 2 1	# p 1 p
+  rsh		# p 2^p
+  rot 2 1	# 2^p p
+  dup 1 1	# 2^p p p
+  ipush 2	# 2^p p p 2
+  idiv		# 2^p p q
+  ipush -2	# 2^p p q -2
+  imul		# 2^p p -2q
+  iadd		# 2^p p-2q
+  ipush 2	# 2^p p-2q 2
+  imul		# 2^p 2(p-2q)
+  ipush 1	# 2^p 2(p-2q) 1
+  iadd		# 2^p 2(p-2q)+1
+  zconv		# 2^p 2(p-2q)+1
+  rconv		# 2^p 2(p-2q)+1
+  rmul		# +/-2^p
+  ret
+
+main:            # (args)
+  pop 1          #
+  ipush 1        # 1
+  entc           # 1 p
+  rslim zero_apx # 1 p 0
+  ipush -2000    # 1 p 0 2
+  scall bounded  # 1 p z
+  lvc 1          # 1 z
+  rot 2 1        # z 1
+  pop 1          # z
