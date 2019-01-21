@@ -195,6 +195,8 @@ struct lll_stack : protected std::vector<elem> {
 	using vector::insert;
 	using vector::reserve;
 
+	using vector::const_iterator;
+
 	template <typename T>
 	void op1(void (*f)(T &a))
 	{
@@ -401,13 +403,19 @@ void lll_state::go(const prog_t &p)
 		}); break;
 	case RCH  : {
 		int64_t n = get<I>(stack.back());
-		assert(n > 0);
 		assert(stack.size() > (uint64_t)n);
 		size_t s = stack.size()-1-n;
-		assert(n == 2 && "sorry, 'rch' implemented only for n=2");
-		I k = choose(get<R>(stack[s+0]) > 0,
-		             get<R>(stack[s+1]) > 0);
-		stack.pop(3);
+		struct itr : lll_stack::const_iterator {
+			using lll_stack::const_iterator::const_iterator;
+			iRRAM::LAZY_BOOLEAN operator*() const
+			{
+				return get<R>(lll_stack::const_iterator::operator*()) > 0;
+			}
+			iRRAM::LAZY_BOOLEAN * operator->() = delete;
+			iRRAM::LAZY_BOOLEAN * operator->() const = delete;
+		};
+		I k = iRRAM::choose(itr(stack.begin() + s), itr(stack.end()));
+		stack.pop(n+1);
 		stack.push(k);
 		break;
 	}
