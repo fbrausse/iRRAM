@@ -333,8 +333,10 @@ template <bool discrete>
 void lll_state::go(const prog_t &p)
 {
 	auto rlim = [&p,this](uint64_t adr) {
+		pstack.push_back(stack.size());
 		auto [r,s] = discrete ? iRRAM::exec(interpret_limit2, -1, p, adr, *this)
 		                      : iRRAM::limit(interpret_limit2, p, adr, *this);
+		pstack.pop_back();
 		assert(s == stack.size());
 		assert(stack.size() <= r.size());
 		stack.reserve(r.size());
@@ -439,7 +441,11 @@ void lll_state::go(const prog_t &p)
 	case ZADD : stack.op2<Z,Z>([](auto &a, auto b){ a += b; }); break;
 	case ZMUL : stack.op2<Z,Z>([](auto &a, auto b){ a *= b; }); break;
 	case ZDIV : stack.op2<Z,Z>([](auto &a, auto b){ a /= b; }); break;
-	case ZSGN : stack.op1<Z>([](auto &a){ a = a < 0 ? -1 : a > 0 ? +1 : 0; }); break;
+	case ZSGN : {
+		const Z &a = get<Z>(stack.back());
+		stack.back() = I(a < 0 ? -1 : a > 0 ? +1 : 0);
+		break;
+	}
 	/* boolean ops */
 	case OR   : stack.op2<I,I>([](auto &a, auto b){ a |= b; }); break;
 	case AND  : stack.op2<I,I>([](auto &a, auto b){ a &= b; }); break;
