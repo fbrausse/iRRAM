@@ -169,6 +169,16 @@ inline void ext_mpfr_add_i(const mpfr_t z1,int n,mpfr_t z,int p)
 	return;
 }
 
+inline void ext_mpfr_neg_inplace(mpfr_t z)
+{
+	mpfr_neg(z, z, iRRAM_mpfr_rounding_mode);
+}
+
+inline void ext_mpfr_neg(const mpfr_t z1, mpfr_t z)
+{
+	mpfr_set_prec(z, mpfr_get_prec(z1));
+	mpfr_neg(z, z1, iRRAM_mpfr_rounding_mode);
+}
 
 inline void ext_mpfr_sub(const mpfr_t z1,const mpfr_t z2,mpfr_t z,int p)
 { int q,s1,s2;

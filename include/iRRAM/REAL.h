@@ -327,6 +327,7 @@ private:
 	REAL         mp_intervall_join  (const REAL   &y) const;
 	void         mp_scale(int n);
 	LAZY_BOOLEAN mp_lt0             ()                const;
+	REAL         mp_neg             ()                const;
 
 	void scale(int n);
 
@@ -666,7 +667,7 @@ inline REAL operator-(const int &n, const REAL& x)
 inline REAL REAL::operator-() const
 {
 	if (iRRAM_unlikely(value))
-		return mp_invsubtraction(int(0));
+		return mp_neg();
 	return REAL(REAL::double_pair(dp.upper_neg, dp.lower_pos));
 }
 

@@ -363,6 +363,14 @@ std::string swrite(const REAL & x, const int w, const float_form form)
 	return result;
 }
 
+REAL REAL::mp_neg() const
+{
+	MP_type zvalue;
+	MP_init(zvalue);
+	MP_neg(this->value, zvalue);
+	return REAL(zvalue, error);
+}
+
 REAL REAL::mp_subtraction(const REAL & y) const
 {
 	MP_type zvalue;
