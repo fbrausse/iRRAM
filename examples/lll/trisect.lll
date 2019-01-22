@@ -1,0 +1,240 @@
+
+# Z:m != 0
+apx2real_cnt_loop:	# i m s
+  pop 1			# i m
+  ipush 2		# i m 2
+  zconv			# i m 2
+  zdiv			# i m/2
+  rot 2 1		# m/2 i
+  ipush 1		# m/2 i 1
+  iadd			# m/2 i+1
+  rot 2 1		# i+1 m/2
+apx2real_cnt:		# i m
+  dup 1 1		# i m m
+  zsgn			# i m s
+  jnz apx2real_cnt_loop	# j 0 0
+  pop 1			# j 0
+  ret
+
+apx2real:		# Z:m i64:e
+  ipush 0		# m e 0
+  dup 3 1		# m e 0 m
+  scall apx2real_cnt	# m e i 0
+  pop 1			# m e i
+  ineg			# m e -i
+  iadd			# m e-i
+  rot 2 1		# e-i m
+  rconv			# e-i m
+  rot 2 1		# m e-i
+  rsh			# m*2^(e-i)
+  ret
+
+abs2_apx:		# x p
+  dup 2 1		# x p x
+  rot 2 1		# x x p
+  rapx			# x m e
+  rot 2 1		# x e m
+  dup 1 1		# x e m m
+  zsgn			# x e m s
+  zconv			# x e m s
+  zmul			# x e |m|
+  rot 2 1		# x |m| e
+  jmp apx2real		# x y
+
+abs2:			# x
+  rslim abs2_apx	# x |x|
+  rot 2 1		# |x| x
+  pop 1
+  ret
+
+# lim p => case x < 2^p => -x || x > -2^p => x end
+# cases equiv:  2^p-x > 0     || 2^p+x > 0
+abs_apx:        # x p
+  ipush 1       # x p 1
+  zconv         # x p 1
+  rconv         # x p 1
+  rot 2 1       # x 1 p
+  rsh           # x 2^p
+  dup 2 2	# x 2^p x 2^p
+  rot 2 1	# x 2^p 2^p x
+  rneg		# x 2^p 2^p -x
+  radd		# x 2^p 2^p-x
+  rot 2 1	# x 2^p-x 2^p
+  dup 3 1	# x 2^p-x 2^p x
+  radd		# x 2^p-x 2^p+x
+  ipush 2	# x 2^p-x 2^p+x 2
+  rch		# x k
+# k = 0 => 2^p-x < 0 and 2^p+x < 0 -- impossible
+# k = 1 => 2^p-x > 0               -- p-approximation is -x = (2k-3)*x
+# k = 2 => 2^p+x > 0               -- p-approximation is  x = (2k-3)*x
+  ipush 2	# x k 2
+  imul		# x 2k
+  ipush -3	# x 2k -3
+  iadd		# x 2k-3
+  zconv		# x 2k-3
+  rconv		# x 2k-3
+  dup 2 1	# x 2k-3 x
+  rmul		# x (2k-3)*x
+  ret
+
+abs:		# x
+  rslim abs_apx	# x |x|
+  rot 2 1	# |x| x
+  pop 1		# |x|
+  ret
+
+#           case |x| > 2^(p-1) => 0 || |x| < 2^p => 1 end
+# cases equiv:   |x|-2^(p-1) > 0    || 2^p-|x| > 0
+#               # stack                      types
+bounded:        # x p                        [R Z]
+  rot 2 1       # p x
+  scall abs	# p |x|
+  rot 2 1	# |x| p
+  ipush 1       # |x| p 1
+  zconv         # |x| p 1
+  rconv         # |x| p 1
+  rot 2 1       # |x| 1 p
+  dup 2 2       # |x| 1 p 1 p
+  ipush -1      # |x| 1 p 1 p -1
+  iadd          # |x| 1 p 1 p-1
+  rsh           # |x| 1 p 2^(p-1)
+  dup 4 1       # |x| 1 p 2^(p-1) |x|
+  rot 2 1       # |x| 1 p |x| 2^(p-1)
+  rneg          # |x| 1 p |x| -2^(p-1)
+  radd          # |x| 1 p |x|-2^(p-1)
+  rot 4 3	# |x|-2^(p-1) |x| 1 p
+  rsh		# |x|-2^(p-1) |x| 2^p
+  rot 2 1	# |x|-2^(p-1) 2^p |x|
+  rneg		# |x|-2^(p-1) 2^p -|x|
+  radd		# |x|-2^(p-1) 2^p-|x|
+  ipush 2	# |x|-2^(p-1) 2^p-|x| 2
+  rch		# k
+  # k = 0 => |x|-2^(p-1) < 0 and 2^p-|x| < 0
+  # k = 1 => |x|-2^(p-1) > 0                 -- bounded x p = 0 = k-1
+  # k = 2 =>                     2^p-|x| > 0 -- bounded x p = 1 = k-1
+  ipush -1	# k -1
+  iadd		# k-1
+  ret
+
+trisect_apx_done:	# f _ _ | p a b 1
+  pop 1			# f _ _ | p a b
+  ret
+
+trisect_apx_db:		# f _ _ | p a b d c 1
+  rot 5 1		# f _ _ | p b d c 1 a
+  pop 3			# f _ _ | p b d
+  rot 2 1		# f _ _ | p d b
+trisect_apx_loop:	# f _ _ | p a b
+  dup 2 2		# f _ _ | p a b a b
+  rneg			# f _ _ | p a b a -b
+  radd			# f _ _ | p a b a-b
+  dup 4 1		# f _ _ | p a b a-b p
+  scall bounded		# f _ _ | p a b l
+  # l = 0 => 2^(p-1) < |a-b|
+  # l = 1 => |a-b| < 2^p
+  jnz trisect_apx_done	# f _ _ | p a b 0
+  pop 1			# f _ _ | p a b
+  dup 2 2		# f _ _ | p a b a b 
+  dup 2 1		# f _ _ | p a b a b a
+  ipush 1		# f _ _ | p a b a b a 1
+  rsh			# f _ _ | p a b a b 2a
+  dup 2 1		# f _ _ | p a b a b 2a b
+  radd			# f _ _ | p a b a b 2a+b
+  ipush 3		# f _ _ | p a b a b 2a+b 3
+  zconv
+  rconv
+  rinv
+  rmul			# f _ _ | p a b a b d		# d = (2a+b)/3
+  rot 3 2		# f _ _ | p a b d a b
+  ipush 1		# f _ _ | p a b d a b 1
+  rsh			# f _ _ | p a b d a 2b
+  radd			# f _ _ | p a b d a+2b
+  ipush 3		# f _ _ | p a b d a+2b 3
+  zconv
+  rconv
+  rinv
+  rmul			# f _ _ | p a b d c		# c = (a+2b)/3
+  dup 2 2		# f _ _ | p a b d c d c
+  dup 10 1		# f _ _ | p a b d c d c f
+  dcall			# f _ _ | p a b d c d f(c)
+  dup 6 1		# f _ _ | p a b d c d f(c) a
+  dup 11 1		# f _ _ | p a b d c d f(c) a f
+  dcall			# f _ _ | p a b d c d f(c) f(a)
+  rmul			# f _ _ | p a b d c d f(c)*f(a)
+  rneg			# f _ _ | p a b d c d -f(c)*f(a)
+  rot 2 1		# f _ _ | p a b d c -f(c)*f(a) d
+  dup 10 1		# f _ _ | p a b d c -f(c)*f(a) d f
+  dcall			# f _ _ | p a b d c -f(c)*f(a) f(d)
+  dup 5 1		# f _ _ | p a b d c -f(c)*f(a) f(d) b
+  dup 11 1		# f _ _ | p a b d c -f(c)*f(a) f(d) b f
+  dcall			# f _ _ | p a b d c -f(c)*f(a) f(d) f(b)
+  rmul			# f _ _ | p a b d c -f(c)*f(a) f(d)*f(b)
+  rneg			# f _ _ | p a b d c -f(c)*f(a) -f(d)*f(b)
+  ipush 2		# f _ _ | p a b d c -f(c)*f(a) -f(d)*f(b) 2
+  rch			# f _ _ | p a b d c k
+  # k = 0 -- impossible
+  # k = 1 -- f(c)*f(a) < 0 => (a,b) <- (a,c)
+  # k = 2 -- f(d)*f(b) < 0 => (a,b) <- (d,b)
+  ipush -1		# f _ _ | p a b d c k -1
+  iadd			# f _ _ | p a b d c k-1
+  jnz trisect_apx_db	# f _ _ | p a b d c 0
+  pop 1			# f _ _ | p a b d c
+  rot 4 3		# f _ _ | p c a b d
+  pop 2			# f _ _ | p c a
+  rot 2 1		# f _ _ | p a c
+  jmp trisect_apx_loop
+
+# f(a) * f(b) < 0; returns unique root of f in (a,b)
+trisect_apx:		# f a b | p
+  dup 3 2		# f a b | p a b
+  scall trisect_apx_loop
+  rot 3 1		# f a b | a b p
+  pop 1			# f a b | a b
+  radd			# f a b | a+b
+  ipush -1		# f a b | a+b -1
+  rsh			# f a b | (a+b)/2
+  ret
+
+trisect:		# f a b
+  rslim trisect_apx	# f a b x
+  rot 4 3		# x f a b
+  pop 3			# x
+  ret
+
+f:			# x
+  dup 1 1		# x x
+  rmul			# x*x
+  ipush -1		# x*x -1
+  zconv
+  rconv
+  ipush -1		# x*x -1 -1
+  rsh			# x*x -1/2
+  radd			# x*x-1/2
+  ret
+
+main_apx:		# p -1
+  pop 1			# p
+  apush f		# p f
+  ipush 0		# p f 0
+  zconv
+  rconv
+  ipush 1		# p f 0 1
+  zconv
+  rconv
+  scall trisect		# p x
+  dup 2 1		# p x p
+  rapx			# p m e
+  ret
+
+main_p:			# p n
+  pop 1			# p
+  rslim main_apx	# p m e
+  ret
+
+main:			# (args..)
+  texpl			# args.. n
+  jnz main_p		# 0
+  pop 1			#
+  ipush -50		# -50
+  ipush 1		# -50 1
+  jmp main_p
