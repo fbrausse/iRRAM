@@ -164,15 +164,57 @@ f:			# x
   radd			# x*x-1/2
   ret
 
+f_roots_bound:		#
+  apush f		# f
+  ipush 0		# f 0
+  zconv
+  rconv
+  ipush 1		# f 0 1
+  zconv
+  rconv
+  ret
+
+g:			# p | x
+  ipush 1		# p | x 1
+  zconv
+  rconv
+  dup 2 1		# p | x 1 x
+  rneg			# p | x 1 -x
+  radd			# p | x 1-x
+  rmul			# p | x*(1-x)
+  ipush 15		# p | x*(1-x)
+  zconv
+  rconv
+  ipush -2		# p | x*(1-x) 15 -2
+  rsh			# p | x*(1-x) 3.75
+  rmul			# p | x*(1-x)*3.75
+  ipush 1		# p | x*(1-x)*3.75 1
+  zconv
+  rconv
+  ipush 1		# p | y 1 p
+  rsh			# p | y 2^p
+  radd			# p | y+2^p
+  ipush -1		# p | y+2^p -1
+  zconv
+  rconv
+  radd			# p | y+2^p-1
+  ret
+
+g_roots_bound:		#
+  apush g		# g
+  ipush 0		# g 0
+  zconv
+  rconv
+  ipush 1		# g 0 1
+  zconv
+  rconv
+  ipush -1		# g 0 1 -1
+  rsh			# g 0 1/2
+  ret
+
 main_apx:		# p -1
   pop 1			# p
-  apush f		# p f
-  ipush 0		# p f 0
-  zconv
-  rconv
-  ipush 1		# p f 0 1
-  zconv
-  rconv
+  scall f_roots_bound	# p f a b
   scall trisect		# p x
   dup 2 1		# p x p
   rapx			# p m e
