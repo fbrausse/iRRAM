@@ -131,6 +131,8 @@ MA 02111-1307, USA.
 #define MP_divi(z1,z2,z,p) ext_mpfr_div_i(z1,z2,z,p)
 #define MP_idiv(z1,z2,z,p) ext_mpfr_i_div(z1,z2,z,p); 
 #define MP_abs(z1,z)       ext_mpfr_abs(z1,z)
+#define MP_neg(z1,z)       ext_mpfr_neg(z1,z)
+#define MP_neg_inplace(z)  ext_mpfr_neg_inplace(z)
 
 /* Multiple precision arithmetic with multi-valued results:
   The following versions of the arithmetic operations
