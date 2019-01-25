@@ -100,7 +100,9 @@ public:
   orstream& operator<<(_SetRwidth);
   orstream& operator<<(_SetRflags);
   orstream& operator<<(std::ostream&(std::ostream&) );
+#if iRRAM_HAVE_TLS
   orstream& operator<<(const std::thread::id &);
+#endif
 
 // the following should be "private:"
 
