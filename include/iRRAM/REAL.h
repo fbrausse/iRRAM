@@ -174,6 +174,7 @@ public:
 
 	void          rcheck      (int n=50) const;
 
+	friend REAL glue(LAZY_BOOLEAN b, const REAL &x, const REAL &y);
 
 // limit operators: ------------------------
 
@@ -861,6 +862,13 @@ inline void REAL::scale(int n)
 //       z.dp.upper_neg=y.dp.upper_neg;
 //     return REAL(z);
 // }
+
+/* returns: x          if b == TRUE,
+ *          y          if b == FALSE
+ *          x (or y)   if b == UNKNOWN and x==y
+ *          UNDEFINED  if b == UNKNOWN and x<>y
+ */
+REAL glue(LAZY_BOOLEAN b, const REAL &x, const REAL &y);
 
 } // namespace iRRAM
 

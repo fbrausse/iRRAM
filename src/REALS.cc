@@ -1316,4 +1316,30 @@ int module(REAL (*f)(const REAL&),const REAL& x, int p){
 
 }
 
+REAL glue(LAZY_BOOLEAN b, const REAL &x, const REAL &y)
+{
+	switch (b.value) {
+	case 1:
+		return x;
+	case 0:
+		return y;
+	default:
+		if (iRRAM_unlikely(x.value || y.value)) {
+			REAL z = (x + y) / 2;
+			REAL delta = abs(x - y) / 2;
+			if (!delta.value)
+				delta.mp_make_mp();
+			z.adderror(delta.error);
+			z.adderror(delta.vsize);
+			/* TODO: this is not optimal: in this solution, the
+			 * error contains (x.error+y.error) while
+			 * max(x.error,y.error) would suffice */
+			return z;
+		}
+		return REAL(REAL::double_pair(
+		        fmin(x.dp.lower_pos, y.dp.lower_pos),
+		        fmin(x.dp.upper_neg, y.dp.upper_neg)));
+	}
+}
+
 } // namespace iRRAM

@@ -71,6 +71,8 @@ friend LAZY_BOOLEAN bound (const REAL& x, const int k);
 
 friend class REAL;
 
+friend REAL glue(LAZY_BOOLEAN b, const REAL &x, const REAL &y);
+
 private:
 
 LAZY_BOOLEAN(int b) noexcept : value(b) {}
