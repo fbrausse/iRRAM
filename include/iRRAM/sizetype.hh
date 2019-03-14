@@ -271,7 +271,7 @@ inline void sizetype_shift(sizetype& x, const sizetype& y, int s)
   x.mantissa=y.mantissa;
 
   if (iRRAM_unlikely( x.exponent < MP_min ) ) {
-    iRRAM_DEBUG1(1,"warning: small exponent found in sizetype_shift\n");
+    iRRAM_DEBUG1(2,"warning: small exponent found in sizetype_shift\n");
     x.exponent = min_exponent;
 //    x.mantissa = 1;
   } else  if ( iRRAM_unlikely(x.exponent >= MP_max) )

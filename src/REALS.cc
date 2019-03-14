@@ -562,7 +562,7 @@ REAL REAL::mp_square() const
 LAZY_BOOLEAN REAL::mp_lt0() const
 {
 	if (sizetype_less(vsize, error)) {
-		iRRAM_DEBUG2(1, "insufficient precisions %d*2^(%d) and "
+		iRRAM_DEBUG2(2, "insufficient precisions %d*2^(%d) and "
 		                "comparing to zero\n",
 		             error.mantissa, error.exponent);
 		return LAZY_BOOLEAN::BOTTOM;
