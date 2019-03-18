@@ -335,6 +335,14 @@ private:
 	friend REAL mp_minimum(const REAL &a, const REAL &b);
 };
 
+LAZY_BOOLEAN  positive  (const REAL& x, const int k);
+LAZY_BOOLEAN  bound     (const REAL& x, const int k);
+DYADIC        approx    (const REAL& x, const int p);
+int           size      (const REAL& x);
+int           upperbound(const REAL& x);
+REAL          mp_maximum(const REAL &a, const REAL &b);
+REAL          mp_minimum(const REAL &a, const REAL &b);
+
 /*! \relates REAL */
 inline sizetype geterror(const REAL &r) { return r.geterror(); }
 /*! \relates REAL */
@@ -348,7 +356,7 @@ inline void     to_formal_ball(const REAL &r, DYADIC &center, sizetype &err)
 }
 
 // for the sake of proving computational adequacy:
-// if q=module(f,x,p), then |z-x|<2^q => |f(z)-f(x)| < 2^p
+// if q=module(f,x,p), then forall z, |z-x|<2^q => |f(z)-f(x)| < 2^p
 //! \related REAL
 int module(REAL (*f)(const REAL&),const REAL& x, int p);
 

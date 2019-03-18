@@ -83,7 +83,7 @@ MA 02111-1307, USA.
  * part of their contract. Identify and fix those.
  */
 
-namespace iRRAM {
+using namespace iRRAM;
 
 sizetype REAL::double_pair::geterror() const
 {
@@ -249,7 +249,7 @@ REAL & REAL::mp_eqaddition(const REAL & y)
 	return (*this);
 }
 
-std::string swrite(const REAL & x, const int w, const float_form form)
+std::string iRRAM::swrite(const REAL & x, const int w, const float_form form)
 {
 	if (!x.value) {
 		REAL y(x);
@@ -531,9 +531,9 @@ REAL REAL::mp_division(const int n) const
 }
 
 
-void rwrite(const REAL & x, const int w)  { cout << swrite(x, w, float_form::absolute); }
-void rwritee(const REAL & x, const int w) { cout << swrite(x, w, float_form::relative); }
-void rshow(const REAL & x, const int w)   { cout << swrite(x, w, float_form::show); }
+void iRRAM::rwrite(const REAL & x, const int w)  { cout << swrite(x, w, float_form::absolute); }
+void iRRAM::rwritee(const REAL & x, const int w) { cout << swrite(x, w, float_form::relative); }
+void iRRAM::rshow(const REAL & x, const int w)   { cout << swrite(x, w, float_form::show); }
 
 
 REAL REAL::mp_square() const
@@ -612,7 +612,7 @@ void REAL::mp_scale(int n)
 	error = error << n;
 }
 
-LAZY_BOOLEAN positive(const REAL & x, int k)
+LAZY_BOOLEAN iRRAM::positive(const REAL & x, int k)
 {
 	if (!x.value) {
 		REAL y(x);
@@ -646,7 +646,7 @@ LAZY_BOOLEAN positive(const REAL & x, int k)
  * \exception Iteration when \f$2^{p+1}<x_\varepsilon\f$
  * \sa iRRAM_REITERATE
  */
-DYADIC approx(const REAL & x, const int p)
+DYADIC iRRAM::approx(const REAL & x, const int p)
 {
 	if (!x.value)
 		return approx(REAL(x).mp_conv(), p);
@@ -705,7 +705,7 @@ DYADIC approx(const REAL & x, const int p)
  * \\ \text{undef,}&x=0
  * \end{cases}\f$
  */
-int size(const REAL & x)
+int iRRAM::size(const REAL & x)
 {
 	if (!x.value)
 		return size(REAL(x).mp_conv());
@@ -736,7 +736,7 @@ int size(const REAL & x)
 	return result;
 }
 
-int upperbound(const REAL & x)
+int iRRAM::upperbound(const REAL & x)
 {
 	if (!x.value) {
 		REAL y(x);
@@ -797,7 +797,7 @@ int upperbound(const REAL & x)
  * \\ \bot,&\text{otherwise}
  * \end{cases}\f$ and does indeed compute a tightening.
  */
-LAZY_BOOLEAN bound(const REAL & x, const int k)
+LAZY_BOOLEAN iRRAM::bound(const REAL & x, const int k)
 {
 	if (!x.value) {
 		REAL y(x);
@@ -1015,7 +1015,7 @@ REAL::REAL(const INTEGER & y)
  *  \lfloor((g+k-z+1)\cdot 10+2)/3+1\rfloor-p&\text{otherwise}
  * \end{cases}\f$
  */
-REAL strtoREAL2(const char *s, char **endptr)
+REAL iRRAM::strtoREAL2(const char *s, char **endptr)
 {
 	const char *t = s;
 	const char *dk, *d0, *f1, *fn;
@@ -1068,7 +1068,7 @@ REAL strtoREAL2(const char *s, char **endptr)
 	return REAL(value, r ? sizetype_power2(p) : sizetype_exact());
 }
 
-REAL strtoREAL(const char * s, char ** endptr)
+REAL iRRAM::strtoREAL(const char * s, char ** endptr)
 {
 	stiff code;
 	int exp = 0;
@@ -1113,17 +1113,17 @@ REAL strtoREAL(const char * s, char ** endptr)
 	return y;
 }
 
-REAL atoREAL(const char * s)
+REAL iRRAM::atoREAL(const char * s)
 {
 	char * dummy;
 	return strtoREAL(s, &dummy);
 }
 
-REAL modulo(const REAL & x, const REAL & y) { return x - round2(x / y) * y; }
+REAL iRRAM::modulo(const REAL & x, const REAL & y) { return x - round2(x / y) * y; }
 
-REAL power(const REAL & x, const REAL & y) { return exp(log(x) * y); }
+REAL iRRAM::power(const REAL & x, const REAL & y) { return exp(log(x) * y); }
 
-REAL power(const REAL & x, int n)
+REAL iRRAM::power(const REAL & x, int n)
 {
 	if (n == 0)
 		return 1;
@@ -1165,7 +1165,7 @@ REAL power(const REAL & x, int n)
 // };
 
 // maximum, using of internal representation of LAZY_BOOLEAN
-REAL mp_maximum(const REAL & x, const REAL & y)
+REAL iRRAM::mp_maximum(const REAL & x, const REAL & y)
 {
 	LAZY_BOOLEAN larger;
 	{
@@ -1180,7 +1180,7 @@ REAL mp_maximum(const REAL & x, const REAL & y)
 }
 
 // minimum, using of internal representation of LAZY_BOOLEAN
-REAL mp_minimum(const REAL & x, const REAL & y)
+REAL iRRAM::mp_minimum(const REAL & x, const REAL & y)
 {
 	LAZY_BOOLEAN larger;
 	{
@@ -1198,7 +1198,7 @@ REAL mp_minimum(const REAL & x, const REAL & y)
 // Absolute value of vector in Euclidean space
 //********************************************************************************
 
-REAL abs(const std::vector<REAL>& x)
+REAL iRRAM::abs(const std::vector<REAL>& x)
 {
 	unsigned int n=x.size();
 	REAL sqrsum=0;
@@ -1226,7 +1226,7 @@ double REAL::as_double(const int p) const
 /*****************************************/
 // module function (will be a template later...)
 
-int module(REAL (*f)(const REAL&),const REAL& x, int p){
+int iRRAM::module(REAL (*f)(const REAL&),const REAL& x, int p){
 // Semantics: If m=module(f,x,p), then
 //    |x-z| <=2^m implies  |f(x)-f(z)| <= 2^p 
 
@@ -1316,7 +1316,7 @@ int module(REAL (*f)(const REAL&),const REAL& x, int p){
 
 }
 
-REAL glue(LAZY_BOOLEAN b, const REAL &x, const REAL &y)
+REAL iRRAM::glue(LAZY_BOOLEAN b, const REAL &x, const REAL &y)
 {
 	switch (b.value) {
 	case 1:
@@ -1341,5 +1341,3 @@ REAL glue(LAZY_BOOLEAN b, const REAL &x, const REAL &y)
 		        fmin(x.dp.upper_neg, y.dp.upper_neg)));
 	}
 }
-
-} // namespace iRRAM
