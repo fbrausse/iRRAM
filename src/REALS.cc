@@ -650,12 +650,10 @@ DYADIC iRRAM::approx(const REAL & x, const int p)
 {
 	if (!x.value)
 		return approx(REAL(x).mp_conv(), p);
-	MP_type result;
+	DYADIC result;
 	MP_type erg;
-	if (get_cached(result)) {
-		MP_duplicate_w_init(result, erg);
-		return DYADIC(erg);
-	}
+	if (get_cached(result))
+		return result;
 
 	if (sizetype_less(sizetype_power2(p + 1), x.error)) {
 		iRRAM_DEBUG2(1,
@@ -666,11 +664,9 @@ DYADIC iRRAM::approx(const REAL & x, const int p)
 	MP_init(erg);
 	MP_copy(x.value, erg, p - 1);
 
-	if (actual_stack().inlimit == 0) { /* TODO: make state_t::put_cached lambda-aware */
-		MP_duplicate_w_init(erg, result);
-		put_cached(result);
-	}
-	return DYADIC(erg);
+	result = DYADIC(erg);
+	put_cached(result);
+	return result;
 }
 
 /*!
@@ -914,11 +910,10 @@ INTEGER REAL::as_INTEGER() const
 	if (!this->value) {
 		return this->mp_conv().as_INTEGER();
 	}
-	MP_int_type result, value;
-	if (get_cached(result)) {
-		MP_int_duplicate_w_init(result, value);
-		return { value, INTEGER::move_t{} };
-	}
+	MP_int_type value;
+	INTEGER result;
+	if (get_cached(result))
+		return result;
 
 	sizetype psize;
 	sizetype_set(psize, 1, -4);
@@ -937,11 +932,9 @@ INTEGER REAL::as_INTEGER() const
 	MP_int_init(value);
 	MP_mp_to_INTEGER(y.value, value);
 
-	if (actual_stack().inlimit == 0) { /* TODO: ... or duplicate the MP_*_types */
-		MP_int_duplicate_w_init(value, result);
-		put_cached(result);
-	}
-	return { value, INTEGER::move_t{} };
+	result = INTEGER(value, INTEGER::move_t{});
+	put_cached(result);
+	return result;
 }
 
 // conversion to type REAL from smaller types

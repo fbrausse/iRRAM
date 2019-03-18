@@ -29,6 +29,8 @@ MA 02111-1307, USA.
 
 #include <iRRAM/core.h>
 #include <iRRAM/cache.h>
+#include <iRRAM/DYADIC.h>
+#include <iRRAM/INTEGER.h>
 
 //*************************************************************************************
 // runtime identification of the iRRAM version, cf. iRRAM_version.h

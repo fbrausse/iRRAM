@@ -64,17 +64,6 @@ template <> struct get_type<bool> {
 	typedef wrap_type<bool,clear> type;
 };
 
-template <> struct get_type<MP_type> {
-	static void clear(MP_type &t){ if(t) MP_clear(t); }
-	typedef wrap_type<MP_type,clear> type;
-};
-
-template <> struct get_type<MP_int_type> {
-	static void clear(MP_int_type &t){ if (t) MP_int_clear(t); }
-	typedef wrap_type<MP_int_type,clear> type;
-};
-
-
 struct cache_type
 {
 	/* never invoked; just to silence compiler */
@@ -152,8 +141,8 @@ template <> struct is_cacheable<unsigned long long> : std::true_type {};
 template <> struct is_cacheable<float> : std::true_type {};
 template <> struct is_cacheable<double> : std::true_type {};
 template <> struct is_cacheable<void *> : std::true_type {};
-template <> struct is_cacheable<MP_type> : std::true_type {};
-template <> struct is_cacheable<MP_int_type> : std::true_type {};
+template <> struct is_cacheable<DYADIC> : std::true_type {};
+template <> struct is_cacheable<INTEGER> : std::true_type {};
 template <> struct is_cacheable<std::string> : std::true_type {};
 template <> struct is_cacheable<std::ostream *> : std::true_type {};
 template <> struct is_cacheable<std::istream *> : std::true_type {};
@@ -173,8 +162,8 @@ struct mv_cache final
 , cache<float> // unused
 , cache<double> // unused
 , cache<void*> // unused
-, cache<MP_type>
-, cache<MP_int_type>
+, cache<DYADIC>
+, cache<INTEGER>
 , cache<std::string>
 , cache<std::ostream*>
 , cache<std::istream*>
