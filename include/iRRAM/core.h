@@ -101,7 +101,9 @@ class INTERVAL;
 class REALMATRIX;
 class SPARSEREALMATRIX;
 template <typename R,typename... Args> class FUNCTION;
+namespace internal {
 struct cachelist;
+}
 struct mv_cache;
 
 
@@ -132,7 +134,7 @@ struct state_t {
 	 * might continue in later iterations! */
 	bool inReiterate = false;
 	int DYADIC_precision = -60;
-	cachelist *cache_active = nullptr;
+	internal::cachelist *cache_active = nullptr;
 	int max_active = 0;
 	mv_cache *cache_address = nullptr;
 
@@ -161,6 +163,7 @@ struct state_t {
 	~state_t();
 };
 
+namespace internal {
 
 template <bool tls> struct state_proxy;
 
@@ -186,7 +189,9 @@ private:
 	state_t st;
 };
 
-extern iRRAM_TLS state_proxy<iRRAM_HAVE_TLS> state;
+}
+
+extern iRRAM_TLS internal::state_proxy<iRRAM_HAVE_TLS> state;
 
 inline const ITERATION_DATA & actual_stack(const state_t &st = *state)
 {

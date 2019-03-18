@@ -176,26 +176,26 @@ int geterror_exp(const S &x)
 }
 
 template <typename S,typename T,typename... ContArgs>
-typename std::enable_if<is_continuous<S>::value &&
-                        any_continuous<T,ContArgs...>::value,int>::type
+typename std::enable_if<internal::is_continuous<S>::value &&
+                        internal::any_continuous<T,ContArgs...>::value,int>::type
 geterror_exp(const S &x, const T &y, const ContArgs &... z)
 {
 	return max(geterror_exp(x), geterror_exp(y, z...));
 }
 
 template <typename S,typename T,typename... ContArgs>
-typename std::enable_if<is_continuous<S>::value &&
-                        !any_continuous<T,ContArgs...>::value,int>::type
+typename std::enable_if<internal::is_continuous<S>::value &&
+                        !internal::any_continuous<T,ContArgs...>::value,int>::type
 geterror_exp(const S &x, const T &, const ContArgs &...)
 {
 	return geterror_exp(x);
 }
 
 template <typename S,typename T,typename... ContArgs>
-typename std::enable_if<!is_continuous<S>::value,int>::type
+typename std::enable_if<!internal::is_continuous<S>::value,int>::type
 geterror_exp(const S &, const T &y, const ContArgs &... z)
 {
-	static_assert(any_continuous<T,ContArgs...>::value,
+	static_assert(internal::any_continuous<T,ContArgs...>::value,
 	              "geterror_exp() is only applicable to continuous types");
 	return geterror_exp(y, z...);
 }
@@ -222,7 +222,7 @@ geterror_exp(const S &, const T &y, const ContArgs &... z)
  */
 template <typename F,typename... ContArgs>
 auto limit(F f, const ContArgs &... cont_args)
--> typename std::enable_if<any_continuous<ContArgs...>::value,
+-> typename std::enable_if<internal::any_continuous<ContArgs...>::value,
                            decltype(f(0,cont_args...))>::type
 {
 	using Result = decltype(f(0,cont_args...));
@@ -295,7 +295,7 @@ auto limit(F f, const ContArgs &... cont_args)
 
 template <typename F,typename... DiscArgs>
 auto limit(F f, const DiscArgs &... disc_args)
--> typename std::enable_if<!any_continuous<DiscArgs...>::value,
+-> typename std::enable_if<!internal::any_continuous<DiscArgs...>::value,
                            decltype(f(0,disc_args...))>::type
 {
 	using Result = decltype(f(0,disc_args...));
@@ -327,7 +327,7 @@ auto limit(F f, const DiscArgs &... disc_args)
 }
 
 template <typename R, typename C, typename... Args>
-std::enable_if_t<is_cacheable<C>::value, R>
+std::enable_if_t<internal::is_cacheable<C>::value, R>
 limit_mv(R (*seq)(int prec, C &choice, const Args &... args),
          C choice, const Args &... x)
 {

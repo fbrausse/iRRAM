@@ -30,7 +30,7 @@ MA 02111-1307, USA.
 namespace iRRAM {
 
 /*! \ingroup types */
-class DYADIC : conditional_comparison_overloads<DYADIC>
+class DYADIC : internal::conditional_comparison_overloads<DYADIC>
 {
 public:
 	static int getprec() { return state->DYADIC_precision; };
@@ -66,17 +66,17 @@ public:
 	friend DYADIC operator*(const DYADIC& x, const DYADIC& y) { return MULT(x, y, getprec()); }
 	friend DYADIC operator/(const DYADIC& x, const DYADIC& y) { return DIV(x, y, getprec()); }
 
-	template <typename A,typename B> friend enable_if_compat<DYADIC,A,B> operator+(const A &a, const B &b) { return a+DYADIC(b); }
-	template <typename A,typename B> friend enable_if_compat<DYADIC,A,B> operator+(const B &b, const A &a) { return a+b; }
+	template <typename A,typename B> friend internal::enable_if_compat<DYADIC,A,B> operator+(const A &a, const B &b) { return a+DYADIC(b); }
+	template <typename A,typename B> friend internal::enable_if_compat<DYADIC,A,B> operator+(const B &b, const A &a) { return a+b; }
 
-	template <typename A,typename B> friend enable_if_compat<DYADIC,A,B> operator-(const A &a, const B &b) { return a-DYADIC(b); }
-	template <typename A,typename B> friend enable_if_compat<DYADIC,A,B> operator-(const B &b, const A &a) { return DYADIC(b)-a; }
+	template <typename A,typename B> friend internal::enable_if_compat<DYADIC,A,B> operator-(const A &a, const B &b) { return a-DYADIC(b); }
+	template <typename A,typename B> friend internal::enable_if_compat<DYADIC,A,B> operator-(const B &b, const A &a) { return DYADIC(b)-a; }
 
-	template <typename A,typename B> friend enable_if_compat<DYADIC,A,B> operator*(const A &a, const B &b) { return a*DYADIC(b); }
-	template <typename A,typename B> friend enable_if_compat<DYADIC,A,B> operator*(const B &b, const A &a) { return a*b; }
+	template <typename A,typename B> friend internal::enable_if_compat<DYADIC,A,B> operator*(const A &a, const B &b) { return a*DYADIC(b); }
+	template <typename A,typename B> friend internal::enable_if_compat<DYADIC,A,B> operator*(const B &b, const A &a) { return a*b; }
 
-	template <typename A,typename B> friend enable_if_compat<DYADIC,A,B> operator/(const A &a, const B &b) { return a/DYADIC(b); }
-	template <typename A,typename B> friend enable_if_compat<DYADIC,A,B> operator/(const B &b, const A &a) { return DYADIC(b)/a; }
+	template <typename A,typename B> friend internal::enable_if_compat<DYADIC,A,B> operator/(const A &a, const B &b) { return a/DYADIC(b); }
+	template <typename A,typename B> friend internal::enable_if_compat<DYADIC,A,B> operator/(const B &b, const A &a) { return DYADIC(b)/a; }
 
 	// Comparisons: --------------------------------
 

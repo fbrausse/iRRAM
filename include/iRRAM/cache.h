@@ -30,6 +30,8 @@ MA 02111-1307, USA.
 
 namespace iRRAM {
 
+namespace internal {
+
 template <typename T,void (*clearfct)(T &)>
 struct wrap_type {
 	T v;
@@ -86,10 +88,12 @@ struct cachelist
 	cache_type * id[50];
 };
 
+}
+
 template <class DATA>
-class cache : public cache_type
+class cache : public internal::cache_type
 {
-	std::vector<typename get_type<DATA>::type> data;
+	std::vector<typename internal::get_type<DATA>::type> data;
 	unsigned int current = 0;
 	bool active = false;
 
@@ -133,6 +137,8 @@ public:
 	}
 };
 
+namespace internal {
+
 template <typename T> struct is_cacheable : std::false_type {};
 template <> struct is_cacheable<bool> : std::true_type {};
 template <> struct is_cacheable<short> : std::true_type {};
@@ -151,6 +157,8 @@ template <> struct is_cacheable<MP_int_type> : std::true_type {};
 template <> struct is_cacheable<std::string> : std::true_type {};
 template <> struct is_cacheable<std::ostream *> : std::true_type {};
 template <> struct is_cacheable<std::istream *> : std::true_type {};
+
+}
 
 struct mv_cache final
 : cache<bool>

@@ -8,6 +8,8 @@
 
 namespace iRRAM {
 
+namespace internal {
+
 /* helper for reduced overload visibility of binary operator declarations */
 template <typename Base,typename EquivBase,typename Compat,typename Ret = Base>
 using enable_if_compat = typename std::enable_if<
@@ -66,16 +68,16 @@ template <typename... T> using any_continuous = disjunction<is_continuous<T>...>
 template <typename F,typename... Args>
 using result_of_t = typename std::result_of<F &&(Args &&...)>::type;
 
-namespace internal {
 template <typename R> struct retval       { typedef R    value_type; };
 template <>           struct retval<void> { typedef void void_type; };
-}
 
 template <typename F,typename... Args>
 using ret_void_t = typename internal::retval<result_of_t<F,Args...>>::void_type;
 
 template <typename F,typename... Args>
 using ret_value_t = typename internal::retval<result_of_t<F,Args...>>::value_type;
+
+}
 
 }
 

@@ -127,14 +127,14 @@ public:
 }
 
 template <typename F, typename... Args>
-ret_value_t<F,Args...> exec(F f, const Args &... args)
+internal::ret_value_t<F,Args...> exec(F f, const Args &... args)
 {
 	internal::init();
 	return internal::run(*state).exec(f, args...);
 }
 
 template <typename F, typename... Args>
-ret_void_t<F,Args...> exec(F f, const Args &... args)
+internal::ret_void_t<F,Args...> exec(F f, const Args &... args)
 {
 	internal::init();
 	internal::run(*state).exec(f, args...);

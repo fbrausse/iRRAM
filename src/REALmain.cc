@@ -57,7 +57,7 @@ static void init_prec_array(int (&prec_array)[iRRAM_prec_steps],
 
 namespace iRRAM {
 
-state_proxy<true>::state_proxy()
+internal::state_proxy<true>::state_proxy()
 : std::unique_ptr<state_t> { std::make_unique<state_t>() }
 {
 }
@@ -86,7 +86,7 @@ state_t::~state_t()
 	int_gmp_finalize(&mpz_cache);
 }
 
-iRRAM_TLS state_proxy<iRRAM_HAVE_TLS> state;
+iRRAM_TLS internal::state_proxy<iRRAM_HAVE_TLS> state;
 
 iRRAM_TLS orstream cerr(&std::cerr, false);
 iRRAM_TLS orstream clog(&std::clog, false);
