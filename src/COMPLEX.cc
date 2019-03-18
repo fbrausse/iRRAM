@@ -99,7 +99,7 @@ REAL abs(const COMPLEX& z)
 { return sqrt(z._real*z._real+z._imag*z._imag); }
 
 
-static COMPLEX c_sqrt_approx(int p, int* choice, const COMPLEX& z)
+static COMPLEX c_sqrt_approx(int p, int &choice, const COMPLEX& z)
 {
   REAL a,b,c,d,r;
   COMPLEX y;
@@ -108,19 +108,19 @@ static COMPLEX c_sqrt_approx(int p, int* choice, const COMPLEX& z)
   b= imag(z);
   c= sqrt( (r+a) / 2 );
   d= sqrt( (r-a) / 2 );
-  if ( *choice == 0 ) {
+  if ( choice == 0 ) {
     if ( !bound(r, 2*p) ) {
       if ( ! bound(b,p-10) ) {
-        if ( b > REAL(0) )  *choice=1; 
-                 else  *choice=2; 
+        if ( b > REAL(0) )  choice=1;
+                 else  choice=2;
       } else {
-        if ( a > REAL(0) )  *choice=3; 
-                 else  *choice=4; 
+        if ( a > REAL(0) )  choice=3;
+                 else  choice=4;
       }
     }
   }
 
-  switch ( *choice ) {
+  switch ( choice ) {
     case 0:    y = COMPLEX (  0      ,  0     );    break;
     case 1:    y = COMPLEX (  c      ,  d     );    break;
     case 2:    y = COMPLEX (  c      , -d     );    break;
@@ -132,7 +132,7 @@ static COMPLEX c_sqrt_approx(int p, int* choice, const COMPLEX& z)
 
 COMPLEX  sqrt(const COMPLEX& z)
 {
-  return limit_mv(c_sqrt_approx,z);
+  return limit_mv(c_sqrt_approx,0,z);
 }
 
 COMPLEX csqrt(const COMPLEX& z)

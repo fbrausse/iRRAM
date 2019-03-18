@@ -723,11 +723,11 @@ REAL limit (const FUNCTION<REAL,int> & f )
 //! @}
 
 // Instantiation of templates for multi-valued limits:
-template COMPLEX limit_mv<COMPLEX,COMPLEX>
-    (COMPLEX (*)(int, int *, COMPLEX const &), COMPLEX const &);
+template COMPLEX limit_mv
+    (COMPLEX (*)(int, int &, COMPLEX const &), int, COMPLEX const &);
 
-template REALMATRIX limit_mv<REALMATRIX,REALMATRIX>
-    (REALMATRIX (*)(int, int *, REALMATRIX const &), REALMATRIX const &);
+template REALMATRIX limit_mv<REALMATRIX,int,REALMATRIX>
+    (REALMATRIX (*)(int, int &, REALMATRIX const &), int, REALMATRIX const &);
 
 // Instantiation of templates for single-valued limits:
 
