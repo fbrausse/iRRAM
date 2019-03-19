@@ -2,12 +2,12 @@ var limit__templates_8h =
 [
     [ "geterror_exp", "limit__templates_8h.html#a0a3af7b79e31e3d9b1e436a7d90105a4", null ],
     [ "geterror_exp", "limit__templates_8h.html#a34400cad81f2a73a0398bfc87a334812", null ],
-    [ "geterror_exp", "limit__templates_8h.html#a86173f70221fcd9723fa63aa36d5d316", null ],
-    [ "geterror_exp", "limit__templates_8h.html#abd2fe5c396d831eaea3acb0b87b10532", null ],
-    [ "geterror_exp", "limit__templates_8h.html#a50bbcf1fbbe8ec61118e0304742ea11c", null ],
+    [ "geterror_exp", "limit__templates_8h.html#aaa1961fd4d1461a3e37cdccfa492e69c", null ],
+    [ "geterror_exp", "limit__templates_8h.html#a7a6da53ec882b8373c179e5bf3720e7c", null ],
+    [ "geterror_exp", "limit__templates_8h.html#a2b5cb2e0a467df1951c7bfbe4a35697f", null ],
     [ "iteration", "limit__templates_8h.html#ga4701681603f8346e74299e0e7305d705", null ],
-    [ "limit", "limit__templates_8h.html#gae3e794e9ff5bf284bde1a8706a0feab7", null ],
-    [ "limit", "limit__templates_8h.html#ga7f5fdfcf5a359c2bea9bbb7891499e64", null ],
+    [ "limit", "limit__templates_8h.html#gaeb51ea6a8d63b1e1825f8f03576624df", null ],
+    [ "limit", "limit__templates_8h.html#gaa2021fd3a1b8b6b02f57c6e357018f2f", null ],
     [ "limit", "limit__templates_8h.html#ga322172a761ed4983ad267bfb18e312cc", null ],
     [ "limit", "limit__templates_8h.html#ga2b9a87d47dfd157c7200a335410650ba", null ],
     [ "limit", "limit__templates_8h.html#gaef4a78f676d6e97dd6cf1c13c6e34252", null ],
@@ -21,6 +21,8 @@ var limit__templates_8h =
     [ "limit_hint", "limit__templates_8h.html#gae3b2ba3f4732bcd96cdfaf057d825d9e", null ],
     [ "limit_hint", "limit__templates_8h.html#ga6b67d44b058fd3fa1ae2a1fd8b19faed", null ],
     [ "limit_lip", "limit__templates_8h.html#ga648e2e0b9dd7c4dc99a4bd6c3c313546", null ],
-    [ "limit_mv", "limit__templates_8h.html#gadce8d369f1cf4314bc943fcb76de2279", null ],
+    [ "limit_mv", "limit__templates_8h.html#ga4065b0defbc5dfca561e01450711c0e1", null ],
+    [ "limit_mv", "limit__templates_8h.html#ga51d1f4db3b36a421ed49c692b319e346", null ],
+    [ "limit_mv< REALMATRIX, int, REALMATRIX >", "limit__templates_8h.html#ga01a4441706f3ef6aa2d8a3ef695da4f6", null ],
     [ "lipschitz_1p_1a", "limit__templates_8h.html#gaacf2f074f2347b40178aeee4dcbc3806", null ]
 ];

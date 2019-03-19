@@ -159,25 +159,25 @@ Functions</h2></td></tr>
 <tr class="memitem:a34400cad81f2a73a0398bfc87a334812"><td class="memTemplParams" colspan="2">template&lt;typename S &gt; </td></tr>
 <tr class="memitem:a34400cad81f2a73a0398bfc87a334812"><td class="memTemplItemLeft" align="right" valign="top">int&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceiRRAM.html#a34400cad81f2a73a0398bfc87a334812">iRRAM::geterror_exp</a> (const S &amp;x)</td></tr>
 <tr class="separator:a34400cad81f2a73a0398bfc87a334812"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a86173f70221fcd9723fa63aa36d5d316"><td class="memTemplParams" colspan="2">template&lt;typename S , typename T , typename... ContArgs&gt; </td></tr>
-<tr class="memitem:a86173f70221fcd9723fa63aa36d5d316"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; is_continuous&lt; S &gt;::value &amp;&amp;any_continuous&lt; T, ContArgs... &gt;::value, int &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceiRRAM.html#a86173f70221fcd9723fa63aa36d5d316">iRRAM::geterror_exp</a> (const S &amp;x, const T &amp;y, const ContArgs &amp;... z)</td></tr>
-<tr class="separator:a86173f70221fcd9723fa63aa36d5d316"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abd2fe5c396d831eaea3acb0b87b10532"><td class="memTemplParams" colspan="2">template&lt;typename S , typename T , typename... ContArgs&gt; </td></tr>
-<tr class="memitem:abd2fe5c396d831eaea3acb0b87b10532"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; is_continuous&lt; S &gt;::value &amp;&amp;!any_continuous&lt; T, ContArgs... &gt;::value, int &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceiRRAM.html#abd2fe5c396d831eaea3acb0b87b10532">iRRAM::geterror_exp</a> (const S &amp;x, const T &amp;, const ContArgs &amp;...)</td></tr>
-<tr class="separator:abd2fe5c396d831eaea3acb0b87b10532"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50bbcf1fbbe8ec61118e0304742ea11c"><td class="memTemplParams" colspan="2">template&lt;typename S , typename T , typename... ContArgs&gt; </td></tr>
-<tr class="memitem:a50bbcf1fbbe8ec61118e0304742ea11c"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt;!is_continuous&lt; S &gt;::value, int &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceiRRAM.html#a50bbcf1fbbe8ec61118e0304742ea11c">iRRAM::geterror_exp</a> (const S &amp;, const T &amp;y, const ContArgs &amp;... z)</td></tr>
-<tr class="separator:a50bbcf1fbbe8ec61118e0304742ea11c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae3e794e9ff5bf284bde1a8706a0feab7"><td class="memTemplParams" colspan="2">template&lt;typename F , typename... ContArgs&gt; </td></tr>
-<tr class="memitem:gae3e794e9ff5bf284bde1a8706a0feab7"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__limits.html#gae3e794e9ff5bf284bde1a8706a0feab7">iRRAM::limit</a> (F f, const ContArgs &amp;... cont_args) -&gt; typename std::enable_if&lt; any_continuous&lt; ContArgs... &gt;::value, decltype(f(0, cont_args...))&gt;::type</td></tr>
-<tr class="memdesc:gae3e794e9ff5bf284bde1a8706a0feab7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continuous variant of the limit operator.  <a href="group__limits.html#gae3e794e9ff5bf284bde1a8706a0feab7">More...</a><br /></td></tr>
-<tr class="separator:gae3e794e9ff5bf284bde1a8706a0feab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7f5fdfcf5a359c2bea9bbb7891499e64"><td class="memTemplParams" colspan="2">template&lt;typename F , typename... DiscArgs&gt; </td></tr>
-<tr class="memitem:ga7f5fdfcf5a359c2bea9bbb7891499e64"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__limits.html#ga7f5fdfcf5a359c2bea9bbb7891499e64">iRRAM::limit</a> (F f, const DiscArgs &amp;... disc_args) -&gt; typename std::enable_if&lt;!any_continuous&lt; DiscArgs... &gt;::value, decltype(f(0, disc_args...))&gt;::type</td></tr>
-<tr class="separator:ga7f5fdfcf5a359c2bea9bbb7891499e64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gadce8d369f1cf4314bc943fcb76de2279"><td class="memTemplParams" colspan="2">template&lt;class ARGUMENT , class RESULT &gt; </td></tr>
-<tr class="memitem:gadce8d369f1cf4314bc943fcb76de2279"><td class="memTemplItemLeft" align="right" valign="top">RESULT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__limits.html#gadce8d369f1cf4314bc943fcb76de2279">iRRAM::limit_mv</a> (RESULT(*f)(int prec, int *choice, const ARGUMENT &amp;), const ARGUMENT &amp;x)</td></tr>
-<tr class="separator:gadce8d369f1cf4314bc943fcb76de2279"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa1961fd4d1461a3e37cdccfa492e69c"><td class="memTemplParams" colspan="2">template&lt;typename S , typename T , typename... ContArgs&gt; </td></tr>
+<tr class="memitem:aaa1961fd4d1461a3e37cdccfa492e69c"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; internal::is_continuous&lt; S &gt;::value &amp;&amp;internal::any_continuous&lt; T, ContArgs... &gt;::value, int &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceiRRAM.html#aaa1961fd4d1461a3e37cdccfa492e69c">iRRAM::geterror_exp</a> (const S &amp;x, const T &amp;y, const ContArgs &amp;... z)</td></tr>
+<tr class="separator:aaa1961fd4d1461a3e37cdccfa492e69c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a6da53ec882b8373c179e5bf3720e7c"><td class="memTemplParams" colspan="2">template&lt;typename S , typename T , typename... ContArgs&gt; </td></tr>
+<tr class="memitem:a7a6da53ec882b8373c179e5bf3720e7c"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt; internal::is_continuous&lt; S &gt;::value &amp;&amp;!internal::any_continuous&lt; T, ContArgs... &gt;::value, int &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceiRRAM.html#a7a6da53ec882b8373c179e5bf3720e7c">iRRAM::geterror_exp</a> (const S &amp;x, const T &amp;, const ContArgs &amp;...)</td></tr>
+<tr class="separator:a7a6da53ec882b8373c179e5bf3720e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b5cb2e0a467df1951c7bfbe4a35697f"><td class="memTemplParams" colspan="2">template&lt;typename S , typename T , typename... ContArgs&gt; </td></tr>
+<tr class="memitem:a2b5cb2e0a467df1951c7bfbe4a35697f"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if&lt;!internal::is_continuous&lt; S &gt;::value, int &gt;::type&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespaceiRRAM.html#a2b5cb2e0a467df1951c7bfbe4a35697f">iRRAM::geterror_exp</a> (const S &amp;, const T &amp;y, const ContArgs &amp;... z)</td></tr>
+<tr class="separator:a2b5cb2e0a467df1951c7bfbe4a35697f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaeb51ea6a8d63b1e1825f8f03576624df"><td class="memTemplParams" colspan="2">template&lt;typename F , typename... ContArgs&gt; </td></tr>
+<tr class="memitem:gaeb51ea6a8d63b1e1825f8f03576624df"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__limits.html#gaeb51ea6a8d63b1e1825f8f03576624df">iRRAM::limit</a> (F f, const ContArgs &amp;... cont_args) -&gt; typename std::enable_if&lt; internal::any_continuous&lt; ContArgs... &gt;::value, decltype(f(0, cont_args...))&gt;::type</td></tr>
+<tr class="memdesc:gaeb51ea6a8d63b1e1825f8f03576624df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Continuous variant of the limit operator.  <a href="group__limits.html#gaeb51ea6a8d63b1e1825f8f03576624df">More...</a><br /></td></tr>
+<tr class="separator:gaeb51ea6a8d63b1e1825f8f03576624df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa2021fd3a1b8b6b02f57c6e357018f2f"><td class="memTemplParams" colspan="2">template&lt;typename F , typename... DiscArgs&gt; </td></tr>
+<tr class="memitem:gaa2021fd3a1b8b6b02f57c6e357018f2f"><td class="memTemplItemLeft" align="right" valign="top">auto&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__limits.html#gaa2021fd3a1b8b6b02f57c6e357018f2f">iRRAM::limit</a> (F f, const DiscArgs &amp;... disc_args) -&gt; typename std::enable_if&lt;!internal::any_continuous&lt; DiscArgs... &gt;::value, decltype(f(0, disc_args...))&gt;::type</td></tr>
+<tr class="separator:gaa2021fd3a1b8b6b02f57c6e357018f2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4065b0defbc5dfca561e01450711c0e1"><td class="memTemplParams" colspan="2">template&lt;typename R , typename C , typename... Args&gt; </td></tr>
+<tr class="memitem:ga4065b0defbc5dfca561e01450711c0e1"><td class="memTemplItemLeft" align="right" valign="top">std::enable_if_t&lt; internal::is_cacheable&lt; C &gt;::value, R &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__limits.html#ga4065b0defbc5dfca561e01450711c0e1">iRRAM::limit_mv</a> (R(*seq)(int prec, C &amp;choice, const Args &amp;... args), C choice, const Args &amp;... x)</td></tr>
+<tr class="separator:ga4065b0defbc5dfca561e01450711c0e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga648e2e0b9dd7c4dc99a4bd6c3c313546"><td class="memTemplParams" colspan="2">template&lt;class ARGUMENT , class DISCRETE , class RESULT &gt; </td></tr>
 <tr class="memitem:ga648e2e0b9dd7c4dc99a4bd6c3c313546"><td class="memTemplItemLeft" align="right" valign="top">RESULT&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="group__limits.html#ga648e2e0b9dd7c4dc99a4bd6c3c313546">iRRAM::limit_lip</a> (RESULT(*f)(int, const ARGUMENT &amp;, DISCRETE param), int lip_value, bool(*on_domain)(const ARGUMENT &amp;), const ARGUMENT &amp;x, DISCRETE param)</td></tr>
 <tr class="separator:ga648e2e0b9dd7c4dc99a4bd6c3c313546"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -206,6 +206,10 @@ Functions</h2></td></tr>
 <tr class="separator:ga0d577c00fe3b34cef3f8920ca0b416a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad9e0b52d500ce0d5af9513c0c9e42fab"><td class="memItemLeft" align="right" valign="top">template REALMATRIX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__limits.html#gad9e0b52d500ce0d5af9513c0c9e42fab">iRRAM::limit</a> (REALMATRIX(*)(int, const REALMATRIX &amp;), const REALMATRIX &amp;)</td></tr>
 <tr class="separator:gad9e0b52d500ce0d5af9513c0c9e42fab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga51d1f4db3b36a421ed49c692b319e346"><td class="memItemLeft" align="right" valign="top">template COMPLEX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__limits.html#ga51d1f4db3b36a421ed49c692b319e346">iRRAM::limit_mv</a> (COMPLEX(*)(int, int &amp;, COMPLEX const &amp;), int, COMPLEX const &amp;)</td></tr>
+<tr class="separator:ga51d1f4db3b36a421ed49c692b319e346"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga01a4441706f3ef6aa2d8a3ef695da4f6"><td class="memItemLeft" align="right" valign="top">template REALMATRIX&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__limits.html#ga01a4441706f3ef6aa2d8a3ef695da4f6">iRRAM::limit_mv&lt; REALMATRIX, int, REALMATRIX &gt;</a> (REALMATRIX(*)(int, int &amp;, REALMATRIX const &amp;), int, REALMATRIX const &amp;)</td></tr>
+<tr class="separator:ga01a4441706f3ef6aa2d8a3ef695da4f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
@@ -213,7 +217,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_5fc73ab729db226bd41aaf51717d49b4.html">iRRAM</a></li><li class="navelem"><a class="el" href="limit__templates_8h.html">limit_templates.h</a></li>
-    <li class="footer">Generated on Wed Dec 5 2018 20:02:05 for iRRAM by
+    <li class="footer">Generated on Tue Mar 19 2019 11:15:28 for iRRAM by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
   </ul>

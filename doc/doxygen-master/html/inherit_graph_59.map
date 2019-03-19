@@ -1,3 +1,6 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structiRRAM_1_1stiff_1_1abs.html" title="iRRAM::stiff::abs" alt="" coords="5,5,129,32"/>
+<area shape="rect" id="node1" href="$structiRRAM_1_1single__valued.html" title="Explicit declaration of single_valued behaviour of a code section despite multi&#45;valued operations..." alt="" coords="5,5,157,32"/>
+<area shape="rect" id="node2" href="$structiRRAM_1_1limit__computation.html" title="Combination of stiff and single_valued. " alt="" coords="205,5,380,32"/>
+<area shape="rect" id="node3" href="$classiRRAM_1_1stiff.html" title="Temporary increase of the working precision. " alt="" coords="34,56,129,83"/>
+<area shape="rect" id="node4" href="$structiRRAM_1_1relaxed.html" title="Temporarily halve the working precision. " alt="" coords="235,56,350,83"/>
 </map>

@@ -1,29 +1,29 @@
 <map id="iRRAM::state_t" name="iRRAM::state_t">
-<area shape="rect" id="node2" href="$structiRRAM_1_1ITERATION__DATA.html" title="iRRAM::ITERATION_DATA" alt="" coords="575,469,763,496"/>
-<area shape="rect" id="node3" href="$structiRRAM_1_1cachelist.html" title="iRRAM::cachelist" alt="" coords="425,18,551,45"/>
-<area shape="rect" id="node4" href="$structiRRAM_1_1cache__type.html" title="iRRAM::cache_type" alt="" coords="5,484,145,510"/>
-<area shape="rect" id="node7" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; bool \&gt;" alt="" coords="227,49,383,76"/>
-<area shape="rect" id="node8" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; short \&gt;" alt="" coords="224,100,385,126"/>
-<area shape="rect" id="node9" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; unsigned\l short \&gt;" alt="" coords="219,151,391,192"/>
-<area shape="rect" id="node10" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; int \&gt;" alt="" coords="231,217,378,244"/>
-<area shape="rect" id="node11" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; unsigned\l int \&gt;" alt="" coords="219,268,391,310"/>
-<area shape="rect" id="node12" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; long \&gt;" alt="" coords="227,334,383,361"/>
-<area shape="rect" id="node13" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; unsigned\l long \&gt;" alt="" coords="219,386,391,427"/>
-<area shape="rect" id="node14" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; long\l long \&gt;" alt="" coords="233,451,377,492"/>
-<area shape="rect" id="node15" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; unsigned\l long long \&gt;" alt="" coords="219,516,391,558"/>
-<area shape="rect" id="node16" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; float \&gt;" alt="" coords="226,582,383,609"/>
-<area shape="rect" id="node17" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; double \&gt;" alt="" coords="219,633,390,660"/>
-<area shape="rect" id="node18" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; void *\&gt;" alt="" coords="224,684,385,710"/>
-<area shape="rect" id="node19" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; MP_type \&gt;" alt="" coords="213,734,397,761"/>
-<area shape="rect" id="node20" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; MP_int\l_type \&gt;" alt="" coords="224,786,385,827"/>
-<area shape="rect" id="node21" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; std::\lstring \&gt;" alt="" coords="231,851,378,892"/>
-<area shape="rect" id="node22" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; std::\lostream *\&gt;" alt="" coords="231,916,378,958"/>
-<area shape="rect" id="node23" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; std::\listream *\&gt;" alt="" coords="231,982,378,1023"/>
-<area shape="rect" id="node5" href="$structiRRAM__mpq__cache__t.html" title="iRRAM_mpq_cache_t" alt="" coords="593,817,744,844"/>
-<area shape="rect" id="node6" href="$structiRRAM_1_1mv__cache.html" title="iRRAM::mv_cache" alt="" coords="602,582,735,609"/>
-<area shape="rect" id="node24" href="$classiRRAM_1_1REAL.html" title="iRRAM::REAL" alt="" coords="615,1016,723,1042"/>
-<area shape="rect" id="node25" href="$structiRRAM_1_1conditional__comparison__overloads.html" title="iRRAM::conditional\l_comparison_overloads\l\&lt; REAL, LAZY_BOOLEAN \&gt;" alt="" coords="208,1048,401,1104"/>
-<area shape="rect" id="node26" href="$structiRRAM_1_1generic__sizetype.html" title="iRRAM::generic_sizetype\l\&lt; uint32_t, int32_t \&gt;" alt="" coords="219,1128,390,1170"/>
-<area shape="rect" id="node28" href="$structiRRAM__mpz__cache__t.html" title="iRRAM_mpz_cache_t" alt="" coords="593,1066,744,1093"/>
-<area shape="rect" id="node29" href="$structiRRAM__ext__mpfr__cache__t.html" title="iRRAM_ext_mpfr_cache_t" alt="" coords="581,1117,757,1144"/>
+<area shape="rect" id="node2" href="$structiRRAM_1_1ITERATION__DATA.html" title="iRRAM::ITERATION_DATA" alt="" coords="692,464,880,491"/>
+<area shape="rect" id="node3" href="$structiRRAM__mpq__cache__t.html" title="iRRAM_mpq_cache_t" alt="" coords="711,515,861,541"/>
+<area shape="rect" id="node4" href="$structiRRAM_1_1mv__cache.html" title="iRRAM::mv_cache" alt="" coords="719,565,853,592"/>
+<area shape="rect" id="node5" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; bool \&gt;" alt="" coords="286,5,442,32"/>
+<area shape="rect" id="node6" href="$structiRRAM_1_1internal_1_1cache__type.html" title="iRRAM::internal::cache_type" alt="" coords="5,516,196,543"/>
+<area shape="rect" id="node7" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; short \&gt;" alt="" coords="283,56,445,83"/>
+<area shape="rect" id="node8" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; unsigned\l short \&gt;" alt="" coords="278,107,450,149"/>
+<area shape="rect" id="node9" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; int \&gt;" alt="" coords="291,173,437,200"/>
+<area shape="rect" id="node10" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; unsigned\l int \&gt;" alt="" coords="278,225,450,266"/>
+<area shape="rect" id="node11" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; long \&gt;" alt="" coords="286,291,442,317"/>
+<area shape="rect" id="node12" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; unsigned\l long \&gt;" alt="" coords="278,342,450,383"/>
+<area shape="rect" id="node13" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; long\l long \&gt;" alt="" coords="292,407,436,449"/>
+<area shape="rect" id="node14" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; unsigned\l long long \&gt;" alt="" coords="278,473,450,514"/>
+<area shape="rect" id="node15" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; float \&gt;" alt="" coords="285,539,443,565"/>
+<area shape="rect" id="node16" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; double \&gt;" alt="" coords="279,589,449,616"/>
+<area shape="rect" id="node17" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; void *\&gt;" alt="" coords="283,640,445,667"/>
+<area shape="rect" id="node18" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; DYADIC \&gt;" alt="" coords="272,691,456,717"/>
+<area shape="rect" id="node19" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; INTEGER \&gt;" alt="" coords="268,741,460,768"/>
+<area shape="rect" id="node20" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; std::\lstring \&gt;" alt="" coords="291,793,437,834"/>
+<area shape="rect" id="node21" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; std::\lostream *\&gt;" alt="" coords="291,858,437,899"/>
+<area shape="rect" id="node22" href="$classiRRAM_1_1cache.html" title="iRRAM::cache\&lt; std::\listream *\&gt;" alt="" coords="291,923,437,965"/>
+<area shape="rect" id="node23" href="$structiRRAM_1_1internal_1_1cachelist.html" title="iRRAM::internal::cachelist" alt="" coords="493,989,668,1016"/>
+<area shape="rect" id="node24" href="$classiRRAM_1_1REAL.html" title="iRRAM::REAL" alt="" coords="732,1052,840,1079"/>
+<area shape="rect" id="node25" href="$structiRRAM_1_1internal_1_1conditional__comparison__overloads.html" title="iRRAM::internal::conditional\l_comparison_overloads\&lt; REAL,\l LAZY_BOOLEAN \&gt;" alt="" coords="259,1040,469,1096"/>
+<area shape="rect" id="node26" href="$structiRRAM_1_1generic__sizetype.html" title="iRRAM::generic_sizetype\l\&lt; uint32_t, int32_t \&gt;" alt="" coords="279,1121,449,1162"/>
+<area shape="rect" id="node28" href="$structiRRAM__mpz__cache__t.html" title="iRRAM_mpz_cache_t" alt="" coords="711,1103,861,1129"/>
+<area shape="rect" id="node29" href="$structiRRAM__ext__mpfr__cache__t.html" title="iRRAM_ext_mpfr_cache_t" alt="" coords="698,1153,874,1180"/>
 </map>

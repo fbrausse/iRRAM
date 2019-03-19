@@ -38,7 +38,6 @@ var classiRRAM_1_1orstream =
     [ "operator<<", "classiRRAM_1_1orstream.html#a5ce6bbf3a96895bc0091115760239186", null ],
     [ "operator<<", "classiRRAM_1_1orstream.html#a621e1d9bfd3b75da131bda7efbb6e650", null ],
     [ "operator<<", "classiRRAM_1_1orstream.html#a004a6bdc29f14dc95a32310ba11e988c", null ],
-    [ "operator<<", "classiRRAM_1_1orstream.html#a0d28dc093a7e03ef3b94c1500d992718", null ],
     [ "reset", "classiRRAM_1_1orstream.html#a9d6225ff03cb9fab1af54fe636ed7c97", null ],
     [ "rewind", "classiRRAM_1_1orstream.html#a2dd2c3306874a047576e43872da8a1ce", null ],
     [ "operator!", "classiRRAM_1_1orstream.html#aa90f1798b0e38a3839c97ff707ccc510", null ],

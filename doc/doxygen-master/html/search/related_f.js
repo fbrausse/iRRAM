@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['upperbound',['upperbound',['../classiRRAM_1_1REAL.html#a80c8f19b38d93264767f3744290c0800',1,'iRRAM::REAL']]]
+  ['tan',['tan',['../classiRRAM_1_1INTERVAL.html#a1db5af1bb54a00520a387629a25870c2',1,'iRRAM::INTERVAL']]]
 ];

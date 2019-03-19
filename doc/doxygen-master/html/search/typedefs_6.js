@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['result_5fof_5ft',['result_of_t',['../namespaceiRRAM.html#a51526e301e8615e9db8958737ff78253',1,'iRRAM']]],
-  ['ret_5fvalue_5ft',['ret_value_t',['../namespaceiRRAM.html#ab40321dd8f24582c15c524bb8e2b7481',1,'iRRAM']]],
-  ['ret_5fvoid_5ft',['ret_void_t',['../namespaceiRRAM.html#ab2384bdeb80ac67f6ca96eb8add5ec41',1,'iRRAM']]]
+  ['result_5fof_5ft',['result_of_t',['../namespaceiRRAM_1_1internal.html#a015cfefe5cb0974355ab1a628be91813',1,'iRRAM::internal']]],
+  ['ret_5fvalue_5ft',['ret_value_t',['../namespaceiRRAM_1_1internal.html#a37e62b5cff9a08188c2f83f7fcc541c0',1,'iRRAM::internal']]],
+  ['ret_5fvoid_5ft',['ret_void_t',['../namespaceiRRAM_1_1internal.html#a6dad594ca9c2cd3c25f48b4629c805e5',1,'iRRAM::internal']]]
 ];

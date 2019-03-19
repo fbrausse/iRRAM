@@ -1,4 +1,23 @@
 var searchData=
 [
-  ['tan',['tan',['../classiRRAM_1_1INTERVAL.html#a1db5af1bb54a00520a387629a25870c2',1,'iRRAM::INTERVAL']]]
+  ['scale',['scale',['../classiRRAM_1_1DYADIC.html#a9f27d7ab0cfbeb6e117c68383ad4dbac',1,'iRRAM::DYADIC::scale()'],['../classiRRAM_1_1INTEGER.html#aacf7534e4f3e6d33214dddc7f16ff62a',1,'iRRAM::INTEGER::scale()'],['../classiRRAM_1_1RATIONAL.html#afb2b559184424456ba2d7973e0e78278',1,'iRRAM::RATIONAL::scale()'],['../classiRRAM_1_1REAL.html#a8493d20d3d8516ed45b404636c3f90b1',1,'iRRAM::REAL::scale()']]],
+  ['sign',['sign',['../classiRRAM_1_1INTEGER.html#a5fb4078c9569147ae01221aabaa6fd67',1,'iRRAM::INTEGER::sign()'],['../classiRRAM_1_1RATIONAL.html#a41a08eee3faa9e72aa234a93438d0626',1,'iRRAM::RATIONAL::sign()']]],
+  ['sin',['sin',['../classiRRAM_1_1INTERVAL.html#a35ee1a757ddfb10dff98a83d31dbb041',1,'iRRAM::INTERVAL']]],
+  ['size',['size',['../classiRRAM_1_1DYADIC.html#a7f6cbe8a76928d4a55b44a69b3e5533e',1,'iRRAM::DYADIC::size()'],['../classiRRAM_1_1INTEGER.html#a158a716a3840c07d2561718ae820c4f4',1,'iRRAM::INTEGER::size()'],['../classiRRAM_1_1REAL.html#a114722c519cbd98d63791f48d2b082df',1,'iRRAM::REAL::size()']]],
+  ['solve',['solve',['../classiRRAM_1_1REALMATRIX.html#afefbacd2747d6e98c89102f1983b6e44',1,'iRRAM::REALMATRIX::solve()'],['../classiRRAM_1_1SPARSEREALMATRIX.html#ab7de011589121ed597ae96aad358af94',1,'iRRAM::SPARSEREALMATRIX::solve()']]],
+  ['sparse_5feye',['sparse_eye',['../classiRRAM_1_1SPARSEREALMATRIX.html#abfb524ad16c1c01b59b7f00c1e27087c',1,'iRRAM::SPARSEREALMATRIX']]],
+  ['sparse_5fget_5fptr',['sparse_get_ptr',['../classiRRAM_1_1SPARSEREALMATRIX.html#a3d5ee35ca7c91758b836aa436b99460e',1,'iRRAM::SPARSEREALMATRIX']]],
+  ['sparse_5fones',['sparse_ones',['../classiRRAM_1_1SPARSEREALMATRIX.html#a30aa459c77b25b3ce4e8687ad8005684',1,'iRRAM::SPARSEREALMATRIX']]],
+  ['sparse_5fset',['sparse_set',['../classiRRAM_1_1SPARSEREALMATRIX.html#a43aed470f1d1e8fdbf54087e69752ab0',1,'iRRAM::SPARSEREALMATRIX']]],
+  ['sparse_5funset',['sparse_unset',['../classiRRAM_1_1SPARSEREALMATRIX.html#a438e60b5c59ea306c4ea7d47dc327fe0',1,'iRRAM::SPARSEREALMATRIX']]],
+  ['sparse_5fzeroes',['sparse_zeroes',['../classiRRAM_1_1SPARSEREALMATRIX.html#a8a170eec1515505339c8179bd1f59bd9',1,'iRRAM::SPARSEREALMATRIX']]],
+  ['sqrt',['sqrt',['../classiRRAM_1_1INTEGER.html#a0046fe9bad3d6be145a747edfd8f1c17',1,'iRRAM::INTEGER::sqrt()'],['../classiRRAM_1_1REAL.html#a0064956df768b4b7e0b0415fb6a5dbd0',1,'iRRAM::REAL::sqrt()']]],
+  ['square',['square',['../classiRRAM_1_1INTERVAL.html#a50e449b0c0862f0d873648c1c16d98ae',1,'iRRAM::INTERVAL::square()'],['../classiRRAM_1_1REAL.html#ae6ab8fbfb41c8100d7f7a2a8308e3c85',1,'iRRAM::REAL::square()']]],
+  ['strtoreal2',['strtoREAL2',['../classiRRAM_1_1REAL.html#ac81c63075e0f0a0a3d7d59bc23375c78',1,'iRRAM::REAL']]],
+  ['sub',['SUB',['../classiRRAM_1_1DYADIC.html#accb88316bd7797abde5f038570c2e5ea',1,'iRRAM::DYADIC']]],
+  ['subset',['subset',['../classiRRAM_1_1INTERVAL.html#a4a55f878b6f36f0c81488933816b9630',1,'iRRAM::INTERVAL']]],
+  ['sup',['sup',['../classiRRAM_1_1INTERVAL.html#a643a20202a494bb01ed98d65ee1d4123',1,'iRRAM::INTERVAL']]],
+  ['superset',['superset',['../classiRRAM_1_1INTERVAL.html#adb2f35a213cca8726c48d52ad5f50e0a',1,'iRRAM::INTERVAL']]],
+  ['swap',['swap',['../classiRRAM_1_1REAL.html#aeb1ecbf861115a98a5d1af49f45ed371',1,'iRRAM::REAL']]],
+  ['swrite',['swrite',['../classiRRAM_1_1DYADIC.html#a3fcb893563c5d74a80238717cd32ecf3',1,'iRRAM::DYADIC::swrite()'],['../classiRRAM_1_1INTEGER.html#a947a564bc736f1c7d2757052789fcefa',1,'iRRAM::INTEGER::swrite()'],['../classiRRAM_1_1INTEGER.html#ac8a40c9ae067d4aab44b64ad8cba76ee',1,'iRRAM::INTEGER::swrite()'],['../classiRRAM_1_1RATIONAL.html#a45772cae16003fccdebe2f06c66c376d',1,'iRRAM::RATIONAL::swrite()'],['../classiRRAM_1_1RATIONAL.html#ad1ec2dbcb17cb331fb728dfba490b4c6',1,'iRRAM::RATIONAL::swrite()'],['../classiRRAM_1_1REAL.html#abebd48c4ff515f80371f03b166c07515',1,'iRRAM::REAL::swrite()']]]
 ];

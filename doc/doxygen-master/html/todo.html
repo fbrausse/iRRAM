@@ -98,33 +98,6 @@ $(document).ready(function(){initNavTree('todo.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><dl class="reflist">
-<dt><a class="anchor" id="_todo000001"></a>Namespace <a class="el" href="namespaceiRRAM.html">iRRAM</a>  </dt>
-<dd><p class="startdd">REALs with MP-backend are infectious: every operation involving other <code>double_pair</code> REALs will result in a MP-backed result even on precision-level 1. Check which of the following functions could be fitted to work on the <code>double_pair</code> representation directly or could at least be adapted to return a precision-level 1 result:</p><ul>
-<li><a class="el" href="group__maths.html#gadb8ebd2712ef7455c900f935c21b7bce" title="Computes the square root of the argument x. ">sqrt(const REAL &amp;)</a></li>
-<li><a class="el" href="group__maths.html#gaeb6d033fec14f1ec48d8751125ab16e4">power(const REAL &amp;, const REAL &amp;)</a></li>
-<li><a class="el" href="group__maths.html#gadb8ebd2712ef7455c900f935c21b7bce" title="Computes the square root of the argument x. ">sqrt(const REAL &amp;)</a></li>
-<li><a class="el" href="namespaceiRRAM.html#ab5a3c978c85968a8e9fca2468e2d0d75" title="Computes a dyadic approximation to x that is accurate to 2^p. ">approx(const REAL &amp;, const int)</a></li>
-<li><a class="el" href="namespaceiRRAM.html#acbff5b4d83f94ea76f661db3abb8a3c8" title="Multi-valued check whether 2^k bounds |x|. ">bound(const REAL &amp;, const int)</a></li>
-<li><a class="el" href="namespaceiRRAM.html#acccdf705077cc02b2bc1870acd456b58" title="Returns a tight bound to the logarithmic value of |x|: , where e is x.vsize.exponent. ">size(const REAL &amp;)</a></li>
-<li><a class="el" href="namespaceiRRAM.html#a3ccddf2382e675771f247721afa2c616">upperbound(const REAL &amp;)</a></li>
-<li><a class="el" href="group__maths.html#ga5daa52740f7014a5c20727ffe68b4043">modulo(const REAL &amp;, const REAL &amp;)</a></li>
-<li><a class="el" href="group__limits.html#ga2b9a87d47dfd157c7200a335410650ba">limit()</a> family</li>
-<li><a class="el" href="classiRRAM_1_1REAL.html#aa92815af24102c71982cbb9662710aa8">REAL::adderror()</a></li>
-<li><a class="el" href="classiRRAM_1_1REAL.html#aa61b8bbcde229232f9089fe8ce0065ea">REAL::getsize()</a></li>
-<li><a class="el" href="classiRRAM_1_1REAL.html#ada3e891dab5fba417eb66c6b06007e28">REAL::as_INTEGER()</a></li>
-<li><a class="el" href="namespaceiRRAM.html#a89883b3093ff31eb7837bc4f246f534c">swrite(const REAL &amp;, const int, const float_form)</a></li>
-<li><a class="el" href="namespaceiRRAM.html#ad53936f588c6aeb38d5ab90f4868a487" title="Converts a base-10 string in scientific notation to REAL. ">strtoREAL2(const char *, char **)</a></li>
-<li><a class="el" href="group__maths.html#gaff6d24bf35120367ec5998f22fc45aa0">pi()</a></li>
-<li><a class="el" href="group__maths.html#gad75add220636eebf19f8d07b82f7ede6">euler()</a></li>
-<li><a class="el" href="group__maths.html#ga077c0b5701e159fa2a2f74c3218bb15a">ln2()</a></li>
-<li><a class="el" href="group__maths.html#ga5afeb059421acdb704c4bc4d15bec8f3">root(const REAL &amp;, int n)</a> at least for <code>n == 3</code></li>
-<li>trigonometric functions </li>
-</ul>
-<p>Special care has to be taken in case C/C++ library functions are used to implement those. Only <code>sqrt(double)</code> and <code>fma(double,double,double)</code> provide error guarrantees according to the respective standards (for <code>fma</code> including POSIX). Standard compliance in this respect also cannot be assumed for every C/C++ standard library but should probably be white-listed for proven implementations. See</p><ul>
-<li><a class="el" href="group__sizetype.html#gad7e67c8eaf4ef73538a671ae59abbe03" title="Computes the square root of y and stores it, rounded towards positive infinity, in x...">sizetype_sqrt()</a> </li>
-</ul>
-<p class="enddd">The functions <a class="el" href="classiRRAM_1_1REAL.html#ad52da4ecaf2a2a44e7f5467ae7daa8f8">REAL::geterror()</a>, <a class="el" href="classiRRAM_1_1REAL.html#aa61b8bbcde229232f9089fe8ce0065ea">REAL::getsize()</a> (and maybe <a class="el" href="classiRRAM_1_1REAL.html#aa92815af24102c71982cbb9662710aa8">REAL::adderror()</a>?) are sometimes used to implicitely convert to an MP-backed <a class="el" href="classiRRAM_1_1REAL.html">REAL</a>. That's not part of their contract. Identify and fix those.  </p>
-</dd>
 <dt><a class="anchor" id="_todo000003"></a>Member <a class="el" href="namespaceiRRAM.html#acccdf705077cc02b2bc1870acd456b58">iRRAM::size</a>  (const <a class="el" href="classiRRAM_1_1REAL.html">REAL</a> &amp;x)</dt>
 <dd>According to documentation, <a class="el" href="namespaceiRRAM.html#acccdf705077cc02b2bc1870acd456b58" title="Returns a tight bound to the logarithmic value of |x|: , where e is x.vsize.exponent. ">size(const REAL &amp;)</a> should compute \(\begin{cases} 1+\lfloor\log_2|x|\rfloor\text,&amp;x\neq 0 \\ 1+\lceil\log_2|x|\rceil\text,&amp;x\neq 0 \\ \text{undef,}&amp;x=0 \end{cases}\) but it does compute \(\begin{cases} i+\lfloor\log_2|x|\rfloor\text,&amp;x\neq 0, i\in\{1,2,3\} \\ \text{undef,}&amp;x=0 \end{cases}\)  </dd>
 <dt><a class="anchor" id="_todo000007"></a>Member <a class="el" href="group__sizetype.html#gac008e777d9962452cb8890b7650ab652">iRRAM::sizetype_dec</a>  (sizetype &amp;x, const sizetype &amp;y)</dt>
@@ -152,7 +125,7 @@ $(document).ready(function(){initNavTree('todo.html','');});
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Wed Dec 5 2018 20:02:05 for iRRAM by
+    <li class="footer">Generated on Tue Mar 19 2019 11:15:28 for iRRAM by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
   </ul>

@@ -144,8 +144,9 @@ Friends</h2></td></tr>
 <tr class="memitem:a58798c6458562bee37c37e5e0e350979"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classiRRAM_1_1LAZY__BOOLEAN.html">LAZY_BOOLEAN</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classiRRAM_1_1LAZY__BOOLEAN.html#a58798c6458562bee37c37e5e0e350979">positive</a> (const <a class="el" href="classiRRAM_1_1REAL.html">REAL</a> &amp;x, int k)</td></tr>
 <tr class="separator:a58798c6458562bee37c37e5e0e350979"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6b03cb0cbf0f2c64d608097b1519b29"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classiRRAM_1_1LAZY__BOOLEAN.html">LAZY_BOOLEAN</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classiRRAM_1_1LAZY__BOOLEAN.html#aa6b03cb0cbf0f2c64d608097b1519b29">bound</a> (const <a class="el" href="classiRRAM_1_1REAL.html">REAL</a> &amp;x, const int k)</td></tr>
-<tr class="memdesc:aa6b03cb0cbf0f2c64d608097b1519b29"><td class="mdescLeft">&#160;</td><td class="mdescRight">Multi-valued check whether 2^k bounds |x|.  <a href="#aa6b03cb0cbf0f2c64d608097b1519b29">More...</a><br /></td></tr>
 <tr class="separator:aa6b03cb0cbf0f2c64d608097b1519b29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3809bf78bddf7bc14ad4e31cdb2b873"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classiRRAM_1_1REAL.html">REAL</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classiRRAM_1_1LAZY__BOOLEAN.html#ac3809bf78bddf7bc14ad4e31cdb2b873">glue</a> (<a class="el" href="classiRRAM_1_1LAZY__BOOLEAN.html">LAZY_BOOLEAN</a> b, const <a class="el" href="classiRRAM_1_1REAL.html">REAL</a> &amp;x, const <a class="el" href="classiRRAM_1_1REAL.html">REAL</a> &amp;y)</td></tr>
+<tr class="separator:ac3809bf78bddf7bc14ad4e31cdb2b873"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
@@ -260,7 +261,7 @@ Friends</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="LAZY__BOOLEAN_8cc_source.html#l00036">36</a> of file <a class="el" href="LAZY__BOOLEAN_8cc_source.html">LAZY_BOOLEAN.cc</a>.</p>
 
-<p class="reference">References <a class="el" href="core_8h_source.html#l00210">iRRAM::get_cached()</a>, <a class="el" href="core_8h_source.html#l00267">iRRAM_DEBUG1</a>, <a class="el" href="core_8h_source.html#l00277">iRRAM_REITERATE</a>, and <a class="el" href="core_8h_source.html#l00216">iRRAM::put_cached()</a>.</p>
+<p class="reference">References <a class="el" href="core_8h_source.html#l00215">iRRAM::get_cached()</a>, <a class="el" href="core_8h_source.html#l00272">iRRAM_DEBUG1</a>, <a class="el" href="core_8h_source.html#l00282">iRRAM_REITERATE</a>, and <a class="el" href="core_8h_source.html#l00221">iRRAM::put_cached()</a>.</p>
 
 </div>
 </div>
@@ -326,25 +327,6 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Multi-valued check whether 2^k bounds |x|. </p>
-<p>If it is necessary to check that a number is small enough (e.g. given as the error of an approximating algorithm), bound(x,k) should be preferred over size(x)&lt;k as there is no singularity at x=0.</p>
-<p>The current approximation to \(x\) is deemed precise enough, predicate \(P_k(\hat x,x_\varepsilon)\), when \(\neg(\hat x&lt;x_\varepsilon+2^{k-1}+2^e\wedge2^k&lt;\hat x+x_\varepsilon)\) where \(\hat x=m\cdot2^e\). Otherwise, \(\bot\) is returned. These are the cases:</p><ol type="1">
-<li>\(\bot\): \(\neg P_k(\hat x,x_\varepsilon)\Longrightarrow\hat x+x_\varepsilon&gt;2^k=2\cdot2^{k-1}&gt;2(\hat x-x_\varepsilon)\Longrightarrow x_\varepsilon&gt;\hat x/3&gt;|x|/3\).</li>
-<li>\(T\): \(P_k(\hat x,x_\varepsilon)\wedge2^k\geq\hat x+x_\varepsilon&gt;|x|\)</li>
-<li>\(F\): \(P_k(\hat x,x_\varepsilon)\wedge2^k&lt;\hat x+x_\varepsilon \Longrightarrow\hat x\geq x_\varepsilon+2^{k-1}+2^e \Longrightarrow2^{k-1}\leq\check x-x_\varepsilon\leq|x|\).</li>
-</ol>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>real number to bound the absolute value of </td></tr>
-    <tr><td class="paramname">k</td><td>base-2 logarithm of the bound </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>\(\text{bound}(x,k)=\begin{cases} \bot,&amp;\neg P_k(\hat x,x_\varepsilon)\Longrightarrow x_\varepsilon&gt;|x|/3 \\ T,&amp;P_k(\hat x,x_\varepsilon)\wedge2^k\geq\hat x+x_\varepsilon\Longrightarrow |x|&lt;2^k \\ F,&amp;P_k(\hat x,x_\varepsilon)\wedge2^k&lt;\hat x+x_\varepsilon\Longrightarrow |x|\geq 2^{k-1} \end{cases}\)</dd></dl>
-<p>According to documentation, this function should compute \(\begin{cases} T,&amp;|x|\leq 2^k \\ F,&amp;|x|\geq 2^{k-2} \\ \bot,&amp;\text{otherwise} \end{cases}\) and does indeed compute a tightening. </p>
-
-<p class="definition">Definition at line <a class="el" href="REALS_8cc_source.html#l00800">800</a> of file <a class="el" href="REALS_8cc_source.html">REALS.cc</a>.</p>
 
 </div>
 </div>
@@ -466,6 +448,48 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="ac3809bf78bddf7bc14ad4e31cdb2b873"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac3809bf78bddf7bc14ad4e31cdb2b873">&#9670;&nbsp;</a></span>glue</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classiRRAM_1_1REAL.html">REAL</a> glue </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classiRRAM_1_1LAZY__BOOLEAN.html">LAZY_BOOLEAN</a>&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classiRRAM_1_1REAL.html">REAL</a> &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classiRRAM_1_1REAL.html">REAL</a> &amp;&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="aa71004d30b11616928193457b2563f91"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa71004d30b11616928193457b2563f91">&#9670;&nbsp;</a></span>mp_maximum</h2>
 
@@ -499,8 +523,6 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="REALS_8cc_source.html#l01168">1168</a> of file <a class="el" href="REALS_8cc_source.html">REALS.cc</a>.</p>
 
 </div>
 </div>
@@ -537,8 +559,6 @@ Friends</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="REALS_8cc_source.html#l01183">1183</a> of file <a class="el" href="REALS_8cc_source.html">REALS.cc</a>.</p>
 
 </div>
 </div>
@@ -680,7 +700,7 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="REAL_8h_source.html#l00811">811</a> of file <a class="el" href="REAL_8h_source.html">REAL.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="REAL_8h_source.html#l00819">819</a> of file <a class="el" href="REAL_8h_source.html">REAL.h</a>.</p>
 
 </div>
 </div>
@@ -756,8 +776,6 @@ Friends</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="REALS_8cc_source.html#l00615">615</a> of file <a class="el" href="REALS_8cc_source.html">REALS.cc</a>.</p>
-
 </div>
 </div>
 <a id="a17b1e82a1fb95006e79e965c939512f7"></a>
@@ -794,7 +812,7 @@ Friends</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="namespaceiRRAM.html">iRRAM</a></li><li class="navelem"><a class="el" href="classiRRAM_1_1LAZY__BOOLEAN.html">LAZY_BOOLEAN</a></li>
-    <li class="footer">Generated on Wed Dec 5 2018 20:02:05 for iRRAM by
+    <li class="footer">Generated on Tue Mar 19 2019 11:15:28 for iRRAM by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.14 </li>
   </ul>

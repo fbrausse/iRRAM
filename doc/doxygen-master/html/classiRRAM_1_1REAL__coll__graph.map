@@ -1,4 +1,4 @@
 <map id="iRRAM::REAL" name="iRRAM::REAL">
-<area shape="rect" id="node2" href="$structiRRAM_1_1conditional__comparison__overloads.html" title="iRRAM::conditional\l_comparison_overloads\l\&lt; REAL, LAZY_BOOLEAN \&gt;" alt="" coords="5,5,199,61"/>
-<area shape="rect" id="node3" href="$structiRRAM_1_1generic__sizetype.html" title="iRRAM::generic_sizetype\l\&lt; uint32_t, int32_t \&gt;" alt="" coords="17,86,187,127"/>
+<area shape="rect" id="node2" href="$structiRRAM_1_1internal_1_1conditional__comparison__overloads.html" title="iRRAM::internal::conditional\l_comparison_overloads\&lt; REAL,\l LAZY_BOOLEAN \&gt;" alt="" coords="5,5,216,61"/>
+<area shape="rect" id="node3" href="$structiRRAM_1_1generic__sizetype.html" title="iRRAM::generic_sizetype\l\&lt; uint32_t, int32_t \&gt;" alt="" coords="25,86,196,127"/>
 </map>

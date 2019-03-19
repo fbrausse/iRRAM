@@ -1,6 +1,11 @@
 var searchData=
 [
-  ['limit_5flip',['limit_lip',['../classiRRAM_1_1REAL.html#a515ceb5360fccdf45be39130bd2f85d7',1,'iRRAM::REAL::limit_lip()'],['../classiRRAM_1_1REAL.html#ae103b1b3ff747ef6cb81fe2fb0c99549',1,'iRRAM::REAL::limit_lip()'],['../classiRRAM_1_1REAL.html#ae594feaede067fe2ac357bb2393134ad',1,'iRRAM::REAL::limit_lip()'],['../classiRRAM_1_1REALMATRIX.html#a04b90ca5489112d23411d43db9dbcf52',1,'iRRAM::REALMATRIX::limit_lip()'],['../classiRRAM_1_1SPARSEREALMATRIX.html#a83edeffcb4191d676ecc2730b9a3a303',1,'iRRAM::SPARSEREALMATRIX::limit_lip()']]],
-  ['lipschitz',['lipschitz',['../classiRRAM_1_1REAL.html#a8ba63d89c1b990dc277261877215a123',1,'iRRAM::REAL::lipschitz()'],['../classiRRAM_1_1REAL.html#a1fdfb89f86d9857d005bbcb1c0be25b3',1,'iRRAM::REAL::lipschitz()'],['../classiRRAM_1_1REAL.html#a1ac7bfd529a7f5aec729d27484d4dbe5',1,'iRRAM::REAL::lipschitz()'],['../classiRRAM_1_1REAL.html#a2bcd402003f72ca54957b2d00cf9d0db',1,'iRRAM::REAL::lipschitz()'],['../classiRRAM_1_1REAL.html#a19329d723f6877af144953df4768b1a7',1,'iRRAM::REAL::lipschitz()'],['../classiRRAM_1_1REAL.html#a7b7d0ee90de50831653614b29541ab16',1,'iRRAM::REAL::lipschitz()']]],
-  ['log',['log',['../classiRRAM_1_1INTERVAL.html#a8ff15484ccc31948d4c6b78744fda67d',1,'iRRAM::INTERVAL']]]
+  ['imag',['imag',['../classiRRAM_1_1COMPLEX.html#aa73eb5e42ffb6d39f238ef6681b5cf62',1,'iRRAM::COMPLEX']]],
+  ['in',['in',['../classiRRAM_1_1INTERVAL.html#a79e30312aa1a77318bf10b618390d6f6',1,'iRRAM::INTERVAL']]],
+  ['in_5finterior',['in_interior',['../classiRRAM_1_1INTERVAL.html#a1028e7cbb11f5e1e685dc38696c4e165',1,'iRRAM::INTERVAL']]],
+  ['inf',['inf',['../classiRRAM_1_1INTERVAL.html#af3e582deb503f87f495138e0cc8b9ebe',1,'iRRAM::INTERVAL']]],
+  ['integer',['INTEGER',['../classiRRAM_1_1DYADIC.html#acf3e4225e52c1f5641054741dc52ad8c',1,'iRRAM::DYADIC::INTEGER()'],['../classiRRAM_1_1RATIONAL.html#acf3e4225e52c1f5641054741dc52ad8c',1,'iRRAM::RATIONAL::INTEGER()']]],
+  ['intersect',['intersect',['../classiRRAM_1_1INTERVAL.html#ae07dfa68fc438fd7fa3cdea1d54474df',1,'iRRAM::INTERVAL']]],
+  ['interval_5fhull',['interval_hull',['../classiRRAM_1_1INTERVAL.html#a54a1b01c216669be0016fb1b1ece9283',1,'iRRAM::INTERVAL']]],
+  ['inv',['inv',['../classiRRAM_1_1RATIONAL.html#a801107f063c863fd46bbb8b0b30cd0c8',1,'iRRAM::RATIONAL']]]
 ];

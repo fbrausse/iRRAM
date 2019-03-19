@@ -1,3 +1,8 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structiRRAM_1_1get__type_3_01bool_01_4.html" title="iRRAM::get_type\&lt; bool \&gt;" alt="" coords="5,5,176,32"/>
+<area shape="rect" id="node2" href="$structiRRAM_1_1internal_1_1disjunction.html" title="iRRAM::internal::disjunction\l\&lt;... \&gt;" alt="" coords="136,5,321,47"/>
+<area shape="rect" id="node3" href="$structiRRAM_1_1internal_1_1is__cacheable.html" title="iRRAM::internal::is\l_cacheable\&lt; T \&gt;" alt="" coords="162,71,295,112"/>
+<area shape="rect" id="node4" href="$structiRRAM_1_1internal_1_1is__continuous.html" title="iRRAM::internal::is\l_continuous\&lt; C \&gt;" alt="" coords="162,136,295,177"/>
+<area shape="rect" id="node5" href="$structiRRAM_1_1internal_1_1is__continuous_3_01C_01_6_01_4.html" title="iRRAM::internal::is\l_continuous\&lt; C &amp; \&gt;" alt="" coords="387,71,526,112"/>
+<area shape="rect" id="node6" href="$structiRRAM_1_1internal_1_1is__continuous_3_01C_01_6_6_01_4.html" title="iRRAM::internal::is\l_continuous\&lt; C &amp;&amp; \&gt;" alt="" coords="383,136,531,177"/>
+<area shape="rect" id="node7" href="$structiRRAM_1_1internal_1_1is__continuous_3_01const_01C_01_6_01_4.html" title="iRRAM::internal::is\l_continuous\&lt; const C &amp; \&gt;" alt="" coords="369,201,544,243"/>
 </map>

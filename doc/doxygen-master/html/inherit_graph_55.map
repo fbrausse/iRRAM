@@ -1,3 +1,5 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="node1" href="$structiRRAM_1_1state__proxy.html" title="iRRAM::state_proxy\l\&lt; tls \&gt;" alt="" coords="5,5,147,47"/>
+<area shape="rect" id="node1" href="$classiRRAM_1_1rstream.html" title="iRRAM::rstream" alt="" coords="5,31,123,57"/>
+<area shape="rect" id="node2" href="$classiRRAM_1_1irstream.html" title="iRRAM::irstream" alt="" coords="173,5,293,32"/>
+<area shape="rect" id="node3" href="$classiRRAM_1_1orstream.html" title="iRRAM::orstream" alt="" coords="171,56,295,83"/>
 </map>

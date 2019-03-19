@@ -1,8 +1,8 @@
 var group__limits =
 [
     [ "iteration", "group__limits.html#ga4701681603f8346e74299e0e7305d705", null ],
-    [ "limit", "group__limits.html#gae3e794e9ff5bf284bde1a8706a0feab7", null ],
-    [ "limit", "group__limits.html#ga7f5fdfcf5a359c2bea9bbb7891499e64", null ],
+    [ "limit", "group__limits.html#gaeb51ea6a8d63b1e1825f8f03576624df", null ],
+    [ "limit", "group__limits.html#gaa2021fd3a1b8b6b02f57c6e357018f2f", null ],
     [ "limit", "group__limits.html#ga322172a761ed4983ad267bfb18e312cc", null ],
     [ "limit", "group__limits.html#ga2b9a87d47dfd157c7200a335410650ba", null ],
     [ "limit", "group__limits.html#gaef4a78f676d6e97dd6cf1c13c6e34252", null ],
@@ -18,7 +18,9 @@ var group__limits =
     [ "limit_lip", "group__limits.html#ga5b322f51f99c6b134f3e29916bc6ceef", null ],
     [ "limit_lip", "group__limits.html#ga648e2e0b9dd7c4dc99a4bd6c3c313546", null ],
     [ "limit_lip", "group__limits.html#ga77a5997f28f7c88a99b1e4619844c03b", null ],
-    [ "limit_mv", "group__limits.html#gadce8d369f1cf4314bc943fcb76de2279", null ],
+    [ "limit_mv", "group__limits.html#ga4065b0defbc5dfca561e01450711c0e1", null ],
+    [ "limit_mv", "group__limits.html#ga51d1f4db3b36a421ed49c692b319e346", null ],
+    [ "limit_mv< REALMATRIX, int, REALMATRIX >", "group__limits.html#ga01a4441706f3ef6aa2d8a3ef695da4f6", null ],
     [ "lipschitz", "group__limits.html#ga8dca991a180fbdd87512f1c42f7899f1", null ],
     [ "lipschitz", "group__limits.html#gac5b4ea8b4d5292c148176eb8a04bfdd7", null ],
     [ "lipschitz", "group__limits.html#ga74d38256d9ca98f970ef5f13c79525e6", null ],

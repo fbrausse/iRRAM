@@ -14,7 +14,7 @@ var dir_68267d1309a1af8e8297ef4c3efbcdba =
     [ "RATIONAL.cc", "RATIONAL_8cc.html", "RATIONAL_8cc" ],
     [ "REALmain.cc", "REALmain_8cc.html", "REALmain_8cc" ],
     [ "REALMATRIX.cc", "REALMATRIX_8cc.html", "REALMATRIX_8cc" ],
-    [ "REALS.cc", "REALS_8cc.html", "REALS_8cc" ],
+    [ "REALS.cc", "REALS_8cc.html", null ],
     [ "sin_cos.cc", "sin__cos_8cc.html", "sin__cos_8cc" ],
     [ "SPARSEREALMATRIX.cc", "SPARSEREALMATRIX_8cc.html", "SPARSEREALMATRIX_8cc" ],
     [ "sqrt.cc", "sqrt_8cc.html", "sqrt_8cc" ],
