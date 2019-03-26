@@ -32,6 +32,8 @@ MA 02111-1307, USA.
 #include <iRRAM/LAZYBOOLEAN.h>
 #include <iRRAM/INTEGER.h>
 #include <iRRAM/STREAMS.h> /* float_form, iRRAM_DEBUG* */
+#include <iRRAM/sizetype.hh>
+#include <iRRAM/SWITCHES.h>
 
 namespace iRRAM {
 
@@ -359,6 +361,114 @@ inline void     to_formal_ball(const REAL &r, DYADIC &center, sizetype &err)
 // if q=module(f,x,p), then forall z, |z-x|<2^q => |f(z)-f(x)| < 2^p
 //! \related REAL
 int module(REAL (*f)(const REAL&),const REAL& x, int p);
+
+//! \related REAL
+//! \see module(REAL (*f)(const REAL &), const REAL &, int)
+template <typename F, typename... Args>
+int modulus(F &&f, int p, Args... x_copy)
+{
+	if constexpr (!internal::any_continuous<Args...>::value)
+		return -1; /* a (-1)-approximation in discrete metric space is
+		              exact */
+
+	/* If we are able to approximate f(x) by a DYADIC number d with an error
+	 * of <=2^{p-1}, then for any z in the argument interval of x, f(z) must
+	 * differ by at most 2^{p-1} from d, hence |f(x)-f(z)|<=2^p */
+
+	int result;
+	if (get_cached(result))
+		return result;
+
+	DYADIC d;
+
+	sizetype argerror, testerror;
+
+	argerror = geterror_sup(x_copy...);
+	testerror = sizetype_power2(argerror.exponent);
+	adderror_sup(testerror, x_copy...);
+	{
+		single_valued code;
+		d = approx(f(static_cast<const Args &>(x_copy)...), p - 1);
+	}
+
+	/* At this point, we are sure that x_copy (and so also x) is precise
+	 * enough to allow the computation of f(x), even with a slightly
+	 * increased error of the argument. */
+
+	/* We now try to find the smallest p_arg such that the evaluation of
+	 * f(x+- 2^p_arg) is possible up to an error of at most 2^{p-1} */
+
+	/* To do this, we start with p_arg=p.
+	 * If this is successfull, we increase the value of p_arg until the
+	 * first failure. If it is not, then we decrease until the first
+	 * success... */
+	int direction = 0, p_arg = p;
+	bool try_it = true;
+
+	while (try_it) {
+		testerror = sizetype_power2(p_arg);
+		seterror_sup(argerror, x_copy...);
+		adderror_sup(testerror, x_copy...);
+		bool fail = false;
+		if (iRRAM_unlikely(state->debug > 0)) {
+			sizetype x_error = geterror_sup(x_copy...);
+			iRRAM_DEBUG2(1, "Testing module: 1*2^%d + %d*2^%d\n",
+			             p_arg, argerror.mantissa,
+			             argerror.exponent);
+			iRRAM_DEBUG2(1, "argument error: %d*2^%d\n",
+			             x_error.mantissa, x_error.exponent);
+		}
+		try {
+			single_valued code;
+			REAL z = f(static_cast<const Args &>(x_copy)...);
+			if (iRRAM_unlikely(state->debug > 0)) {
+				sizetype z_error;
+				z.geterror(z_error);
+				iRRAM_DEBUG2(
+				        1, "Module yields result %d*2^%d\n",
+				        z_error.mantissa, z_error.exponent);
+			}
+			d = approx(z, p - 1);
+		} catch (const Iteration &it) {
+			fail = true;
+		}
+		switch (direction) {
+		case 0:
+			if (fail)
+				direction = -1;
+			else
+				direction = 1;
+			p_arg += direction;
+			break;
+		case 1:
+			if (fail) {
+				try_it = false;
+				p_arg -= direction;
+			} else
+				p_arg += direction;
+			break;
+		case -1:
+			if (fail)
+				p_arg += direction;
+			else
+				try_it = false;
+			break;
+		}
+	}
+	iRRAM_DEBUG2(1, "Modules resulting in p_arg=%d\n", p_arg);
+
+	testerror = sizetype_power2(p_arg);
+	argerror += testerror;
+
+	while (argerror.mantissa > 1) {
+		argerror.mantissa = argerror.mantissa >> 1;
+		argerror.exponent += 1;
+	}
+
+	result = argerror.exponent;
+	put_cached(result);
+	return result;
+}
 
 REAL strtoREAL(const char* s, char** endptr);
 REAL atoREAL(const char* s);

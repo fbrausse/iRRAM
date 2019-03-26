@@ -166,6 +166,10 @@ inline void limit_debug2(const char* c){
       }
 }
 
+/* --------------------------------------------------------------------------
+ * int geterror_exp(...)
+ * -------------------------------------------------------------------------- */
+
 template <typename C,typename... ContArgs>
 int      geterror_exp(const C &, const ContArgs &...);
 
@@ -198,6 +202,122 @@ geterror_exp(const S &, const T &y, const ContArgs &... z)
 	static_assert(internal::any_continuous<T,ContArgs...>::value,
 	              "geterror_exp() is only applicable to continuous types");
 	return geterror_exp(y, z...);
+}
+
+/* --------------------------------------------------------------------------
+ * sizetype geterror_sup(...)
+ * -------------------------------------------------------------------------- */
+
+template <typename C,typename... ContArgs>
+sizetype geterror_sup(const C &, const ContArgs &...);
+
+template <typename S>
+sizetype geterror_sup(const S &x)
+{
+	return geterror(x);
+}
+
+template <typename S,typename T,typename... ContArgs>
+typename std::enable_if_t<internal::is_continuous<S>::value &&
+                          internal::any_continuous<T,ContArgs...>::value,sizetype>
+geterror_sup(const S &x, const T &y, const ContArgs &... z)
+{
+	return max(geterror_sup(x), geterror_sup(y, z...));
+}
+
+template <typename S,typename T,typename... ContArgs>
+typename std::enable_if_t<internal::is_continuous<S>::value &&
+                          !internal::any_continuous<T,ContArgs...>::value,sizetype>
+geterror_sup(const S &x, const T &, const ContArgs &...)
+{
+	return geterror_sup(x);
+}
+
+template <typename S,typename T,typename... ContArgs>
+typename std::enable_if_t<!internal::is_continuous<S>::value,sizetype>
+geterror_sup(const S &, const T &y, const ContArgs &... z)
+{
+	static_assert(internal::any_continuous<T,ContArgs...>::value,
+	              "geterror_sup() is only applicable to continuous types");
+	return geterror_sup(y, z...);
+}
+
+/* --------------------------------------------------------------------------
+ * void adderror_exp(sizetype err, ...)
+ * -------------------------------------------------------------------------- */
+
+template <typename C,typename... ContArgs>
+void adderror_sup(const sizetype &err, C &, ContArgs &...);
+
+template <typename S>
+void adderror_sup(const sizetype &err, S &x)
+{
+	return adderror(x, err);
+}
+
+template <typename S,typename T,typename... ContArgs>
+typename std::enable_if_t<internal::is_continuous<S>::value &&
+                          internal::any_continuous<T,ContArgs...>::value>
+adderror_sup(const sizetype &err, S &x, T &y, ContArgs &... z)
+{
+	adderror_sup(err, x);
+	adderror_sup(err, y, z...);
+}
+
+template <typename S,typename T,typename... ContArgs>
+typename std::enable_if_t<internal::is_continuous<S>::value &&
+                          !internal::any_continuous<T,ContArgs...>::value>
+adderror_sup(const sizetype &err, S &x, T &, ContArgs &...)
+{
+	adderror_sup(err, x);
+}
+
+template <typename S,typename T,typename... ContArgs>
+typename std::enable_if_t<!internal::is_continuous<S>::value>
+adderror_sup(const sizetype &err, S &, T &y, ContArgs &... z)
+{
+	static_assert(internal::any_continuous<T,ContArgs...>::value,
+	              "adderror_sup() is only applicable to continuous types");
+	adderror_sup(err, y, z...);
+}
+
+/* --------------------------------------------------------------------------
+ * void seterror_exp(sizetype err, ...)
+ * -------------------------------------------------------------------------- */
+
+template <typename C,typename... ContArgs>
+void seterror_sup(const sizetype &err, C &, ContArgs &...);
+
+template <typename S>
+void seterror_sup(const sizetype &err, S &x)
+{
+	return seterror(x, err);
+}
+
+template <typename S,typename T,typename... ContArgs>
+typename std::enable_if_t<internal::is_continuous<S>::value &&
+                          internal::any_continuous<T,ContArgs...>::value>
+seterror_sup(const sizetype &err, S &x, T &y, ContArgs &... z)
+{
+	seterror_sup(err, x);
+	seterror_sup(err, y, z...);
+}
+
+template <typename S,typename T,typename... ContArgs>
+typename std::enable_if_t<internal::is_continuous<S>::value &&
+                          !internal::any_continuous<T,ContArgs...>::value>
+seterror_sup(const sizetype &err, S &x, T &, ContArgs &...)
+{
+	seterror_sup(err, x);
+}
+
+template <typename S,typename T,typename... ContArgs>
+typename std::enable_if_t<!internal::is_continuous<S>::value>
+seterror_sup(const sizetype &err, S &, T &y, ContArgs &... z)
+{
+	static_assert(internal::any_continuous<T,ContArgs...>::value,
+	              "seterror_sup() is only applicable to continuous types");
+	seterror_sup(err, y, z...);
 }
 
 /*! \addtogroup limits
