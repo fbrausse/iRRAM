@@ -377,7 +377,23 @@ limit_mv(R (*seq)(int prec, C &choice, const Args &... args),
 					        4 +
 					        iRRAM_prec_array[element_step];
 					firsttime = 1;
-				}
+				}		
+			if (firsttime != 0 || sizetype_less(limnew_error, lim_error)) {
+			lim = limnew;
+			lim_error = limnew_error;
+			iRRAM_DEBUG2(2, "getting result with error %d*2^(%d)\n",
+			             lim_error.mantissa, lim_error.exponent);
+			} else {
+				iRRAM_DEBUG1(
+				        2,
+				        "computation successful, but no improvement\n");
+			}
+			firsttime = 0;
+			if (element <= env.saved_prec())
+				break;
+			element_step += 4;
+			element = iRRAM_prec_array[element_step];
+
 		} catch (const Iteration &it) {
 			if (firsttime == 0) {
 				iRRAM_DEBUG1(2, "computation failed, using "
@@ -395,21 +411,6 @@ limit_mv(R (*seq)(int prec, C &choice, const Args &... args),
 				iRRAM_REITERATE(0);
 			}
 		}
-		if (firsttime != 0 || sizetype_less(limnew_error, lim_error)) {
-			lim = limnew;
-			lim_error = limnew_error;
-			iRRAM_DEBUG2(2, "getting result with error %d*2^(%d)\n",
-			             lim_error.mantissa, lim_error.exponent);
-		} else {
-			iRRAM_DEBUG1(
-			        2,
-			        "computation successful, but no improvement\n");
-		}
-		firsttime = 0;
-		if (element <= env.saved_prec())
-			break;
-		element_step += 4;
-		element = iRRAM_prec_array[element_step];
 	}
 	lim.seterror(lim_error);
 	iRRAM_DEBUG2(2, "end of gen limit_mv with error %d*2^(%d)\n",
