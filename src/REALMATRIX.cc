@@ -206,7 +206,16 @@ REAL&  REALMATRIX::element (unsigned int i, unsigned int j) const {
   return values[i*maxcolumn+j];
 }
 
-REAL&  REALMATRIX::operator () (unsigned int i, unsigned int j) const {
+REAL&  REALMATRIX::operator () (unsigned int i, unsigned int j) {
+  if ((i>= maxrow) || (j>= maxcolumn) ) {
+     fprintf(stderr,"Illegal indices [%d,%d] for real matrix [%d,%d]\n",
+           i,j,maxrow,maxcolumn);
+     exit(1);
+     }
+  return values[i*maxcolumn+j];
+}
+
+const REAL&  REALMATRIX::operator () (unsigned int i, unsigned int j) const {
   if ((i>= maxrow) || (j>= maxcolumn) ) {
      fprintf(stderr,"Illegal indices [%d,%d] for real matrix [%d,%d]\n",
            i,j,maxrow,maxcolumn);

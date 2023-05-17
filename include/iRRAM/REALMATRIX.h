@@ -51,6 +51,9 @@ REALMATRIX&   operator = (const REALMATRIX& y);
 // Access to matrix elements: ------------------
 
 REAL&   operator ()           (unsigned int row,
+                               unsigned int column);
+
+const REAL& operator ()       (unsigned int row,
                                unsigned int column) const;
 
 REAL&   element               (unsigned int row,
