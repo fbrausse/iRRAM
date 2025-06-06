@@ -66,16 +66,22 @@ template <typename... T> using any_continuous = disjunction<is_continuous<T>...>
  * return type void or not usually need different implementations */
 
 template <typename F,typename... Args>
-using result_of_t = typename std::result_of<F &&(Args &&...)>::type;
+using result_of_t = typename
+#if __cpp_lib_is_invocable >= 201703L
+/* std::result_of is deprecated in C++17 and removed in C++20 */
+std::invoke_result<F, Args...>::type;
+#else
+std::result_of<F &&(Args &&...)>::type;
+#endif
 
 template <typename R> struct retval       { typedef R    value_type; };
 template <>           struct retval<void> { typedef void void_type; };
 
 template <typename F,typename... Args>
-using ret_void_t = typename internal::retval<result_of_t<F,Args...>>::void_type;
+using ret_void_t = typename internal::retval<internal::result_of_t<F,Args...>>::void_type;
 
 template <typename F,typename... Args>
-using ret_value_t = typename internal::retval<result_of_t<F,Args...>>::value_type;
+using ret_value_t = typename internal::retval<internal::result_of_t<F,Args...>>::value_type;
 
 }
 
