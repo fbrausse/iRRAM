@@ -24,11 +24,9 @@ MA 02111-1307, USA.
 
 #include <iRRAM/COMPLEX.h>
 
-using std::move;
-
 namespace iRRAM {
 
-COMPLEX::COMPLEX(REAL x, REAL y) : _real(move(x)), _imag(move(y)) {}
+COMPLEX::COMPLEX(REAL x, REAL y) : _real(std::move(x)), _imag(std::move(y)) {}
 
 
 
