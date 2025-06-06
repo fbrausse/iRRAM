@@ -1284,7 +1284,7 @@ int iRRAM::module(REAL (*f)(const REAL&),const REAL& x, int p){
 	p_arg+=direction;
       break;
       case 1:;
-        if ( fail ) { try_it=false; p_arg -=direction; }
+        if ( fail || p_arg > 0 ) { try_it=false; p_arg -=direction; }
 	else { p_arg += direction; };
       break;
       case -1:;
